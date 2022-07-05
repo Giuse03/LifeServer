@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/EconomyModule/EconomyModule.iml" filepath="$PROJECT_DIR$/EconomyModule/EconomyModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/JarCompileModule/JarCompileModule.iml" filepath="$PROJECT_DIR$/JarCompileModule/JarCompileModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/KitModule/KitModule.iml" filepath="$PROJECT_DIR$/KitModule/KitModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JarCompileModule/LifeServer.iml" filepath="$PROJECT_DIR$/JarCompileModule/LifeServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/MainModule/MainModule.iml" filepath="$PROJECT_DIR$/MainModule/MainModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/NewLifeServer.iml" filepath="$PROJECT_DIR$/NewLifeServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/SecretMessageModule/SecretMessageModule.iml" filepath="$PROJECT_DIR$/SecretMessageModule/SecretMessageModule.iml" />
