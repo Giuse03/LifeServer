@@ -90,7 +90,7 @@ public class KitModule extends Services implements Savable {
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Unloading Kits...");
         //Saves Kits
-        save().run();
+        save();
     }
 
     /**
@@ -136,18 +136,14 @@ public class KitModule extends Services implements Savable {
      * Save Sets of PlayerTimerSystem and Kit in a Database
      */
     @Override
-    public Runnable save() {
-        return () -> {
-            mainModule.getConnectorSQLite().openConnect();
-            playerKitOperations.dropTable();
-            playerKitOperations.createTable();
-            playerTimerSystems.forEach(playerTimeSystem -> playerKitOperations.insert(playerKitTimeSerializer.encode(playerTimeSystem)));
-            kitOperations.dropTable();
-            kitOperations.createTable();
-            kitElements.forEach(kitBuilder -> {
-                kitOperations.insert(kitBuilderSerializer.encode(kitBuilder));
-            });
-        };
+    public void save() {
+        mainModule.getConnectorSQLite().openConnect();
+        playerKitOperations.dropTable();
+        playerKitOperations.createTable();
+        playerTimerSystems.forEach(playerTimeSystem -> playerKitOperations.insert(playerKitTimeSerializer.encode(playerTimeSystem)));
+        kitOperations.dropTable();
+        kitOperations.createTable();
+        kitElements.forEach(kitBuilder -> kitOperations.insert(kitBuilderSerializer.encode(kitBuilder)));
     }
 
 

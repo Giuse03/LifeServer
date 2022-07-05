@@ -46,7 +46,7 @@ public class WarpLoaderService extends Services implements Savable {
     @Override
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Unloading Warps...");
-        save().run();
+        save();
     }
 
     @Override
@@ -63,14 +63,12 @@ public class WarpLoaderService extends Services implements Savable {
 
 
     @Override
-    public Runnable save() {
-        return () -> {
-            warpOperations.dropTable();
-            warpOperations.createTable();
-            warpBuilders.forEach(warpBuilder -> {
-                warpOperations.insert(warpBuilderSerializer.encode(warpBuilder));
-                mainModule.getConnectorSQLite().closeConnection();
-            });
-        };
+    public void save() {
+        warpOperations.dropTable();
+        warpOperations.createTable();
+        warpBuilders.forEach(warpBuilder -> {
+            warpOperations.insert(warpBuilderSerializer.encode(warpBuilder));
+            mainModule.getConnectorSQLite().closeConnection();
+        });
     }
 }

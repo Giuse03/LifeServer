@@ -45,7 +45,7 @@ public class HomeLoaderService extends Services implements Savable {
     @Override
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Unloading Home...");
-        save().run();
+        save();
     }
 
     @Override
@@ -59,12 +59,10 @@ public class HomeLoaderService extends Services implements Savable {
     }
 
     @Override
-    public Runnable save() {
-        return () -> {
-            homeOperations.dropTable();
-            homeOperations.createTable();
-            homeBuilders.stream().filter(homeBuilders -> !homeBuilders.toString().endsWith("_")).forEach(homeBuilder -> homeOperations.insert(homeBuilderSerializer.encode(homeBuilder)));
-        };
+    public void save() {
+        homeOperations.dropTable();
+        homeOperations.createTable();
+        homeBuilders.stream().filter(homeBuilders -> !homeBuilders.toString().endsWith("_")).forEach(homeBuilder -> homeOperations.insert(homeBuilderSerializer.encode(homeBuilder)));
     }
 
 

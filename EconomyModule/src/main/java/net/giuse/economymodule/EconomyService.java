@@ -61,7 +61,7 @@ public class EconomyService extends Services implements Savable {
     @Override
     public void unload() {
         Bukkit.getLogger().info("§8[§2Life§aServer §7>> §eEconomy §9] §7Unloading economy...");
-        save().run();
+        save();
     }
 
     @Override
@@ -70,8 +70,8 @@ public class EconomyService extends Services implements Savable {
     }
 
     @Override
-    public Runnable save() {
-        return () -> econPlayers.forEach(player -> {
+    public void save() {
+        econPlayers.forEach(player -> {
             if (!economyOperations.isPresent(player.getPlayer())) {
                 economyOperations.insert(econPlayerSerializer.encode(player));
             } else {

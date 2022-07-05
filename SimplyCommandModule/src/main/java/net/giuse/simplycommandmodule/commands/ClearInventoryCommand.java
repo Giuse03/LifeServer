@@ -13,7 +13,7 @@ import javax.inject.Inject;
 public class ClearInventoryCommand extends AbstractCommand {
 
 
-    private SimplyCommandService simplyCommandService;
+    private final SimplyCommandService simplyCommandService;
 
     @Inject
     public ClearInventoryCommand(MainModule mainModule) {
