@@ -32,7 +32,7 @@ public class KitListCommand extends AbstractCommand {
                 p.sendMessage(kitModule.getMessage("kit-list-empty"));
             } else {
                 StringBuilder sb = new StringBuilder();
-                kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitModule.getKitBuilderSerializer().decoder(kitBuilder).getName()).append(","));
+                kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
                 p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
             }
         } else {

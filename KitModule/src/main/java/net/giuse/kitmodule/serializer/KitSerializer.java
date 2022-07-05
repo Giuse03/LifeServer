@@ -5,16 +5,15 @@ import net.giuse.mainmodule.serializer.Serializer;
 import org.bukkit.inventory.ItemStack;
 
 public class KitSerializer implements Serializer<KitBuilder> {
-    private final Serializer<ItemStack> itemStackSerializer = new ItemStackSerializer();
 
     @Override
     public KitBuilder decoder(String kitString) {
-        String[] valueKitBuilder = kitString.split(";");
+        String[] valueKitBuilder = kitString.split("-");
         KitBuilder kitBuilder = new KitBuilder();
         kitBuilder.setName(valueKitBuilder[0]);
         kitBuilder.setCoolDown(Integer.parseInt(valueKitBuilder[1]));
         for (String s : valueKitBuilder[2].split(",")) {
-            kitBuilder.getItems().add(itemStackSerializer.decoder(s));
+            kitBuilder.getItems().add(s);
         }
         return kitBuilder;
     }
@@ -22,15 +21,15 @@ public class KitSerializer implements Serializer<KitBuilder> {
     @Override
     public String encode(KitBuilder kitBuilder) {
         StringBuilder sb = new StringBuilder();
-        sb.append(kitBuilder.getName()).append(";");
-        sb.append(kitBuilder.getCoolDown()).append(";");
+        sb.append(kitBuilder.getName()).append("-");
+        sb.append(kitBuilder.getCoolDown()).append("-");
         int i = 0;
-        for (ItemStack itemStack : kitBuilder.getItems()) {
+        for (String itemStack : kitBuilder.getItems()) {
             i++;
             if ((i) == kitBuilder.getItems().size()) {
-                sb.append(itemStackSerializer.encode(itemStack));
+                sb.append(itemStack);
             } else {
-                sb.append(itemStackSerializer.encode(itemStack)).append(",");
+                sb.append(itemStack).append(",");
             }
         }
         return sb.toString();

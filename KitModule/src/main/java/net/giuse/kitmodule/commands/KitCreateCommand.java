@@ -46,12 +46,12 @@ public class KitCreateCommand extends AbstractCommand {
                     KitBuilder kitBuilder = new KitBuilder();
                     kitBuilder.setCoolDown(Integer.parseInt(args[1]));
                     kitBuilder.setName(args[0]);
-                    Arrays.stream(p.getInventory().getContents()).forEach(stack -> {
+                    for (ItemStack stack : p.getInventory().getContents()) {
                         if (stack != null && !stack.getType().equals(Material.AIR)) {
-                            kitBuilder.getItems().add(stack);
+                            kitBuilder.getItems().add(kitModule.getItemStackSerializer().encode(stack));
                         }
-                    });
-                    kitModule.getKitElements().add(kitModule.getKitBuilderSerializer().encode(kitBuilder));
+                    }
+                    kitModule.getKitElements().add(kitBuilder);
                     for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                         PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(args[0], onlinePlayers.getUniqueId(), Integer.parseInt(args[1]), 0);
                         playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);

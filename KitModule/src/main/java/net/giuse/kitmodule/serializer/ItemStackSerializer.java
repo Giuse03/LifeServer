@@ -6,13 +6,12 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Base64;
 
 public class ItemStackSerializer implements Serializer<ItemStack> {
 
     @Override
-    public ItemStack decoder(String base64) {
-        String[] valueItemStack = new String(Base64.getDecoder().decode(base64)).split(";");
+    public ItemStack decoder(String str) {
+        String[] valueItemStack = str.split(";");
         ItemstackBuilder itemStackBuild = new ItemstackBuilder(
                 Material.getMaterial(valueItemStack[0].replace("material_", "")),
                 Integer.parseInt(valueItemStack[2].replace("amount_", "")));
@@ -71,7 +70,7 @@ public class ItemStackSerializer implements Serializer<ItemStack> {
             }
             sb.append(";");
         }
-        return Base64.getEncoder().encodeToString(sb.toString().getBytes());
+        return sb.toString();
     }
 
 }

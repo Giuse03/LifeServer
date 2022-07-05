@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @Setter
 @Getter
 public class KitBuilder {
-    private final ArrayList<ItemStack> items = new ArrayList<>();
+    private final ArrayList<String> items = new ArrayList<>();
     private String name;
     private int coolDown;
 

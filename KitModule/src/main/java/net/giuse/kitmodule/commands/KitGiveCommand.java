@@ -44,7 +44,7 @@ public class KitGiveCommand extends AbstractCommand {
                     p.sendMessage(kitModule.getMessage("kit-list-empty"));
                 } else {
                     StringBuilder sb = new StringBuilder();
-                    kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitModule.getKitBuilderSerializer().decoder(kitBuilder).getName()).append(","));
+                    kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
                     p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
                 }
             } else {
@@ -57,7 +57,7 @@ public class KitGiveCommand extends AbstractCommand {
                     KitBuilder kitBuilder = kitModule.getKit(args[0]);
                     if (kitModule.getPlayerTime(p.getUniqueId(), kitBuilder).getVariableCoolDown() == 0) {
                         kitModule.getPlayerTime(p.getUniqueId(), kitBuilder).start();
-                        kitBuilder.getItems().forEach(itemStack -> p.getInventory().addItem(itemStack));
+                        kitBuilder.getItems().forEach(itemStack -> p.getInventory().addItem(kitModule.getItemStackSerializer().decoder(itemStack)));
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', kitModule.getMessage("kit-receive").replace("%kit%", kitBuilder.getName())));
                     } else {
                         p.sendMessage(kitModule.getMessage("kit-wait").replace(

@@ -27,15 +27,12 @@ public class EventManager implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        kitModule.getPlayerTimerSystems().forEach(playerTimerSystemGeneral -> {
-            if (!playerTimerSystemGeneral.getUuid().equals(e.getPlayer().getUniqueId())) {
-                for (String kitBuilder : kitModule.getKitElements()) {
-                    KitBuilder kb = kitModule.getKitBuilderSerializer().decoder(kitBuilder);
-                    PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(kb.getName(), e.getPlayer().getUniqueId(), kb.getCoolDown(), 0);
-                    playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
-                    kitModule.getPlayerTimerSystems().add(playerTimerSystem);
-                }
+        for (KitBuilder kitBuilder : kitModule.getKitElements()) {
+            if(kitModule.getPlayerTime(e.getPlayer().getUniqueId(), kitBuilder) == null) {
+                PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(kitBuilder.getName(), e.getPlayer().getUniqueId(), kitBuilder.getCoolDown(), 0);
+                playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
+                kitModule.getPlayerTimerSystems().add(playerTimerSystem);
             }
-        });
+        }
     }
 }

@@ -33,7 +33,7 @@ public class HomeLoaderService extends Services implements Savable {
         TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         homeOperations = mainModule.getInjector().getSingleton(HomeOperations.class);
         homeOperations.createTable();
-        homeOperations.getAllString().forEach(homeBuilderBase64 -> homeBuilders.add(homeBuilderSerializer.decoder(homeBuilderBase64)));
+        homeOperations.getAllString().forEach(homeBuilder -> homeBuilders.add(homeBuilderSerializer.decoder(homeBuilder)));
         if (Files.size(Paths.get("plugins/LifeServer/messages/messages_home.yml")) == 0) {
             teleportModule.getFileManager().setMessagesHome();
         }
@@ -60,11 +60,11 @@ public class HomeLoaderService extends Services implements Savable {
 
     @Override
     public Runnable save() {
-        return () -> homeBuilders.stream().filter(homeBuilders -> !homeBuilders.toString().endsWith("_")).forEach(homeBuilder -> {
-            if (!homeOperations.isPresent(homeBuilderSerializer.encode(homeBuilder)))
-                homeOperations.insert(homeBuilderSerializer.encode(homeBuilder));
-            else homeOperations.update(homeBuilderSerializer.encode(homeBuilder));
-        });
+        return () -> {
+            homeOperations.dropTable();
+            homeOperations.createTable();
+            homeBuilders.stream().filter(homeBuilders -> !homeBuilders.toString().endsWith("_")).forEach(homeBuilder -> homeOperations.insert(homeBuilderSerializer.encode(homeBuilder)));
+        };
     }
 
 

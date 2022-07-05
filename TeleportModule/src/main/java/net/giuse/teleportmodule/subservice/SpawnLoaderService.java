@@ -25,16 +25,16 @@ public class SpawnLoaderService extends Services {
     private SpawnBuilder spawnBuilder;
     @Inject
     private MainModule mainModule;
-    private SpawnOperations operations;
+    private SpawnOperations spawnOperations;
 
     @Override
     @SneakyThrows
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Spawn...");
         TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        operations = mainModule.getInjector().getSingleton(SpawnOperations.class);
-        operations.getAllString().forEach(newSpawnBuilder -> spawnBuilder = spawnBuilderSerializer.decoder(newSpawnBuilder));
-        operations.dropTable();
+        spawnOperations = mainModule.getInjector().getSingleton(SpawnOperations.class);
+        spawnOperations.getAllString().forEach(newSpawnBuilder -> spawnBuilder = spawnBuilderSerializer.decoder(newSpawnBuilder));
+        spawnOperations.dropTable();
         if (Files.size(Paths.get("plugins/LifeServer/messages/messages_spawn.yml")) == 0) {
             teleportModule.getFileManager().setMessagesSpawn();
         }
@@ -46,9 +46,9 @@ public class SpawnLoaderService extends Services {
     @Override
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Unloading Spawn...");
-        operations.createTable();
+        spawnOperations.createTable();
         if (spawnBuilder != null) {
-            operations.insert(spawnBuilderSerializer.encode(spawnBuilder));
+            spawnOperations.insert(spawnBuilderSerializer.encode(spawnBuilder));
         }
     }
 

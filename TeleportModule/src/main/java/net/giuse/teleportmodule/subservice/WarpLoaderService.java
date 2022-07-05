@@ -42,7 +42,7 @@ public class WarpLoaderService extends Services implements Savable {
 
         warpOperations = mainModule.getInjector().getSingleton(WarpOperations.class);
         warpOperations.createTable();
-        warpOperations.getAllString().forEach(warpBuildBase64 -> warpBuilders.add(warpBuilderSerializer.decoder(warpBuildBase64)));
+        warpOperations.getAllString().forEach(warpBuild -> warpBuilders.add(warpBuilderSerializer.decoder(warpBuild)));
     }
 
     @Override
@@ -67,13 +67,12 @@ public class WarpLoaderService extends Services implements Savable {
     @Override
     public Runnable save() {
         return () -> {
-            warpBuilders.forEach(homeBuilder -> {
-                if (!warpOperations.isPresent(warpBuilderSerializer.encode(homeBuilder)))
-                    warpOperations.insert(warpBuilderSerializer.encode(homeBuilder));
-                else warpOperations.update(warpBuilderSerializer.encode(homeBuilder));
+            warpOperations.dropTable();
+            warpOperations.createTable();
+            warpBuilders.forEach(warpBuilder -> {
+                warpOperations.insert(warpBuilderSerializer.encode(warpBuilder));
+                mainModule.getConnectorSQLite().closeConnection();
             });
-            mainModule.getConnectorSQLite().closeConnection();
         };
-    }
-
+}
 }
