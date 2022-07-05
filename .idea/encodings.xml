@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/EconomyModule/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/EconomyModule/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JarCompileModule/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JarCompileModule/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/KitModule/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/KitModule/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MainModule/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MainModule/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ModuleManager/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ModuleManager/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SecretMessageModule/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SecretMessageModule/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SimplyCommandModule/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SimplyCommandModule/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TeleportModule/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TeleportModule/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

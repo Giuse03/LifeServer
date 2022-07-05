@@ -1,0 +1,30 @@
+#Attention if the page will be 1, the nextpage and the previouspage will not be loaded
+#You can add items in the gui  following the examples
+inventory:
+  title: "Basic %page%"
+  rows: 3
+  page: 1
+  items:
+    nextpage: #<---- This is an identifier of page handler don't change!
+      display-name: "Next"
+      amount: 1
+      position: 23
+      material: ARROW
+      data: 0
+    previouspage: #<---- This is an identifier of page handler don't change!
+      display-name: "Back"
+      amount: 1
+      position: 21
+      material: ARROW
+      data: 0
+    PANEL1: #<---- This is an identifier must be different from the others!
+      display-name: "Warp"
+      material: STONE
+      data: 0
+      amount: 2
+      page: 1
+      position: 1
+      enchant: DURABILITY:10
+      warp: test
+      lore:
+        - "&aClick here for Warp"

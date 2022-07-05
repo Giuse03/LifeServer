@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EconomyModule/EconomyModule.iml" filepath="$PROJECT_DIR$/EconomyModule/EconomyModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JarCompileModule/JarCompileModule.iml" filepath="$PROJECT_DIR$/JarCompileModule/JarCompileModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KitModule/KitModule.iml" filepath="$PROJECT_DIR$/KitModule/KitModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MainModule/MainModule.iml" filepath="$PROJECT_DIR$/MainModule/MainModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NewLifeServer.iml" filepath="$PROJECT_DIR$/NewLifeServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SecretMessageModule/SecretMessageModule.iml" filepath="$PROJECT_DIR$/SecretMessageModule/SecretMessageModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SimplyCommandModule/SimplyCommandModule.iml" filepath="$PROJECT_DIR$/SimplyCommandModule/SimplyCommandModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TeleportModule/TeleportModulez.iml" filepath="$PROJECT_DIR$/TeleportModule/TeleportModulez.iml" />
+    </modules>
+  </component>
+</project>

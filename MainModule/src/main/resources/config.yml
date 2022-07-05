@@ -1,0 +1,11 @@
+no-perms: "You don't have this perms"
+# If this option is active then if you do / kit it will open the gui otherwise the list of kits will appear.
+# Attention / kitlist will always return the kit list
+use-kit-gui: true
+#  If this option is active then if you do / warp it will open the gui otherwise the list of kits will appear.
+# Attention / warplist will always return the kit list
+use-warp-gui: true
+no-hunger: true
+always-day: true
+allow-back-on-death: true
+money-first-time-join: 1000
