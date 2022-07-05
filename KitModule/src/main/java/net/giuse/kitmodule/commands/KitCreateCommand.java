@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 
 public class KitCreateCommand extends AbstractCommand {
 

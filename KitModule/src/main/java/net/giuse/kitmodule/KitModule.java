@@ -16,7 +16,6 @@ import net.giuse.mainmodule.databases.Savable;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
@@ -38,13 +37,12 @@ public class KitModule extends Services implements Savable {
     private final FileManager configManager = new FileManager();
     @Getter
     private final Serializer<KitBuilder> kitBuilderSerializer = new KitSerializer();
+    @Getter
+    private final Serializer<ItemStack> itemStackSerializer = new ItemStackSerializer();
     @Inject
     private MainModule mainModule;
     @Getter
     private Serializer<PlayerTimerSystem> playerKitTimeSerializer;
-    @Getter
-    private final Serializer<ItemStack> itemStackSerializer = new ItemStackSerializer();
-
     private DBOperations kitOperations, playerKitOperations;
 
 

@@ -10,8 +10,6 @@ import net.giuse.teleportmodule.TeleportModule;
 import net.giuse.teleportmodule.builder.WarpBuilder;
 import net.giuse.teleportmodule.database.WarpOperations;
 import net.giuse.teleportmodule.serializer.WarpBuilderSerializer;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 import javax.inject.Inject;
 import java.nio.file.Files;
@@ -74,5 +72,5 @@ public class WarpLoaderService extends Services implements Savable {
                 mainModule.getConnectorSQLite().closeConnection();
             });
         };
-}
+    }
 }

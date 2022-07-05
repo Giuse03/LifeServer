@@ -1,6 +1,5 @@
 package net.giuse.kitmodule.serializer;
 
-import jdk.jfr.internal.tool.Main;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
 import net.giuse.mainmodule.MainModule;
@@ -25,6 +24,6 @@ public class PlayerKitTimeSerializer implements Serializer<PlayerTimerSystem> {
     @Override
     public PlayerTimerSystem decoder(String str) {
         String[] decodePlayerKit = str.split(";");
-    return new PlayerTimerSystem(decodePlayerKit[1], UUID.fromString(decodePlayerKit[0]), kitModule.getKit(decodePlayerKit[1]).getCoolDown(), Integer.parseInt(decodePlayerKit[2]));
+        return new PlayerTimerSystem(decodePlayerKit[1], UUID.fromString(decodePlayerKit[0]), kitModule.getKit(decodePlayerKit[1]).getCoolDown(), Integer.parseInt(decodePlayerKit[2]));
     }
 }

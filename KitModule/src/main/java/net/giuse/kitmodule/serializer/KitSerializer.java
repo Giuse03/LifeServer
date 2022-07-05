@@ -2,7 +2,6 @@ package net.giuse.kitmodule.serializer;
 
 import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.mainmodule.serializer.Serializer;
-import org.bukkit.inventory.ItemStack;
 
 public class KitSerializer implements Serializer<KitBuilder> {
 
