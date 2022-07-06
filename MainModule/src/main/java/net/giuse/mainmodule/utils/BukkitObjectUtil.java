@@ -3,7 +3,7 @@ package net.giuse.mainmodule.utils;
 
 //From: https://www.javatips.net/api/DemigodsRPG-master/src/main/java/com/demigodsrpg/util/BukkitObjectUtil.java
 /*
-* Serializer
+ * Serializer
  */
 public class BukkitObjectUtil {
     private final static char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();

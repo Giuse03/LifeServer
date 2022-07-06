@@ -17,7 +17,7 @@ public class KitSerializer implements Serializer<KitBuilder> {
         //Split Kit Serialized
         String[] valueKitBuilder = kitString.split(":");
 
-        KitBuilder kitBuilder = new KitBuilder(valueKitBuilder[0],Integer.parseInt(valueKitBuilder[1]));
+        KitBuilder kitBuilder = new KitBuilder(valueKitBuilder[0], Integer.parseInt(valueKitBuilder[1]));
 
         for (String s : valueKitBuilder[2].split(",")) {
             kitBuilder.getItems().add(s);
@@ -41,9 +41,9 @@ public class KitSerializer implements Serializer<KitBuilder> {
         //Insert serialized itemstack in a StringBuilder
         int size = kitBuilder.getItems().size();
         for (int i = 0; i < kitBuilder.getItems().size(); i++) {
-            if(i == (size - 1)){
+            if (i == (size - 1)) {
                 sb.append(kitBuilder.getItems().get(i));
-            }else{
+            } else {
                 sb.append(kitBuilder.getItems().get(i)).append(",");
             }
         }

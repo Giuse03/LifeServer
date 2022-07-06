@@ -3,7 +3,6 @@ package net.giuse.economymodule.files;
 import net.giuse.mainmodule.files.abstractfiles.AbstractConfig;
 import net.giuse.mainmodule.files.annotations.FileAnnotation;
 import net.giuse.mainmodule.files.annotations.YamlAnnotation;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

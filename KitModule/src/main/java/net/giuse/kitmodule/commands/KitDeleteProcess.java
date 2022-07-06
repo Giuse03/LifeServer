@@ -21,6 +21,7 @@ public class KitDeleteProcess extends AbstractCommand {
     private final KitModule kitModule;
 
     private final MainModule mainModule;
+
     @Inject
     public KitDeleteProcess(MainModule mainModule) {
         super("kitdelete", "lifeserver.kitdelete", true);
@@ -49,10 +50,10 @@ public class KitDeleteProcess extends AbstractCommand {
                     p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
                 }
 
-                for (PlayerTimerSystem playerTimerSystem  : kitModule.getPlayerTimerSystems()) {
+                for (PlayerTimerSystem playerTimerSystem : kitModule.getPlayerTimerSystems()) {
                     Bukkit.getScheduler().cancelTask(playerTimerSystem.getTaskId());
                     kitModule.getPlayerTimerSystems().remove(playerTimerSystem);
-                    playerTimerSystem.runTaskTimerAsynchronously(mainModule,20L,20L);
+                    playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
                 }
 
                 p.sendMessage(kitModule.getMessage("kit-removed").replace("%kit%", args[0]));

@@ -45,7 +45,7 @@ public class SetHomeCommand extends AbstractCommand {
                             sender.sendMessage(teleportModule.getMessage("sethome"));
                             homeLoaderService.getHome(sender.getUniqueId()).getLocations().put("default", sender.getLocation());
                         } else {
-                            if(args[0].contains(":") || args[0].contains(",") || args[0].contains(";")){
+                            if (args[0].contains(":") || args[0].contains(",") || args[0].contains(";")) {
                                 sender.sendMessage("§cCharacter §4 ':' or ',' or ';' §c isn't allowed in home name!");
                                 return;
                             }

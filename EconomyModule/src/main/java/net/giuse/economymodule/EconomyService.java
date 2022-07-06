@@ -1,4 +1,3 @@
-
 package net.giuse.economymodule;
 
 import lombok.Getter;

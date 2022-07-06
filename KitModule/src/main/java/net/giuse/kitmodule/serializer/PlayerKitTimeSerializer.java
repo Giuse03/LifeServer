@@ -29,9 +29,9 @@ public class PlayerKitTimeSerializer implements Serializer<PlayerTimerSystem> {
         stringBuilder.append(uuid).append(";");
         int size = playerTimerSystem.getKitsCooldown().size();
         for (int i = 0; i < size; i++) {
-            if(i == (size - 1)){
+            if (i == (size - 1)) {
                 stringBuilder.append(playerTimerSystem.getKitsCooldown().get(i).toString());
-            }else{
+            } else {
                 stringBuilder.append(playerTimerSystem.getKitsCooldown().get(i).toString()).append(",");
             }
         }

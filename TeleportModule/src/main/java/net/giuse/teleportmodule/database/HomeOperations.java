@@ -45,7 +45,7 @@ public class HomeOperations implements DBOperations {
     @Override
     public void insert(final String str) {
         String[] args = str.split(":");
-        if(args.length ==2) {
+        if (args.length == 2) {
             try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Home VALUES(?,?)");) {
                 insert.setString(1, args[0]);
                 insert.setString(2, args[1]);

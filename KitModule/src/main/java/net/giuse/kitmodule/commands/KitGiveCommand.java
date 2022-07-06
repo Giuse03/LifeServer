@@ -5,8 +5,8 @@ import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.kitmodule.cooldownsystem.KitCooldown;
 import net.giuse.kitmodule.gui.KitGui;
 import net.giuse.mainmodule.MainModule;
-import net.giuse.mainmodule.utils.Utils;
 import net.giuse.mainmodule.commands.AbstractCommand;
+import net.giuse.mainmodule.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -59,13 +59,13 @@ public class KitGiveCommand extends AbstractCommand {
             if (p.hasPermission("lifeserver.kit." + args[0])) {
                 if (kitModule.getKit(args[0]) != null) {
                     KitBuilder kitBuilder = kitModule.getKit(args[0]);
-                    if(kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().anyMatch(kitCooldown -> kitCooldown.getKitBuilder().equals(kitBuilder))){
+                    if (kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().anyMatch(kitCooldown -> kitCooldown.getKitBuilder().equals(kitBuilder))) {
                         KitCooldown kitCooldown = kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().filter(kitCooldowns -> kitCooldowns.getKitBuilder().equals(kitBuilder)).findFirst().get();
-                        if(kitCooldown.getVariableCoolDown() == 0){
+                        if (kitCooldown.getVariableCoolDown() == 0) {
                             kitModule.getPlayerTime(p.getUniqueId()).start(kitCooldown);
                             kitBuilder.getItems().forEach(itemStack -> p.getInventory().addItem(kitModule.getItemStackSerializer().decoder(itemStack)));
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', kitModule.getMessage("kit-receive").replace("%kit%", kitBuilder.getName())));
-                        }else{
+                        } else {
                             p.sendMessage(kitModule.getMessage("kit-wait").replace("%time%", Utils.formatTime(kitCooldown.getVariableCoolDown())));
                         }
                     }

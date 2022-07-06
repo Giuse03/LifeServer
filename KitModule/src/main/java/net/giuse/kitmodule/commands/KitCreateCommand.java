@@ -6,7 +6,6 @@ import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.apache.commons.lang.math.NumberUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -44,23 +43,23 @@ public class KitCreateCommand extends AbstractCommand {
         } else if (args.length == 1) {
             p.sendMessage(kitModule.getMessage("kit-cooldown"));
         } else {
-            if(!NumberUtils.isNumber(args[1])){
+            if (!NumberUtils.isNumber(args[1])) {
                 p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
                 return;
             }
             try {
-                if( Integer.parseInt(args[1]) < 0){
+                if (Integer.parseInt(args[1]) < 0) {
                     p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
                     return;
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 p.sendMessage(kitModule.getMessage("kit-cooldown-max"));
                 return;
             }
 
             if (kitModule.getKit(args[0]) == null) {
                 if (!isEmpty(p)) {
-                    KitBuilder kitBuilder = new KitBuilder(args[0],Integer.parseInt(args[1]));
+                    KitBuilder kitBuilder = new KitBuilder(args[0], Integer.parseInt(args[1]));
                     for (ItemStack stack : p.getInventory().getContents()) {
                         if (stack != null && !stack.getType().equals(Material.AIR)) {
                             kitBuilder.getItems().add(kitModule.getItemStackSerializer().encode(stack));

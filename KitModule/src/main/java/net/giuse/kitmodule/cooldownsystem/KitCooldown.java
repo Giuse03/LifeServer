@@ -6,11 +6,12 @@ import lombok.Setter;
 import net.giuse.kitmodule.builder.KitBuilder;
 
 
-public class KitCooldown  {
+public class KitCooldown {
     @Getter
     private final KitBuilder kitBuilder;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private int variableCoolDown = 0;
 
     public KitCooldown(@NonNull KitBuilder kitBuilder) {
@@ -19,6 +20,6 @@ public class KitCooldown  {
 
     @Override
     public String toString() {
-        return kitBuilder.getName() +"_" + variableCoolDown;
+        return kitBuilder.getName() + "_" + variableCoolDown;
     }
 }
