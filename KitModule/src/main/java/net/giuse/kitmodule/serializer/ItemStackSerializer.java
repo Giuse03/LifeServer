@@ -22,14 +22,10 @@ public class ItemStackSerializer implements Serializer<ItemStack> {
      */
     @Override
     public ItemStack decoder(String str) {
-        try {
-            byte[] b = BukkitObjectUtil.hexStringToByteArray(str);
-            ByteArrayInputStream bais = new ByteArrayInputStream(b);
-            BukkitObjectInputStream bois = new BukkitObjectInputStream(bais);
-            ItemStack items = (ItemStack) bois.readObject();
-            bois.close();
-            bais.close();
-            return items;
+        byte[] b = BukkitObjectUtil.hexStringToByteArray(str);
+        try(ByteArrayInputStream bais = new ByteArrayInputStream(b);
+            BukkitObjectInputStream bois = new BukkitObjectInputStream(bais)) {
+            return (ItemStack) bois.readObject();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -37,20 +33,15 @@ public class ItemStackSerializer implements Serializer<ItemStack> {
 
     }
 
-
     /**
      * Convert ItemStack to String
      */
     @Override
     public String encode(ItemStack itemStack) {
-        try {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            BukkitObjectOutputStream bos = new BukkitObjectOutputStream(os);
+        try(ByteArrayOutputStream os = new ByteArrayOutputStream();
+            BukkitObjectOutputStream bos = new BukkitObjectOutputStream(os);){
             bos.writeObject(itemStack);
-            String hex = BukkitObjectUtil.byteArrayToHexString(os.toByteArray());
-            bos.close();
-            os.close();
-            return hex;
+            return BukkitObjectUtil.byteArrayToHexString(os.toByteArray());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
