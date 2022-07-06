@@ -57,7 +57,7 @@ public class WarpLoaderService extends Services implements Savable {
 
     public WarpBuilder getWarp(String name) {
         return warpBuilders.stream()
-                .filter(warpBuilders -> warpBuilders.getName().equals(name))
+                .filter(warpBuilders -> warpBuilders.getName().equalsIgnoreCase(name))
                 .findFirst().orElse(null);
     }
 

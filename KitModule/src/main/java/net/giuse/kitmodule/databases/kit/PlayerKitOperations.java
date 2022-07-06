@@ -27,6 +27,7 @@ public class PlayerKitOperations implements DBOperations {
                 sb.append(rs.getString(1)).append(";");
                 sb.append(rs.getString(2));
                 allStrings.add(sb.toString());
+                sb.setLength(0);
             }
             st.close();
         } catch (SQLException e) {
