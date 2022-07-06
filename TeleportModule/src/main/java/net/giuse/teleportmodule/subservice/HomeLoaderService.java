@@ -35,7 +35,6 @@ public class HomeLoaderService extends Services implements Savable {
         homeOperations = mainModule.getInjector().getSingleton(HomeOperations.class);
         homeOperations.createTable();
         homeOperations.getAllString().forEach(homeBuilder -> {
-            System.out.println(homeBuilder);
             homeBuilders.add(homeBuilderSerializer.decoder(homeBuilder));
         });
         if (Files.size(Paths.get("plugins/LifeServer/messages/messages_home.yml")) == 0) {
