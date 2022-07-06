@@ -13,7 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import javax.inject.Inject;
 
 
-
 /**
  * Register a PlayerTimerSystem on Join
  */
@@ -32,14 +31,14 @@ public class EventManager implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-            if (kitModule.getPlayerTime(e.getPlayer().getUniqueId()) == null) {
-                PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(e.getPlayer().getUniqueId());
-                for (KitBuilder kitBuilder : kitModule.getKitElements()) {
-                    playerTimerSystem.getKitsCooldown().add(new KitCooldown(kitBuilder));
-                }
+        if (kitModule.getPlayerTime(e.getPlayer().getUniqueId()) == null) {
+            PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(e.getPlayer().getUniqueId());
+            for (KitBuilder kitBuilder : kitModule.getKitElements()) {
+                playerTimerSystem.getKitsCooldown().add(new KitCooldown(kitBuilder));
+            }
 
-                playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
-                kitModule.getPlayerTimerSystems().add(playerTimerSystem);
+            playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
+            kitModule.getPlayerTimerSystems().add(playerTimerSystem);
         }
     }
 }

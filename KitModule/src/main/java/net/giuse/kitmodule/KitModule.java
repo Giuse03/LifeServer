@@ -104,14 +104,14 @@ public class KitModule extends Services implements Savable {
      * Search PlayerTimerSystem from Set
      */
     public PlayerTimerSystem getPlayerTime(UUID playerUUID) {
-      return playerTimerSystems.stream().filter(playerTimerSystem -> playerTimerSystem.getUuid().equals(playerUUID)).findFirst().orElse(null);
+        return playerTimerSystems.stream().filter(playerTimerSystem -> playerTimerSystem.getUuid().equals(playerUUID)).findFirst().orElse(null);
     }
 
     /**
      * Search Kit  from Name in a Set
      */
     public KitBuilder getKit(String searchKitBuilder) {
-       return kitElements.stream().filter(kitBuilder -> kitBuilder.getName().equalsIgnoreCase(searchKitBuilder)).findFirst().orElse(null);
+        return kitElements.stream().filter(kitBuilder -> kitBuilder.getName().equalsIgnoreCase(searchKitBuilder)).findFirst().orElse(null);
     }
 
     /**
