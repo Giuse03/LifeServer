@@ -10,6 +10,8 @@ import net.giuse.teleportmodule.TeleportModule;
 import net.giuse.teleportmodule.builder.WarpBuilder;
 import net.giuse.teleportmodule.database.WarpOperations;
 import net.giuse.teleportmodule.serializer.WarpBuilderSerializer;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 import javax.inject.Inject;
 import java.nio.file.Files;
@@ -66,9 +68,7 @@ public class WarpLoaderService extends Services implements Savable {
     public void save() {
         warpOperations.dropTable();
         warpOperations.createTable();
-        warpBuilders.forEach(warpBuilder -> {
-            warpOperations.insert(warpBuilderSerializer.encode(warpBuilder));
-            mainModule.getConnectorSQLite().closeConnection();
-        });
+        warpBuilders.forEach(warpBuilder -> warpOperations.insert(warpBuilderSerializer.encode(warpBuilder)));
+        mainModule.getConnectorSQLite().closeConnection();
     }
 }

@@ -23,6 +23,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 
 public class EconomyService extends Services implements Savable {
@@ -73,7 +74,7 @@ public class EconomyService extends Services implements Savable {
     @Override
     public void save() {
         econPlayers.forEach(player -> {
-            if (!economyOperations.isPresent(player.getPlayer())) {
+            if (!economyOperations.isPresent(player.getPlayer().toString())) {
                 economyOperations.insert(econPlayerSerializer.encode(player));
             } else {
                 economyOperations.update(econPlayerSerializer.encode(player));
@@ -81,8 +82,8 @@ public class EconomyService extends Services implements Savable {
         });
     }
 
-    public EconPlayer getEconPlayer(String name) {
-        return econPlayers.stream().filter(econPlayer -> econPlayer.getPlayer().equalsIgnoreCase(name)).findFirst().orElse(null);
+    public EconPlayer getEconPlayer(UUID uuid) {
+        return econPlayers.stream().filter(econPlayer -> econPlayer.getPlayer().equals(uuid)).findFirst().orElse(null);
     }
 
     public String getMessage(String key) {

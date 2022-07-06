@@ -35,27 +35,27 @@ public class DelHomeCommand extends AbstractCommand {
 
         if (sender.hasPermission("lifeserver.delhome.multiple") || sender.isOp()) {
             if (args.length == 0) {
-                if (homeLoaderService.getHome(sender.getName()).getLocations().size() == 1) {
-                    for (String s : homeLoaderService.getHome(sender.getName()).getLocations().keySet()) {
-                        homeLoaderService.getHome(sender.getName()).getLocations().remove(s);
+                if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == 1) {
+                    for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
+                        homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(s);
                         sender.sendMessage(teleportModule.getMessage("deleted_home"));
                     }
-                } else if (homeLoaderService.getHome(sender.getName()).getLocations().size() == 0) {
+                } else if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == 0) {
                     sender.sendMessage(teleportModule.getMessage("no_home_found"));
                 } else {
                     sender.sendMessage(teleportModule.getMessage("select-home"));
                 }
             } else {
-                if (homeLoaderService.getHome(sender.getName()).getLocations().get(args[0]) != null) {
-                    homeLoaderService.getHome(sender.getName()).getLocations().remove(args[0].toLowerCase());
+                if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0]) != null) {
+                    homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(args[0].toLowerCase());
                     sender.sendMessage(teleportModule.getMessage("deleted_home"));
                 } else {
                     sender.sendMessage(teleportModule.getMessage("no_home_found"));
                 }
             }
         } else {
-            if (homeLoaderService.getHome(sender.getName()).getLocations().get("default") != null) {
-                homeLoaderService.getHome(sender.getName()).getLocations().remove("default");
+            if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().get("default") != null) {
+                homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove("default");
                 sender.sendMessage(teleportModule.getMessage("deleted_home"));
                 sender.sendMessage(teleportModule.getMessage("deleted_home"));
             } else {

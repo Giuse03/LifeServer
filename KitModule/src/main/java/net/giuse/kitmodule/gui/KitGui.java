@@ -10,6 +10,10 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
+/**
+ * Initialize Kit Gui
+ */
+
 public class KitGui implements GuiInitializer {
     @Inject
     private MainModule mainModule;
@@ -25,8 +29,8 @@ public class KitGui implements GuiInitializer {
                 kitModule.getConfigManager().getKitYaml().getInt("inventory.rows"),
                 kitModule.getConfigManager().getKitYaml().getString("inventory.title"),
                 kitModule.getConfigManager().getKitYaml().getInt("inventory.page")).createInvs();
-        mainModule.getInjector().getSingleton(NextArrowGuiInit.class).initItems(inventoryBuilder);
-        mainModule.getInjector().getSingleton(PreviousArrowGuiInit.class).initItems(inventoryBuilder);
+        mainModule.getInjector().getSingleton(NextItemGuiInit.class).initItems(inventoryBuilder);
+        mainModule.getInjector().getSingleton(PreviousItemGuiInit.class).initItems(inventoryBuilder);
         mainModule.getInjector().getSingleton(ItemsGuiInit.class).initItems(inventoryBuilder);
         inventoryBuilder.build();
         this.inventoryBuilder = inventoryBuilder;

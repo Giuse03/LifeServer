@@ -11,13 +11,20 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
+/**
+ * Command /kitdelete for delete a kit
+ */
+
+
 public class KitDeleteProcess extends AbstractCommand {
 
     private final KitModule kitModule;
 
+    private final MainModule mainModule;
     @Inject
     public KitDeleteProcess(MainModule mainModule) {
         super("kitdelete", "lifeserver.kitdelete", true);
+        this.mainModule = mainModule;
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         setNoPerm(kitModule.getMessage("no-perms"));
 
@@ -37,15 +44,15 @@ public class KitDeleteProcess extends AbstractCommand {
             if (kitModule.getKit(args[0]) != null) {
 
                 if (kitModule.getKit(args[0]) != null) {
-                    kitModule.getKitElements().remove(kitModule.getKitBuilderSerializer().encode(kitModule.getKit(args[0])));
+                    kitModule.getKitElements().remove(kitModule.getKit(args[0]));
                 } else {
                     p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
                 }
 
-                for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
-                    PlayerTimerSystem playerTimerSystem = kitModule.getPlayerTime(onlinePlayers.getUniqueId(), kitModule.getKit(args[0]));
+                for (PlayerTimerSystem playerTimerSystem  : kitModule.getPlayerTimerSystems()) {
                     Bukkit.getScheduler().cancelTask(playerTimerSystem.getTaskId());
                     kitModule.getPlayerTimerSystems().remove(playerTimerSystem);
+                    playerTimerSystem.runTaskTimerAsynchronously(mainModule,20L,20L);
                 }
 
                 p.sendMessage(kitModule.getMessage("kit-removed").replace("%kit%", args[0]));

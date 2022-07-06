@@ -5,6 +5,7 @@ import net.giuse.economymodule.EconomyService;
 import net.giuse.mainmodule.MainModule;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import javax.inject.Inject;
@@ -47,23 +48,23 @@ public class EconomyManager implements Economy {
     }
 
     public boolean hasAccount(final String playerName) {
-        return this.economyService.getEconPlayer(playerName) != null;
+        return this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId()) != null;
     }
 
     public boolean hasAccount(final OfflinePlayer player) {
-        return this.economyService.getEconPlayer(player.getName()) != null;
+        return this.economyService.getEconPlayer(player.getUniqueId()) != null;
     }
 
     public boolean hasAccount(final String playerName, final String worldName) {
-        return this.economyService.getEconPlayer(playerName) != null;
+        return this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId()) != null;
     }
 
     public boolean hasAccount(final OfflinePlayer player, final String worldName) {
-        return this.economyService.getEconPlayer(player.getName()) != null;
+        return this.economyService.getEconPlayer(player.getUniqueId()) != null;
     }
 
     public double getBalance(final String playerName) {
-        return this.economyService.getEconPlayer(playerName).getBalance();
+        return this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId()).getBalance();
     }
 
     public double getBalance(final OfflinePlayer player) {
@@ -79,7 +80,7 @@ public class EconomyManager implements Economy {
     }
 
     public boolean has(final String playerName, final double amount) {
-        final EconPlayer econPlayer = this.economyService.getEconPlayer(playerName);
+        final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId());
         return econPlayer.getBalance() >= amount;
     }
 
@@ -96,7 +97,7 @@ public class EconomyManager implements Economy {
     }
 
     public EconomyResponse withdrawPlayer(final String playerName, final double amount) {
-        final EconPlayer econPlayer = this.economyService.getEconPlayer(playerName);
+        final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId());
         econPlayer.setBalance(econPlayer.getBalance() - amount);
         return new EconomyResponse(amount, econPlayer.getBalance(), EconomyResponse.ResponseType.SUCCESS, "not yet Supported");
     }
@@ -114,7 +115,7 @@ public class EconomyManager implements Economy {
     }
 
     public EconomyResponse depositPlayer(final String playerName, final double amount) {
-        final EconPlayer econPlayer = this.economyService.getEconPlayer(playerName);
+        final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(playerName).getUniqueId());
         econPlayer.setBalance(econPlayer.getBalance() + amount);
         return new EconomyResponse(amount, econPlayer.getBalance(), EconomyResponse.ResponseType.SUCCESS, "not yet Supported");
     }
@@ -180,7 +181,7 @@ public class EconomyManager implements Economy {
     }
 
     public boolean createPlayerAccount(final String playerName) {
-        this.economyService.getEconPlayers().add(new EconPlayer(playerName, 0.0));
+        this.economyService.getEconPlayers().add(new EconPlayer(Bukkit.getPlayer(playerName).getUniqueId(), 0.0));
         return false;
     }
 

@@ -2,30 +2,37 @@ package net.giuse.kitmodule.cooldownsystem;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.giuse.kitmodule.builder.KitBuilder;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.UUID;
+import java.util.*;
 
 /*
  * Timer System
  */
-
-@AllArgsConstructor
+@RequiredArgsConstructor @Getter
 public class PlayerTimerSystem extends BukkitRunnable {
-    @Getter
-    private final String nameKit;
-    @Getter
+
     private final UUID uuid;
-    private final int fixedCoolDown;
-    @Getter
-    private int variableCoolDown;
+    private final ArrayList<KitCooldown> kitsCooldown = new ArrayList<>();
 
     @Override
     public void run() {
-        if (variableCoolDown > 0) variableCoolDown = variableCoolDown - 1;
+        for (KitCooldown kitCooldown : kitsCooldown){
+            if (kitCooldown.getVariableCoolDown() > 0){
+                kitCooldown.setVariableCoolDown(kitCooldown.getVariableCoolDown() - 1);
+            }
+        }
     }
 
-    public void start() {
-        variableCoolDown = fixedCoolDown;
+    public void start(KitCooldown kitCooldown) {
+        kitCooldown.setVariableCoolDown(kitCooldown.getKitBuilder().getCoolDown());
     }
+
+    public void addKit(KitBuilder kitBuilder) {
+        KitCooldown kitCooldown = new KitCooldown(kitBuilder);
+        kitsCooldown.add(kitCooldown);
+    }
+
 }

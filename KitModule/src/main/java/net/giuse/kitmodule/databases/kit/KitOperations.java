@@ -18,10 +18,14 @@ public class KitOperations implements DBOperations {
     @Override
     public ArrayList<String> getAllString() {
         ArrayList<String> allStrings = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
         try (PreparedStatement st = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT * FROM Kit")) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                allStrings.add(rs.getString(1));
+                stringBuilder.append(rs.getString(1)).append("-");
+                stringBuilder.append(rs.getInt(3)).append("-");
+                stringBuilder.append(rs.getString(2));
+                allStrings.add(stringBuilder.toString());
             }
         } catch (SQLException ignored) {
             mainModule.getLogger().info("Empty Database");
@@ -40,8 +44,11 @@ public class KitOperations implements DBOperations {
 
     @Override
     public void insert(final String str) {
-        try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Kit VALUES(?)")) {
-            insert.setString(1, str);
+        String[] args = str.split("-");
+        try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Kit VALUES(?,?,?)")) {
+            insert.setString(1, args[0]);
+            insert.setInt(3, Integer.parseInt(args[1]));
+            insert.setString(2, args[2]);
             insert.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,7 +57,7 @@ public class KitOperations implements DBOperations {
 
     @Override
     public void createTable() {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS Kit (kitContent TEXT);")) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS Kit (KitName TEXT, KitItems TEXT, coolDown INT);")) {
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();

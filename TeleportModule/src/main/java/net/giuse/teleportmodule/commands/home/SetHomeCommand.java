@@ -40,13 +40,13 @@ public class SetHomeCommand extends AbstractCommand {
                         maxHomes = Integer.parseInt(effectivePermission.getPermission().replace("lifeserver.home.multiple.", ""));
                     else maxHomes = Integer.MAX_VALUE;
 
-                    if (homeLoaderService.getHome(sender.getName()).getLocations().size() != maxHomes) {
+                    if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() != maxHomes) {
                         if (args.length == 0) {
                             sender.sendMessage(teleportModule.getMessage("sethome"));
-                            homeLoaderService.getHome(sender.getName()).getLocations().put("default", sender.getLocation());
+                            homeLoaderService.getHome(sender.getUniqueId()).getLocations().put("default", sender.getLocation());
                         } else {
                             sender.sendMessage(teleportModule.getMessage("sethome"));
-                            homeLoaderService.getHome(sender.getName()).getLocations().put(args[0].toLowerCase(), sender.getLocation());
+                            homeLoaderService.getHome(sender.getUniqueId()).getLocations().put(args[0].toLowerCase(), sender.getLocation());
                         }
                     } else {
                         sender.sendMessage(teleportModule.getMessage("max_home_reached"));
@@ -55,7 +55,7 @@ public class SetHomeCommand extends AbstractCommand {
             }
         } else {
             sender.sendMessage(teleportModule.getMessage("sethome"));
-            homeLoaderService.getHome(sender.getName()).getLocations().put("default", sender.getLocation());
+            homeLoaderService.getHome(sender.getUniqueId()).getLocations().put("default", sender.getLocation());
         }
     }
 }

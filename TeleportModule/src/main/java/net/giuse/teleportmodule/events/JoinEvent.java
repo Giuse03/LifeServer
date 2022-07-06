@@ -19,8 +19,8 @@ public class JoinEvent implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (homeLoaderService.getHome(e.getPlayer().getName()) == null)
-            homeLoaderService.getHomeBuilders().add(new HomeBuilder(e.getPlayer().getName()));
+        if (homeLoaderService.getHome(e.getPlayer().getUniqueId()) == null)
+            homeLoaderService.getHomeBuilders().add(new HomeBuilder(e.getPlayer().getUniqueId()));
     }
 
 }

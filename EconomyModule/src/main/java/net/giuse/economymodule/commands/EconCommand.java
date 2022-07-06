@@ -39,7 +39,7 @@ public class EconCommand extends AbstractCommand {
         } else {
             p.sendMessage(this.economyService.getMessage("no-perms"));
         }
-        if (this.economyService.getEconPlayer(args[1]) == null) {
+        if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[1]).getUniqueId()) == null) {
             p.sendMessage(this.economyService.getMessage("economy-neverJoin"));
             return;
         }
@@ -47,10 +47,10 @@ public class EconCommand extends AbstractCommand {
             p.sendMessage(this.economyService.getMessage("economy-number"));
             return;
         }
-        final EconPlayer econPlayer = this.economyService.getEconPlayer(args[1]);
+        final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[1]).getUniqueId());
         if (args[0].equalsIgnoreCase("give")) {
             if (p.hasPermission("lifeserver.eco.give")) {
-                this.economyService.getCustomEcoManager().depositPlayer(econPlayer.getPlayer(), Double.parseDouble(args[2]));
+                this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(args[1]), Double.parseDouble(args[2]));
                 Bukkit.getPlayer(econPlayer.getPlayer()).sendMessage(this.economyService.getMessage("economy-addMoney").replace("%money%", String.valueOf(econPlayer.getBalance())).replace("%moneyadd% ", args[2]));
                 p.sendMessage(this.economyService.getMessage("economy-addMoney-other").replace("%money%", String.valueOf(econPlayer.getBalance())).replace("%moneyadd% ", args[2]).replace("%player%", Bukkit.getPlayer(econPlayer.getPlayer()).getName()));
             } else {
@@ -58,7 +58,7 @@ public class EconCommand extends AbstractCommand {
             }
         } else if (args[0].equalsIgnoreCase("remove")) {
             if (p.hasPermission("lifeserver.eco.remove")) {
-                this.economyService.getCustomEcoManager().withdrawPlayer(econPlayer.getPlayer(), Double.parseDouble(args[2]));
+                this.economyService.getCustomEcoManager().withdrawPlayer(Bukkit.getOfflinePlayer(args[1]), Double.parseDouble(args[2]));
                 Bukkit.getPlayer(econPlayer.getPlayer()).sendMessage(this.economyService.getMessage("economy-removeMoney").replace("%money%", String.valueOf(econPlayer.getBalance())).replace("%moneyadd% ", args[2]));
                 p.sendMessage(this.economyService.getMessage("economy-removeMoney-other").replace("%money%", String.valueOf(econPlayer.getBalance())).replace("%moneyadd% ", args[2]).replace("%player%", Bukkit.getPlayer(econPlayer.getPlayer()).getName()));
             } else {
@@ -66,8 +66,8 @@ public class EconCommand extends AbstractCommand {
             }
         } else if (args[0].equalsIgnoreCase("set")) {
             if (p.hasPermission("lifeserver.eco.set")) {
-                this.economyService.getCustomEcoManager().withdrawPlayer(econPlayer.getPlayer(), econPlayer.getBalance());
-                this.economyService.getCustomEcoManager().depositPlayer(econPlayer.getPlayer(), Double.parseDouble(args[2]));
+                this.economyService.getCustomEcoManager().withdrawPlayer(Bukkit.getOfflinePlayer(args[1]), econPlayer.getBalance());
+                this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(args[1]), Double.parseDouble(args[2]));
                 Bukkit.getPlayer(econPlayer.getPlayer()).sendMessage(this.economyService.getMessage("economy-setMoney").replace("%money%", String.valueOf(econPlayer.getBalance())));
                 p.sendMessage(this.economyService.getMessage("economy-setMoney-other").replace("%money%", String.valueOf(econPlayer.getBalance())).replace("%player%", Bukkit.getPlayer(econPlayer.getPlayer()).getName()));
             } else {

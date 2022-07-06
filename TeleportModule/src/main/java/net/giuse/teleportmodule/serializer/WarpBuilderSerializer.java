@@ -15,14 +15,15 @@ public class WarpBuilderSerializer implements Serializer<WarpBuilder> {
 
     @Override
     public WarpBuilder decoder(String str) {
-        String[] splitWarp = str.split(",");
+        String[] splitWarp = str.split("-");
+        String[] splitLocation = splitWarp[1].split(",");
         return new WarpBuilder(splitWarp[0],
-                new Location(Bukkit.getWorld(splitWarp[1]),
-                        Double.parseDouble(splitWarp[2]),
-                        Double.parseDouble(splitWarp[3]),
-                        Double.parseDouble(splitWarp[4]),
-                        Float.parseFloat(splitWarp[5]),
-                        Float.parseFloat(splitWarp[6])));
+                new Location(Bukkit.getWorld(splitLocation[0]),
+                        Double.parseDouble(splitLocation[1]),
+                        Double.parseDouble(splitLocation[2]),
+                        Double.parseDouble(splitLocation[3]),
+                        Float.parseFloat(splitLocation[4]),
+                        Float.parseFloat(splitLocation[5])));
     }
 
 }

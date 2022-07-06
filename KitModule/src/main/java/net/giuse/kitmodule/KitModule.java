@@ -27,6 +27,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Module Kit
+ */
 public class KitModule extends Services implements Savable {
     @Getter
     private final Set<PlayerTimerSystem> playerTimerSystems = new HashSet<>();
@@ -104,24 +107,15 @@ public class KitModule extends Services implements Savable {
     /**
      * Search PlayerTimerSystem from Set
      */
-    public PlayerTimerSystem getPlayerTime(UUID playerUUID, KitBuilder kitBuilder) {
-        for (PlayerTimerSystem playerTimerSystem : playerTimerSystems) {
-            if (playerTimerSystem.getUuid().equals(playerUUID) && playerTimerSystem.getNameKit().equals(kitBuilder.getName()))
-                return playerTimerSystem;
-        }
-        return null;
+    public PlayerTimerSystem getPlayerTime(UUID playerUUID) {
+      return playerTimerSystems.stream().filter(playerTimerSystem -> playerTimerSystem.getUuid().equals(playerUUID)).findFirst().orElse(null);
     }
 
     /**
      * Search Kit  from Name in a Set
      */
     public KitBuilder getKit(String searchKitBuilder) {
-        for (KitBuilder kitElement : kitElements) {
-            if (searchKitBuilder.equalsIgnoreCase(kitElement.getName())) {
-                return kitElement;
-            }
-        }
-        return null;
+       return kitElements.stream().filter(kitBuilder -> kitBuilder.getName().equalsIgnoreCase(searchKitBuilder)).findFirst().orElse(null);
     }
 
     /**

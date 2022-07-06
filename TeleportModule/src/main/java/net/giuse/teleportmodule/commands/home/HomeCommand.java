@@ -37,23 +37,23 @@ public class HomeCommand extends AbstractCommand {
 
         if (sender.hasPermission("lifeserver.home.multiple") || sender.isOp()) {
             if (args.length == 0) {
-                if (homeLoaderService.getHome(sender.getName()).getLocations().keySet().size() > 1) {
+                if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().size() > 1) {
                     StringBuilder listHome = new StringBuilder();
                     int i = 0;
-                    for (String s : homeLoaderService.getHome(sender.getName()).getLocations().keySet()) {
+                    for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
                         i++;
-                        if (i == homeLoaderService.getHome(sender.getName()).getLocations().keySet().size()) {
+                        if (i == homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().size()) {
                             listHome.append(s);
                         } else {
                             listHome.append(s).append(",");
                         }
                     }
                     sender.sendMessage(teleportModule.getMessage("home_list").replace("%list%", listHome.toString()));
-                } else if (!homeLoaderService.getHome(sender.getName()).getLocations().isEmpty()) {
+                } else if (!homeLoaderService.getHome(sender.getUniqueId()).getLocations().isEmpty()) {
 
-                    for (String s : homeLoaderService.getHome(sender.getName()).getLocations().keySet()) {
+                    for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
                         teleportModule.getBackLocations().put(sender, sender.getLocation());
-                        PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getName()).getLocations().get(s));
+                        PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(s));
                         sender.sendMessage(teleportModule.getMessage("teleported"));
                     }
                 } else {
@@ -61,9 +61,9 @@ public class HomeCommand extends AbstractCommand {
                 }
 
             } else {
-                if (homeLoaderService.getHome(sender.getName()).getLocations().get(args[0].toLowerCase()) != null) {
+                if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0].toLowerCase()) != null) {
                     teleportModule.getBackLocations().put(sender, sender.getLocation());
-                    PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getName()).getLocations().get(args[0].toLowerCase()));
+                    PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0].toLowerCase()));
 
                     sender.sendMessage(teleportModule.getMessage("teleported"));
                 } else {
@@ -71,9 +71,9 @@ public class HomeCommand extends AbstractCommand {
                 }
             }
         } else {
-            if (homeLoaderService.getHome(sender.getName()).getLocations().get("default") != null) {
+            if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().get("default") != null) {
                 teleportModule.getBackLocations().put(sender, sender.getLocation());
-                PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getName()).getLocations().get("default"));
+                PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get("default"));
                 sender.sendMessage(teleportModule.getMessage("teleported"));
             } else {
                 sender.sendMessage(teleportModule.getMessage("no_home_found"));

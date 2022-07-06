@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class HomeLoaderService extends Services implements Savable {
 
@@ -33,7 +34,10 @@ public class HomeLoaderService extends Services implements Savable {
         TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         homeOperations = mainModule.getInjector().getSingleton(HomeOperations.class);
         homeOperations.createTable();
-        homeOperations.getAllString().forEach(homeBuilder -> homeBuilders.add(homeBuilderSerializer.decoder(homeBuilder)));
+        homeOperations.getAllString().forEach(homeBuilder -> {
+            System.out.println(homeBuilder);
+            homeBuilders.add(homeBuilderSerializer.decoder(homeBuilder));
+        });
         if (Files.size(Paths.get("plugins/LifeServer/messages/messages_home.yml")) == 0) {
             teleportModule.getFileManager().setMessagesHome();
         }
@@ -54,8 +58,8 @@ public class HomeLoaderService extends Services implements Savable {
     }
 
 
-    public HomeBuilder getHome(String owner) {
-        return homeBuilders.stream().filter(homeBuilder -> homeBuilder.getOwner().equalsIgnoreCase(owner)).findFirst().orElse(null);
+    public HomeBuilder getHome(UUID owner) {
+        return homeBuilders.stream().filter(homeBuilder -> homeBuilder.getOwner().equals(owner)).findFirst().orElse(null);
     }
 
     @Override

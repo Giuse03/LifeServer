@@ -6,21 +6,36 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * ItemStack serializer for save in database
+ */
 
 public class ItemStackSerializer implements Serializer<ItemStack> {
 
+
+    /**
+     * Convert String to ItemStack
+     */
     @Override
     public ItemStack decoder(String str) {
+        //Split ItemStack serialized
         String[] valueItemStack = str.split(";");
+
+        //Create an ItemStackBuilder
         ItemstackBuilder itemStackBuild = new ItemstackBuilder(
                 Material.getMaterial(valueItemStack[0].replace("material_", "")),
                 Integer.parseInt(valueItemStack[2].replace("amount_", "")));
         itemStackBuild.setData(Short.parseShort(valueItemStack[1].replace("data_", "")));
 
+        //Iterate all Strings of ItemStack Serialized
         for (String strings : valueItemStack) {
+            //Set Name to ItemStackBuilder
             if (strings.contains("name_")) {
                 itemStackBuild.setName(strings.replace("name_", ""));
-            } else if (strings.contains("enchant_")) {
+            }
+
+            //Set Enchants to ItemStackBuilder
+            if (strings.contains("enchant_")) {
                 String[] valueEnchant = strings.replace("enchant_", "").split(",");
                 int i;
                 for (i = 0; i < valueEnchant.length; i++) {
@@ -28,7 +43,10 @@ public class ItemStackSerializer implements Serializer<ItemStack> {
                     int lvl = Integer.parseInt(valueEnchantAndLevel[1]);
                     itemStackBuild.setEnchant(lvl, Enchantment.getByName(valueEnchantAndLevel[0]));
                 }
-            } else if (strings.contains("lore_")) {
+            }
+
+            //Set Lore to ItemStackBuilder
+            if (strings.contains("lore_")) {
                 itemStackBuild.setLores(strings.split(":"));
             }
         }
@@ -36,14 +54,27 @@ public class ItemStackSerializer implements Serializer<ItemStack> {
     }
 
 
+    /**
+     * Convert ItemStack to String
+     */
     @Override
     public String encode(ItemStack itemStack) {
         StringBuilder sb = new StringBuilder();
+        //Save Material
         sb.append("material_").append(itemStack.getType().toString()).append(";");
+
+        //Save Data
         sb.append("data_").append(itemStack.getDurability()).append(";");
+
+        //Save Amount
         sb.append("amount_").append(itemStack.getAmount()).append(";");
-        if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasDisplayName())
+
+        //Save Name
+        if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasDisplayName()){
             sb.append("name_").append(itemStack.getItemMeta().getDisplayName()).append(";");
+        }
+
+        //Save Enchant
         if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasEnchants()) {
             sb.append("enchant_");
             if (itemStack.getEnchantments() != null) {
@@ -59,14 +90,18 @@ public class ItemStackSerializer implements Serializer<ItemStack> {
                 sb.append(";");
             }
         }
+
+
+        //Save lores
         if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
             sb.append("lore_");
-            int i = 0;
-            for (String lores : itemStack.getItemMeta().getLore()) {
-                i++;
-                if (i == itemStack.getItemMeta().getLore().size()) {
-                    sb.append(lores);
-                } else sb.append(lores).append(":");
+            int size = itemStack.getItemMeta().getLore().size();
+            for (int i = 0; i < size; i++) {
+                if (i == (size-1)) {
+                    sb.append(itemStack.getItemMeta().getLore().get(i));
+                } else{
+                    sb.append(itemStack.getItemMeta().getLore().get(i)).append(":");
+                }
             }
             sb.append(";");
         }

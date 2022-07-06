@@ -41,15 +41,15 @@ public class PayCommand extends AbstractCommand {
                 p.sendMessage(this.economyService.getMessage("economy-number"));
                 return;
             }
-            if (this.economyService.getEconPlayer(args[0]) == null) {
+            if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) == null) {
                 p.sendMessage(this.economyService.getMessage("economy-neverJoin"));
                 return;
             }
-            if (this.economyService.getCustomEcoManager().getBalance((OfflinePlayer) p) >= Double.parseDouble(args[1])) {
-                final EconPlayer econPlayer = this.economyService.getEconPlayer(args[0]);
-                this.economyService.getCustomEcoManager().depositPlayer(econPlayer.getPlayer(), Double.parseDouble(args[1]));
-                this.economyService.getCustomEcoManager().withdrawPlayer((OfflinePlayer) p, Double.parseDouble(args[1]));
-                p.sendMessage(this.economyService.getMessage("economy-pay-send").replace("%player%", econPlayer.getPlayer()).replace("%amount%", args[1]));
+            if (this.economyService.getCustomEcoManager().getBalance(p) >= Double.parseDouble(args[1])) {
+                final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId());
+                this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(econPlayer.getPlayer()), Double.parseDouble(args[1]));
+                this.economyService.getCustomEcoManager().withdrawPlayer(p, Double.parseDouble(args[1]));
+                p.sendMessage(this.economyService.getMessage("economy-pay-send").replace("%player%", Bukkit.getPlayer(econPlayer.getPlayer()).getName()).replace("%amount%", args[1]));
                 Bukkit.getPlayer(econPlayer.getPlayer()).sendMessage(this.economyService.getMessage("economy-pay-receive").replace("%player%", p.getName()).replace("%amount%", args[1]));
             } else {
                 p.sendMessage(this.economyService.getMessage("economy-no-money"));

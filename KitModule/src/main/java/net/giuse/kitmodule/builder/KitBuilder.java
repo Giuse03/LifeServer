@@ -15,10 +15,4 @@ public class KitBuilder {
     private final ArrayList<String> items = new ArrayList<>();
     private String name;
     private int coolDown;
-
-    @Override
-    public String toString() {
-        return "name: " + name + " cooldown:" + coolDown + " Items:" + items;
-    }
-
 }

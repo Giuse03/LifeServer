@@ -9,6 +9,11 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
+/**
+ * Command /kitlist for view a list of kit
+ */
+
+
 public class KitListCommand extends AbstractCommand {
     private final KitModule kitModule;
 

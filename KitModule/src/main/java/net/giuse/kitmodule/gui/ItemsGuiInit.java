@@ -13,6 +13,11 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
+
+/**
+ * Initialize Items in kit gui
+ */
+
 public class ItemsGuiInit implements ItemInitializer {
     @Inject
     private MainModule mainModule;

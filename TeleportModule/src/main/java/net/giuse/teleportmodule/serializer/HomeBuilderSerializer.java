@@ -6,6 +6,8 @@ import net.giuse.teleportmodule.builder.HomeBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+import java.util.UUID;
+
 public class HomeBuilderSerializer implements Serializer<HomeBuilder> {
 
     @Override
@@ -15,8 +17,8 @@ public class HomeBuilderSerializer implements Serializer<HomeBuilder> {
 
     @Override
     public HomeBuilder decoder(String str) {
-        String[] homes = str.split("_");
-        HomeBuilder homeBuilder = new HomeBuilder(homes[0]);
+        String[] homes = str.split(":");
+        HomeBuilder homeBuilder = new HomeBuilder(UUID.fromString(homes[0]));
         if (homes.length == 1) return homeBuilder;
         if (homes[1].contains(";")) {
             for (String s : homes[1].split(";")) {

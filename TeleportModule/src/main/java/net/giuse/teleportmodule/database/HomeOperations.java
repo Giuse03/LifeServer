@@ -17,11 +17,14 @@ public class HomeOperations implements DBOperations {
 
     @Override
     public ArrayList<String> getAllString() {
+        StringBuilder stringBuilder = new StringBuilder();
         ArrayList<String> allStrings = new ArrayList<>();
         try (PreparedStatement st = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT * FROM Home")) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                allStrings.add(rs.getString(1));
+                stringBuilder.append(rs.getString(1)).append(":");
+                stringBuilder.append(rs.getString(2));
+                allStrings.add(stringBuilder.toString());
             }
         } catch (SQLException ignored) {
             mainModule.getLogger().info("Empty Database");
@@ -40,8 +43,10 @@ public class HomeOperations implements DBOperations {
 
     @Override
     public void insert(final String str) {
-        try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Home VALUES(?)");) {
-            insert.setString(1, str);
+        String[] args = str.split(":");
+        try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Home VALUES(?,?)");) {
+            insert.setString(1, args[0]);
+            insert.setString(2, args[1]);
             insert.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,7 +55,7 @@ public class HomeOperations implements DBOperations {
 
     @Override
     public void createTable() {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS Home (name TEXT);");) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS Home (UUID TEXT,Location TEXT);");) {
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();

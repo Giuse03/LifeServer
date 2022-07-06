@@ -12,7 +12,11 @@ import org.bukkit.enchantments.Enchantment;
 
 import javax.inject.Inject;
 
-public class NextArrowGuiInit implements ItemInitializer {
+/**
+ * Initialize Previous Arrow in Kit gui
+ */
+
+public class PreviousItemGuiInit implements ItemInitializer {
 
     @Inject
     private MainModule mainModule;
@@ -24,7 +28,7 @@ public class NextArrowGuiInit implements ItemInitializer {
         for (String string : configurationSection.getKeys(false)) {
             ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
             if (kitModule.getConfigManager().getKitYaml().getInt("inventory.page") != 1) {
-                if (string.equalsIgnoreCase("nextpage")) {
+                if (string.equalsIgnoreCase("previouspage")) {
                     for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
                         ItemstackBuilder itemstackBuilder = new ItemstackBuilder(Material.getMaterial(itemsConfig.getString("material").toUpperCase()),
                                 itemsConfig.getInt("amount"))
@@ -37,7 +41,7 @@ public class NextArrowGuiInit implements ItemInitializer {
                         inventoryBuilder.addButton(new ButtonBuilder(
                                 inventoryBuilder, itemsConfig.getInt("position"),
                                 i, itemstackBuilder.toItem()
-                                , true, false, true)
+                                , false, true, true)
                         );
                     }
                 }

@@ -19,11 +19,14 @@ public class PlayerKitOperations implements DBOperations {
     @Override
     public ArrayList<String> getAllString() {
         ArrayList<String> allStrings = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
         try {
             PreparedStatement st = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT * FROM PlayerKit");
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                allStrings.add(rs.getString(1));
+                sb.append(rs.getString(1)).append(";");
+                sb.append(rs.getString(2));
+                allStrings.add(sb.toString());
             }
             st.close();
         } catch (SQLException e) {
@@ -43,26 +46,30 @@ public class PlayerKitOperations implements DBOperations {
 
     @Override
     public void insert(final String str) {
-        try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO PlayerKit VALUES(?)")) {
-            insert.setString(1, str);
-            insert.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        String[] args = str.split(";");
+        if (args.length == 2) {
+            try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO PlayerKit VALUES(?,?)")) {
+                insert.setString(1, args[0]);
+                insert.setString(2, args[1]);
+                insert.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void createTable() {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS PlayerKit(ptime TEXT);")) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS PlayerKit(PlayerUUID TEXT,KitCooldown TEXT);")) {
             stmt.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
         }
     }
 
     @Override
     public boolean isPresent(String string) {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT ptime FROM PlayerKit where ptime = '" + string + "';")) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT PlayerUUID FROM PlayerKit where PlayerUUID = '" + string + "';")) {
             ResultSet resultSet = stmt.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
@@ -73,7 +80,7 @@ public class PlayerKitOperations implements DBOperations {
 
     @Override
     public void update(String string) {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("UPDATE PlayerKit SET ptime = '" + string + "' WHERE ptime = '" + string + "'")) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("UPDATE PlayerKit SET PlayerUUID = '" + string + "' WHERE PlayerUUID = '" + string + "'")) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +89,7 @@ public class PlayerKitOperations implements DBOperations {
 
     @Override
     public void remove(String string) {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("DELETE FROM PlayerKit WHERE ptime = '" + string + "'")) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("DELETE FROM PlayerKit WHERE PlayerUUID = '" + string + "'")) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

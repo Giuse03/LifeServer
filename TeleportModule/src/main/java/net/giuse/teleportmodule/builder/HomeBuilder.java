@@ -5,21 +5,20 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor
 public class HomeBuilder {
 
     private final HashMap<String, Location> locations = new HashMap<>();
-
-
-    private final String owner;
+    private final UUID owner;
 
     @Override
     public String toString() {
         StringBuilder homeSerialized = new StringBuilder();
         int i = 0;
-        homeSerialized.append(owner).append("_");
+        homeSerialized.append(owner.toString()).append(":");
         for (String s : locations.keySet()) {
             i++;
             if (i == locations.keySet().size()) {
@@ -27,15 +26,19 @@ public class HomeBuilder {
                         .append(",")
                         .append(locations.get(s).getWorld().getName())
                         .append(",").append(locations.get(s).getX())
-                        .append(",").append(locations.get(s).getY()
-                        ).append(",").append(locations.get(s).getZ());
+                        .append(",").append(locations.get(s).getY())
+                        .append(",").append(locations.get(s).getZ())
+                        .append(",").append(locations.get(s).getYaw())
+                        .append(",").append(locations.get(s).getPitch());
             } else {
                 homeSerialized.append(s)
                         .append(",")
                         .append(locations.get(s).getWorld().getName())
                         .append(",").append(locations.get(s).getX())
-                        .append(",").append(locations.get(s).getY()
-                        ).append(",").append(locations.get(s).getZ()).append(";");
+                        .append(",").append(locations.get(s).getY())
+                        .append(",").append(locations.get(s).getZ())
+                        .append(",").append(locations.get(s).getYaw())
+                        .append(",").append(locations.get(s).getPitch()).append(";");
             }
         }
         return homeSerialized.toString();

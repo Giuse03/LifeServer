@@ -34,7 +34,6 @@ public class SpawnLoaderService extends Services {
         TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         spawnOperations = mainModule.getInjector().getSingleton(SpawnOperations.class);
         spawnOperations.getAllString().forEach(newSpawnBuilder -> spawnBuilder = spawnBuilderSerializer.decoder(newSpawnBuilder));
-        spawnOperations.dropTable();
         if (Files.size(Paths.get("plugins/LifeServer/messages/messages_spawn.yml")) == 0) {
             teleportModule.getFileManager().setMessagesSpawn();
         }
@@ -46,6 +45,7 @@ public class SpawnLoaderService extends Services {
     @Override
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Unloading Spawn...");
+        spawnOperations.dropTable();
         spawnOperations.createTable();
         if (spawnBuilder != null) {
             spawnOperations.insert(spawnBuilderSerializer.encode(spawnBuilder));

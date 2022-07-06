@@ -3,6 +3,7 @@ package net.giuse.kitmodule.events;
 
 import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.builder.KitBuilder;
+import net.giuse.kitmodule.cooldownsystem.KitCooldown;
 import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
 import net.giuse.mainmodule.MainModule;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import javax.inject.Inject;
 
+
+
+/**
+ * Register a PlayerTimerSystem on Join
+ */
 
 public class EventManager implements Listener {
     private final MainModule mainModule;
@@ -26,12 +32,14 @@ public class EventManager implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        for (KitBuilder kitBuilder : kitModule.getKitElements()) {
-            if (kitModule.getPlayerTime(e.getPlayer().getUniqueId(), kitBuilder) == null) {
-                PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(kitBuilder.getName(), e.getPlayer().getUniqueId(), kitBuilder.getCoolDown(), 0);
+            if (kitModule.getPlayerTime(e.getPlayer().getUniqueId()) == null) {
+                PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(e.getPlayer().getUniqueId());
+                for (KitBuilder kitBuilder : kitModule.getKitElements()) {
+                    playerTimerSystem.getKitsCooldown().add(new KitCooldown(kitBuilder));
+                }
+
                 playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
                 kitModule.getPlayerTimerSystems().add(playerTimerSystem);
-            }
         }
     }
 }

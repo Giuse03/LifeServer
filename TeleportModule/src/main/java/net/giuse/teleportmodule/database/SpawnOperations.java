@@ -52,7 +52,7 @@ public class SpawnOperations implements DBOperations {
 
     @Override
     public void createTable() {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS Spawn (name TEXT);");) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS Spawn (Location TEXT);");) {
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class SpawnOperations implements DBOperations {
 
     @Override
     public boolean isPresent(String string) {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT name FROM Spawn where name = '" + string + "';")) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT Location FROM Spawn where Location = '" + string + "';")) {
             ResultSet resultSet = stmt.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class SpawnOperations implements DBOperations {
 
     @Override
     public void update(String string) {
-        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("UPDATE Spawn SET name = '" + string + "' WHERE name = '" + string + "'")) {
+        try (PreparedStatement stmt = mainModule.getConnectorSQLite().getConnection().prepareStatement("UPDATE Spawn SET Location = '" + string + "' WHERE name = '" + string + "'")) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

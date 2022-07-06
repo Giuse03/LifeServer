@@ -14,8 +14,8 @@ public class WarpBuilder {
 
     @Override
     public String toString() {
-
-        return name + "," + location.getWorld().getName() +
+        return name + "-" +
+                location.getWorld().getName() +
                 "," + location.getX() +
                 "," + location.getY() +
                 "," + location.getZ() +

@@ -9,6 +9,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
+/**
+ * FileManager of KitModule
+ */
 public class FileManager extends AbstractConfig {
     @FileAnnotation(name = "messages_kit.yml", path = "plugins/LifeServer/messages/messages_kit.yml")
     private File messagesFile;
@@ -22,6 +25,9 @@ public class FileManager extends AbstractConfig {
     @Getter
     private YamlConfiguration kitYaml;
 
+    /**
+     * Load Messages in messages_kit.yml
+     */
     public void messagesLoader() {
         setFile(messagesFile);
         setYamlConfiguration(messagesYaml);
@@ -36,7 +42,6 @@ public class FileManager extends AbstractConfig {
         messagesYaml.set("messages.kit-wait", "&2Kit &a» &7You must wait %time%.");
         messagesYaml.set("messages.kit-receive", "&2Kit &a» &7You received the kit %kit%");
         messagesYaml.set("messages.must-have-item", "&2Kit &a» &7Your inventory is empty");
-
         saveConfig();
     }
 
