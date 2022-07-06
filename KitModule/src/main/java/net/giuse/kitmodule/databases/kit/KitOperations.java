@@ -22,10 +22,11 @@ public class KitOperations implements DBOperations {
         try (PreparedStatement st = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT * FROM Kit")) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                stringBuilder.append(rs.getString(1)).append("-");
-                stringBuilder.append(rs.getInt(3)).append("-");
+                stringBuilder.append(rs.getString(1)).append(":");
+                stringBuilder.append(rs.getInt(3)).append(":");
                 stringBuilder.append(rs.getString(2));
                 allStrings.add(stringBuilder.toString());
+                stringBuilder.setLength(0);
             }
         } catch (SQLException ignored) {
             mainModule.getLogger().info("Empty Database");
@@ -44,7 +45,7 @@ public class KitOperations implements DBOperations {
 
     @Override
     public void insert(final String str) {
-        String[] args = str.split("-");
+        String[] args = str.split(":");
         try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Kit VALUES(?,?,?)")) {
             insert.setString(1, args[0]);
             insert.setInt(3, Integer.parseInt(args[1]));

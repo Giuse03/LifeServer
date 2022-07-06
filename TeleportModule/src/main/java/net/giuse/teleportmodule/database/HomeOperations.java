@@ -25,6 +25,7 @@ public class HomeOperations implements DBOperations {
                 stringBuilder.append(rs.getString(1)).append(":");
                 stringBuilder.append(rs.getString(2));
                 allStrings.add(stringBuilder.toString());
+                stringBuilder.setLength(0);
             }
         } catch (SQLException ignored) {
             mainModule.getLogger().info("Empty Database");
@@ -44,12 +45,14 @@ public class HomeOperations implements DBOperations {
     @Override
     public void insert(final String str) {
         String[] args = str.split(":");
-        try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Home VALUES(?,?)");) {
-            insert.setString(1, args[0]);
-            insert.setString(2, args[1]);
-            insert.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(args.length ==2) {
+            try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Home VALUES(?,?)");) {
+                insert.setString(1, args[0]);
+                insert.setString(2, args[1]);
+                insert.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

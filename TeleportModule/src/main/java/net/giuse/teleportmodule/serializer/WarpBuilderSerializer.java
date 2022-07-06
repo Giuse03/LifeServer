@@ -15,7 +15,7 @@ public class WarpBuilderSerializer implements Serializer<WarpBuilder> {
 
     @Override
     public WarpBuilder decoder(String str) {
-        String[] splitWarp = str.split("-");
+        String[] splitWarp = str.split(":");
         String[] splitLocation = splitWarp[1].split(",");
         return new WarpBuilder(splitWarp[0],
                 new Location(Bukkit.getWorld(splitLocation[0]),

@@ -1,6 +1,7 @@
 package net.giuse.kitmodule.cooldownsystem;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import net.giuse.kitmodule.builder.KitBuilder;
 
@@ -12,7 +13,7 @@ public class KitCooldown  {
     @Getter @Setter
     private int variableCoolDown = 0;
 
-    public KitCooldown(KitBuilder kitBuilder) {
+    public KitCooldown(@NonNull KitBuilder kitBuilder) {
         this.kitBuilder = kitBuilder;
     }
 

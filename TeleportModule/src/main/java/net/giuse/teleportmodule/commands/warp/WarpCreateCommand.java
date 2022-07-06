@@ -41,6 +41,10 @@ public class WarpCreateCommand extends AbstractCommand {
                 p.sendMessage(teleportModule.getMessage("warp-already-exists"));
                 return;
             }
+            if(args[0].contains(":") || args[0].contains(",")){
+                p.sendMessage("§cCharacter §4 ':' or ',' §c isn't allowed in warp name!");
+                return;
+            }
             warpLoaderService.getWarpBuilders().add(new WarpBuilder(args[0], p.getLocation()));
             p.sendMessage(teleportModule.getMessage("warp-created").replace("%name%", args[0]));
         }

@@ -1,4 +1,4 @@
-package net.giuse.mainmodule;
+package net.giuse.mainmodule.utils;
 
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;

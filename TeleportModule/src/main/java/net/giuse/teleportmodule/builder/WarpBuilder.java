@@ -14,12 +14,12 @@ public class WarpBuilder {
 
     @Override
     public String toString() {
-        return name + "-" +
-                location.getWorld().getName() +
-                "," + location.getX() +
-                "," + location.getY() +
-                "," + location.getZ() +
-                "," + location.getYaw() +
-                "," + location.getPitch();
+        return name.concat(":")
+                .concat(location.getWorld().getName()).concat(",")
+                .concat(String.valueOf(location.getX()))
+                .concat(",").concat(String.valueOf(location.getY()))
+                .concat(",").concat(String.valueOf(location.getZ()))
+                .concat(",").concat(String.valueOf(location.getYaw()))
+                .concat(",").concat(String.valueOf(location.getPitch()));
     }
 }

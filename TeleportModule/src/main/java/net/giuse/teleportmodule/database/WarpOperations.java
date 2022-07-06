@@ -21,9 +21,10 @@ public class WarpOperations implements DBOperations {
         try (PreparedStatement st = mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT * FROM Warp")) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                stringBuilder.append(rs.getString(1)).append("-");
+                stringBuilder.append(rs.getString(1)).append(":");
                 stringBuilder.append(rs.getString(2));
                 allStrings.add(stringBuilder.toString());
+                stringBuilder.setLength(0);
             }
         } catch (SQLException ignored) {
             mainModule.getLogger().info("Empty Database");
@@ -42,7 +43,7 @@ public class WarpOperations implements DBOperations {
 
     @Override
     public void insert(final String str) {
-        String[] args = str.split("-");
+        String[] args = str.split(":");
         try (PreparedStatement insert = mainModule.getConnectorSQLite().getConnection().prepareStatement("INSERT INTO Warp VALUES(?,?)");) {
             insert.setString(1, args[0]);
             insert.setString(2, args[1]);

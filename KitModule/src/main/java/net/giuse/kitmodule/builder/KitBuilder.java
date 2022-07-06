@@ -1,6 +1,7 @@
 package net.giuse.kitmodule.builder;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -9,10 +10,10 @@ import java.util.ArrayList;
  * KitBuilder for create Concrete Kits
  */
 
-@Setter
-@Getter
+
+@RequiredArgsConstructor @Getter
 public class KitBuilder {
     private final ArrayList<String> items = new ArrayList<>();
-    private String name;
-    private int coolDown;
+    private final String name;
+    private final int coolDown;
 }

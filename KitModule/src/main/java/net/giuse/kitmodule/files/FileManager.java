@@ -32,6 +32,8 @@ public class FileManager extends AbstractConfig {
         setFile(messagesFile);
         setYamlConfiguration(messagesYaml);
         messagesYaml.set("messages.kit-cooldown", "&2Kit &a» &7Insert cooldown of kit");
+        messagesYaml.set("messages.kit-cooldown-valid", "&2Kit &a» &7Insert valid cooldown of kit");
+        messagesYaml.set("messages.kit-cooldown-max", "&2Kit &a» &7Max cooldown is 2147483647");
         messagesYaml.set("messages.kit-doesnt-exists", "&2Kit &a» &7This kit doesn't exists");
         messagesYaml.set("messages.kit-insert-name-kit", "&2Kit &a» &7Insert name of kit");
         messagesYaml.set("messages.kit-already-exists", "&2Kit &a» &7This kit already exists");

@@ -15,14 +15,10 @@ public class KitSerializer implements Serializer<KitBuilder> {
     @Override
     public KitBuilder decoder(String kitString) {
         //Split Kit Serialized
-        String[] valueKitBuilder = kitString.split("-");
-        KitBuilder kitBuilder = new KitBuilder();
+        String[] valueKitBuilder = kitString.split(":");
 
-        //Set a Name for KitBuilder
-        kitBuilder.setName(valueKitBuilder[0]);
+        KitBuilder kitBuilder = new KitBuilder(valueKitBuilder[0],Integer.parseInt(valueKitBuilder[1]));
 
-        //Set a cooldown for KitBuilder
-        kitBuilder.setCoolDown(Integer.parseInt(valueKitBuilder[1]));
         for (String s : valueKitBuilder[2].split(",")) {
             kitBuilder.getItems().add(s);
         }
@@ -37,10 +33,10 @@ public class KitSerializer implements Serializer<KitBuilder> {
         StringBuilder sb = new StringBuilder();
 
         //Insert name in a StringBuilder
-        sb.append(kitBuilder.getName()).append("-");
+        sb.append(kitBuilder.getName()).append(":");
 
         //Insert cooldown of Kit in a StringBuilder
-        sb.append(kitBuilder.getCoolDown()).append("-");
+        sb.append(kitBuilder.getCoolDown()).append(":");
 
         //Insert serialized itemstack in a StringBuilder
         int size = kitBuilder.getItems().size();
