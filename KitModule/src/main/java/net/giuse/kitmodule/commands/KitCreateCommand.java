@@ -48,11 +48,11 @@ public class KitCreateCommand extends AbstractCommand {
             p.sendMessage(kitModule.getMessage("kit-cooldown"));
         }
 
+        //Check if Number is valid
         if (!NumberUtils.isNumber(args[1])) {
             p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
             return;
         }
-        //Check if Number is valid
         try {
             if (Integer.parseInt(args[1]) < 0) {
                 p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
