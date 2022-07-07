@@ -31,7 +31,7 @@ public class NextItemGuiInit implements ItemInitializer {
                 for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
                     //Create a ItemBuilderStack
                     ItemstackBuilder itemstackBuilder = new ItemstackBuilder(
-                            Material.getMaterial(itemsConfig.getString("material").toUpperCase()),itemsConfig.getInt("amount"))
+                            Material.getMaterial(itemsConfig.getString("material").toUpperCase()), itemsConfig.getInt("amount"))
                             .setName(itemsConfig.getString("display-name")).setData((short) itemsConfig.getInt("data"));
 
                     //Check there are enchantments from section

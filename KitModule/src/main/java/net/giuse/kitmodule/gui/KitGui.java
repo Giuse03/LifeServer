@@ -19,6 +19,7 @@ public class KitGui implements GuiInitializer {
     private final KitModule kitModule;
     @Getter
     private InventoryBuilder inventoryBuilder;
+
     @Inject
     public KitGui(MainModule mainModule) {
         this.mainModule = mainModule;

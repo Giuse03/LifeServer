@@ -1,18 +1,14 @@
 package net.giuse.kitmodule.serializer;
 
-import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.builder.KitBuilder;
-import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.serializer.Serializer;
-
-import javax.inject.Inject;
 
 /**
  * KitSerializer serializer for save in database
  */
 
 public class KitSerializer implements Serializer<KitBuilder> {
-    
+
     /**
      * Convert String to KitBuilder
      */

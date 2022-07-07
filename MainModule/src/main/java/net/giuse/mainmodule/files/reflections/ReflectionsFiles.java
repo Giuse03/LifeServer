@@ -30,17 +30,14 @@ public class ReflectionsFiles {
                     file.createNewFile();
                 }
                 for (Field field2 : config.getClass().getDeclaredFields()) {
-                    if (field2.isAnnotationPresent(YamlAnnotation.class)) {
-                        YamlAnnotation yamlAnnotation = field2.getAnnotation(YamlAnnotation.class);
-                        if (!yamlAnnotation.nameFile().equalsIgnoreCase(fileAnn.name())) continue;
-                        field2.setAccessible(true);
-                        field2.set(config, YamlConfiguration.loadConfiguration(file));
-                        FileConfiguration fileConfiguration = (FileConfiguration) field2.get(config);
-                        config.setFile(file);
-                        config.setYamlConfiguration(fileConfiguration);
-                    }
-
-
+                    if (!field2.isAnnotationPresent(YamlAnnotation.class)) continue;
+                    YamlAnnotation yamlAnnotation = field2.getAnnotation(YamlAnnotation.class);
+                    if (!yamlAnnotation.nameFile().equalsIgnoreCase(fileAnn.name())) continue;
+                    field2.setAccessible(true);
+                    field2.set(config, YamlConfiguration.loadConfiguration(file));
+                    FileConfiguration fileConfiguration = (FileConfiguration) field2.get(config);
+                    config.setFile(file);
+                    config.setYamlConfiguration(fileConfiguration);
                 }
             }
         }
