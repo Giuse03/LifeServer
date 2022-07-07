@@ -36,7 +36,6 @@ public class KitModule extends Services implements Savable {
     private final HashMap<String, String> messages = new HashMap<>();
     @Getter
     private final FileManager configManager = new FileManager();
-
     @Getter
     private Serializer<KitBuilder> kitBuilderSerializer;
     @Inject

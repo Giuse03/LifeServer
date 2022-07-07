@@ -18,7 +18,6 @@ import org.bukkit.inventory.ItemStack;
 public class KitBuilder {
     private final String name;
     private final int coolDown;
-    @Setter
     private String base64;
 
     public KitBuilder setBase(String base64) {
