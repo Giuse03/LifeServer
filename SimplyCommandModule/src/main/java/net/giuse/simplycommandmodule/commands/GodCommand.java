@@ -25,7 +25,15 @@ public class GodCommand extends AbstractCommand {
         if (args.length == 0) {
             if (commandSender instanceof Player) {
                 Player player = (Player) commandSender;
+                if (simplyCommandService.getStringsNameGods().contains(player.getName())) {
+                    player.sendMessage(simplyCommandService.getMex("god-disabled"));
+                    simplyCommandService.getStringsNameGods().remove(player.getName());
+                    return;
+                }
 
+                player.sendMessage(simplyCommandService.getMex("god-enabled"));
+                simplyCommandService.getStringsNameGods().add(player.getName());
+                return;
             }
 
             commandSender.sendMessage(simplyCommandService.getMex("not-player"));
