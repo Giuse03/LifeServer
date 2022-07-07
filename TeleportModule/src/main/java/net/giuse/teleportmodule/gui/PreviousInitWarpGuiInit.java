@@ -1,38 +1,36 @@
-package net.giuse.kitmodule.gui;
+package net.giuse.teleportmodule.gui;
 
 import eu.giuse.inventorylib.ButtonBuilder;
 import eu.giuse.inventorylib.InventoryBuilder;
-import net.giuse.kitmodule.KitModule;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.builder.ItemstackBuilder;
 import net.giuse.mainmodule.gui.ItemInitializer;
+import net.giuse.teleportmodule.TeleportModule;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 
 import javax.inject.Inject;
 
-/**
- * Initialize Previous Arrow in Kit gui
- */
-
-public class PreviousItemGuiInit implements ItemInitializer {
+public class PreviousInitWarpGuiInit implements ItemInitializer {
 
     @Inject
     private MainModule mainModule;
 
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
-        KitModule kitModule = (KitModule) mainModule.getService(KitModule.class);
-        ConfigurationSection configurationSection = kitModule.getConfigManager().getKitYaml().getConfigurationSection("inventory.items");
-        configurationSection.getKeys(false).forEach(string -> {
+        TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
+        ConfigurationSection configurationSection = teleportModule.getFileManager().getWarpYaml().getConfigurationSection("inventory.items");
+        for (String string : configurationSection.getKeys(false)) {
             ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
-            if (kitModule.getConfigManager().getKitYaml().getInt("inventory.page") != 1 && string.equalsIgnoreCase("previouspage")) {
+            if (teleportModule.getFileManager().getWarpYaml().getInt("inventory.page") != 1 && string.equalsIgnoreCase("previouspage")) {
                 for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
 
                     //Create a ItemBuilderStack
                     ItemstackBuilder itemstackBuilder = new ItemstackBuilder(Material.getMaterial(itemsConfig.getString("material").toUpperCase()),
-                            itemsConfig.getInt("amount")).setName(itemsConfig.getString("display-name")).setData((short) itemsConfig.getInt("data"));
+                            itemsConfig.getInt("amount"))
+                            .setName(itemsConfig.getString("display-name"))
+                            .setData((short) itemsConfig.getInt("data"));
 
                     //Check there are enchantments from section
                     if (itemsConfig.getString("enchant") != null) {
@@ -48,6 +46,6 @@ public class PreviousItemGuiInit implements ItemInitializer {
                     );
                 }
             }
-        });
+        }
     }
 }

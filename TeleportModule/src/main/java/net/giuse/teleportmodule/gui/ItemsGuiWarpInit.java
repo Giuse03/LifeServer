@@ -22,27 +22,35 @@ public class ItemsGuiWarpInit implements ItemInitializer {
     public void initItems(InventoryBuilder inventoryBuilder) {
         TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         ConfigurationSection configurationSection = teleportModule.getFileManager().getWarpYaml().getConfigurationSection("inventory.items");
-        for (String string : configurationSection.getKeys(false)) {
+        configurationSection.getKeys(false).forEach(string -> {
             ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
             if (!string.equalsIgnoreCase("previouspage") && !string.equalsIgnoreCase("nextpage")) {
+
+                //Create ItemStackBuilder
                 ItemstackBuilder itemstackBuilder = new ItemstackBuilder(Material.getMaterial(itemsConfig.getString("material").toUpperCase()), itemsConfig.getInt("amount"));
                 itemstackBuilder.setData((short) itemsConfig.getInt("data"));
                 itemstackBuilder.setName(itemsConfig.getString("display-name"));
+
+                //Check there are enchantments from section
                 if (itemsConfig.getString("enchant") != null) itemstackBuilder
                         .setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),
                                 Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0]));
+
+                //Check there are lores from section
                 if (!itemsConfig.getStringList("lore").isEmpty()) {
                     itemstackBuilder.setLores(itemsConfig.getStringList("lore"));
                 }
 
+                //Create a button
                 ButtonBuilder button = new ButtonBuilder(
                         inventoryBuilder,
                         itemsConfig.getInt("position"),
                         itemsConfig.getInt("page"),
                         itemstackBuilder.toItem(),
                         false, false, true);
-                button.setEvent(inventoryClickEvent -> {
 
+                //Set Event of the button
+                button.setEvent(inventoryClickEvent -> {
                     if (itemsConfig.getString("warp") != null) {
                         Player player = (Player) inventoryClickEvent.getWhoClicked();
                         player.performCommand("warp " + itemsConfig.getString("warp"));
@@ -50,6 +58,6 @@ public class ItemsGuiWarpInit implements ItemInitializer {
                 });
                 inventoryBuilder.addButton(button);
             }
-        }
+        });
     }
 }

@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class DelHomeCommand extends AbstractCommand {
-
     private final HomeLoaderService homeLoaderService;
     private final TeleportModule teleportModule;
 
@@ -21,46 +20,49 @@ public class DelHomeCommand extends AbstractCommand {
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         setNoPerm(teleportModule.getMessage("no-perms"));
-
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not Supported From Console");
             return;
         }
-
         Player sender = (Player) commandSender;
 
+        //Check if player has home
+        if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == 0) {
+            sender.sendMessage(teleportModule.getMessage("no_home_found"));
+        }
+
+        //Check if player has multiple home
         if (sender.hasPermission("lifeserver.delhome.multiple") || sender.isOp()) {
             if (args.length == 0) {
+
+                //Check if player has one home
                 if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == 1) {
-                    for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
-                        homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(s);
-                        sender.sendMessage(teleportModule.getMessage("deleted_home"));
-                    }
-                } else if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == 0) {
-                    sender.sendMessage(teleportModule.getMessage("no_home_found"));
-                } else {
-                    sender.sendMessage(teleportModule.getMessage("select-home"));
-                }
-            } else {
-                if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0]) != null) {
-                    homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(args[0].toLowerCase());
+                    homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().forEach(home -> homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(home));
                     sender.sendMessage(teleportModule.getMessage("deleted_home"));
-                } else {
-                    sender.sendMessage(teleportModule.getMessage("no_home_found"));
+                    return;
                 }
+
+                sender.sendMessage(teleportModule.getMessage("select-home"));
             }
-        } else {
-            if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().get("default") != null) {
-                homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove("default");
-                sender.sendMessage(teleportModule.getMessage("deleted_home"));
-                sender.sendMessage(teleportModule.getMessage("deleted_home"));
-            } else {
+
+            //Check if home exists
+            if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0]) == null) {
                 sender.sendMessage(teleportModule.getMessage("no_home_found"));
+                return;
             }
+
+            //Delete home
+            homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(args[0].toLowerCase());
+            sender.sendMessage(teleportModule.getMessage("deleted_home"));
         }
+
+        //Delete Home
+        homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().forEach(home -> homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(home));
+        sender.sendMessage(teleportModule.getMessage("deleted_home"));
     }
 }

@@ -41,6 +41,9 @@ public class FileManager extends AbstractConfig {
     private YamlConfiguration warpYaml;
 
 
+    /*
+     * Load Warp Message
+     */
     public void messagesWarpLoader() {
         setFile(messagesWarpFile);
         setYamlConfiguration(messagesWarpYaml);
@@ -55,7 +58,9 @@ public class FileManager extends AbstractConfig {
         saveConfig();
     }
 
-
+    /*
+     * Load Teleport Message
+     */
     public void messagesTeleportLoader() {
         setFile(messagesTeleportFile);
         setYamlConfiguration(messagesTeleportYaml);
@@ -71,12 +76,12 @@ public class FileManager extends AbstractConfig {
         messagesTeleportYaml.set("messages.teleport.request-accept-receiver", "&2TP &a» &7%playername% is coming to you");
         messagesTeleportYaml.set("messages.teleport.back", "&2Back &a» &7Teleported on previous location");
         messagesTeleportYaml.set("messages.teleport.back-no-location", "&2Back &a» &7No previous location found!");
-
-
         saveConfig();
     }
 
-
+    /*
+     * Load Home Message
+     */
     public void setMessagesHome() {
         setFile(messagesHome);
         setYamlConfiguration(messagesHomeYaml);
@@ -92,6 +97,9 @@ public class FileManager extends AbstractConfig {
         saveConfig();
     }
 
+    /*
+     * Load Spawn Message
+     */
     public void setMessagesSpawn() {
         setFile(messagesSpawn);
         setYamlConfiguration(messagesSpawnYaml);

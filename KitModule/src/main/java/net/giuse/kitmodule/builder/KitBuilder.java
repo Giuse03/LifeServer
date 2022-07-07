@@ -20,14 +20,21 @@ public class KitBuilder {
     private final int coolDown;
     private String base64;
 
+    private ItemStack[] itemStackList;
+
     public KitBuilder setBase(String base64) {
         this.base64 = base64;
         return this;
     }
 
+    public void build() {
+        itemStackList = Utils.itemStackArrayFromBase64(base64);
+    }
+
     @SneakyThrows
     public void giveItems(Player player) {
-        for (ItemStack item : Utils.itemStackArrayFromBase64(base64)) {
+        for (ItemStack item : itemStackList) {
+
             if (player.getInventory().firstEmpty() == -1) {
                 player.getLocation().getWorld().dropItemNaturally(player.getLocation(), item);
             } else {

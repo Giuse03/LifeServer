@@ -21,20 +21,20 @@ public class SocialSpyCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not supported from console");
             return;
         }
-
         Player player = (Player) commandSender;
+
+        //Enable or disable SocialSpy
         if (secretMessageModule.getPlayerSocialSpy().contains(player)) {
             player.sendMessage(secretMessageModule.getMessages("socialspy").replace("%status%", "§cOFF"));
             secretMessageModule.getPlayerSocialSpy().remove(player);
         } else {
             player.sendMessage(secretMessageModule.getMessages("socialspy").replace("%status%", "§aON"));
             secretMessageModule.getPlayerSocialSpy().add(player);
-
         }
-
     }
 }

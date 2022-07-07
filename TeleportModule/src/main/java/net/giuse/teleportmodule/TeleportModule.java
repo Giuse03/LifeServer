@@ -25,27 +25,44 @@ public class TeleportModule extends Services {
     @Getter
     private FileManager fileManager;
 
+    /*
+     * Load Service
+     */
     @Override
     @SneakyThrows
     public void load() {
         Bukkit.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9 Loading");
+        //Load Files
         ReflectionsFiles.loadFiles(fileManager = new FileManager());
-        if (mainModule.getConfig().getBoolean("allow-back-on-death"))
-            Bukkit.getServer().getPluginManager().registerEvents(mainModule.getInjector().getSingleton(EntityBackOnDeath.class), mainModule);
+
+        //Set NoPerms message
         message.put("no-perms", mainModule.getConfig().getString("no-perms"));
 
+        //Check if load back-on-death is active
+        if (mainModule.getConfig().getBoolean("allow-back-on-death")) {
+            Bukkit.getServer().getPluginManager().registerEvents(mainModule.getInjector().getSingleton(EntityBackOnDeath.class), mainModule);
+        }
     }
 
+    /*
+     * Unload Service
+     */
     @Override
     public void unload() {
         Bukkit.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9 Unloaded");
     }
 
+    /*
+     * Get Service Priority
+     */
     @Override
     public int priority() {
         return 0;
     }
 
+    /*
+     * Get Message
+     */
     public String getMessage(String key) {
         return ChatColor.translateAlternateColorCodes('&', message.get(key));
     }

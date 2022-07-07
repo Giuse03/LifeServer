@@ -17,6 +17,9 @@ public class FileManager extends AbstractConfig {
     @Getter
     private YamlConfiguration messagesSecretChatYaml;
 
+    /*
+     *  Load Messages
+     */
     public void messagesMsgLoader() {
         setFile(messagesSecretChat);
         setYamlConfiguration(messagesSecretChatYaml);

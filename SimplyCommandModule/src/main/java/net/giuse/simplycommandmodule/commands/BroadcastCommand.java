@@ -22,13 +22,14 @@ public class BroadcastCommand extends AbstractCommand {
     public void execute(CommandSender commandSender, String[] args) {
         if (args.length == 0) {
             commandSender.sendMessage(simplyCommandService.getMex("broadcast-usage"));
-        } else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < args.length; i++) {
-                sb.append(args[i]).append(" ");
-            }
-            Bukkit.getOnlinePlayers().forEach(onlinePlayers -> onlinePlayers.sendMessage(simplyCommandService.getMex("broadcast").replace("%message%", sb.toString())));
-
+            return;
         }
+
+        StringBuilder sb = new StringBuilder();
+        for (String arg : args) {
+            sb.append(arg).append(" ");
+        }
+        Bukkit.getOnlinePlayers().forEach(onlinePlayers -> onlinePlayers.sendMessage(simplyCommandService.getMex("broadcast").replace("%message%", sb.toString())));
+
     }
 }

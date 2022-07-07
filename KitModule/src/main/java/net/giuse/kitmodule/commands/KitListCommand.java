@@ -26,7 +26,7 @@ public class KitListCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        //Check if sender is a Player
+        //Check if sender is Console
         if (sender instanceof ConsoleCommandSender) {
             sender.sendMessage("Not Supported From Console");
             return;

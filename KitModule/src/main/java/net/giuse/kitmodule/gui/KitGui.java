@@ -26,6 +26,9 @@ public class KitGui implements GuiInitializer {
         this.kitModule = (KitModule) mainModule.getService(KitModule.class);
     }
 
+    /*
+     * Initialize Inventory
+     */
     @Override
     public void initInv() {
 
@@ -41,7 +44,7 @@ public class KitGui implements GuiInitializer {
         mainModule.getInjector().getSingleton(PreviousItemGuiInit.class).initItems(inventoryBuilder);
         mainModule.getInjector().getSingleton(ItemsGuiInit.class).initItems(inventoryBuilder);
 
-        //Build inventorybuilder
+        //Build InventoryBuilder
         inventoryBuilder.build();
         this.inventoryBuilder = inventoryBuilder;
     }

@@ -32,7 +32,7 @@ public class KitCreateCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        //Check if Sender is a Player
+        //Check if sender is Console
         if (sender instanceof ConsoleCommandSender) {
             sender.sendMessage("Not Supported From Console");
             return;
@@ -80,6 +80,7 @@ public class KitCreateCommand extends AbstractCommand {
                 .filter(stacks -> stacks != null && !stacks.getType().equals(Material.AIR))
                 .forEach(itemStackList::add);
         KitBuilder kitBuilder = new KitBuilder(args[0], Integer.parseInt(args[1])).setBase(Utils.listItemStackToBase64(itemStackList));
+        kitBuilder.build();
         kitModule.getKitElements().add(kitBuilder);
         kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.addKit(kitBuilder));
         p.sendMessage(kitModule.getMessage("kit-created").replace("%kit%", args[0]));

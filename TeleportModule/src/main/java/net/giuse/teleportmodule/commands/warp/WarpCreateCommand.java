@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class WarpCreateCommand extends AbstractCommand {
-
     private final WarpLoaderService warpLoaderService;
     private final TeleportModule teleportModule;
 
@@ -22,31 +21,36 @@ public class WarpCreateCommand extends AbstractCommand {
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
         setNoPerm(teleportModule.getMessage("no-perms"));
-
-
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not Supported From Console");
             return;
         }
         Player p = (Player) commandSender;
 
+        //Check if name length is 0
         if (args.length == 0) {
             p.sendMessage(teleportModule.getMessage("warp-insert-name"));
-        } else {
-            if (warpLoaderService.getWarp(args[0]) != null) {
-                p.sendMessage(teleportModule.getMessage("warp-already-exists"));
-                return;
-            }
-            if (args[0].contains(":") || args[0].contains(",")) {
-                p.sendMessage("§cCharacter §4 ':' or ',' §c isn't allowed in warp name!");
-                return;
-            }
-            warpLoaderService.getWarpBuilders().add(new WarpBuilder(args[0], p.getLocation()));
-            p.sendMessage(teleportModule.getMessage("warp-created").replace("%name%", args[0]));
+            return;
         }
+
+        //Check warp exists
+        if (warpLoaderService.getWarp(args[0]) != null) {
+            p.sendMessage(teleportModule.getMessage("warp-already-exists"));
+            return;
+        }
+
+        //Check if name contains illegal characters
+        if (args[0].contains(":") || args[0].contains(",")) {
+            p.sendMessage("§cCharacter §4 ':' or ',' §c isn't allowed in warp name!");
+            return;
+        }
+        //Create warp
+        warpLoaderService.getWarpBuilders().add(new WarpBuilder(args[0], p.getLocation()));
+        p.sendMessage(teleportModule.getMessage("warp-created").replace("%name%", args[0]));
     }
 }

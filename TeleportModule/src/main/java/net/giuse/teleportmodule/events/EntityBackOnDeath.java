@@ -11,7 +11,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import javax.inject.Inject;
 
 public class EntityBackOnDeath implements Listener {
-
     private final TeleportModule teleportService;
 
     @Inject
@@ -19,7 +18,9 @@ public class EntityBackOnDeath implements Listener {
         this.teleportService = (TeleportModule) mainModule.getService(TeleportModule.class);
     }
 
-
+    /*
+     * Event for back on death
+     */
     @EventHandler
     public void onTeleport(EntityDeathEvent e) {
         if (e.getEntity() instanceof Player) {

@@ -68,8 +68,14 @@ public class KitModule extends Services implements Savable {
         }
         messages.put("no-perms", mainModule.getConfig().getString("no-perms"));
 
-        //Load Kit and PlayerTimeKit
-        kitOperations.getAllString().forEach(kitElement -> kitElements.add(kitBuilderSerializer.decoder(kitElement)));
+        //Load Kit
+        kitOperations.getAllString().forEach(kitElement -> {
+            KitBuilder kitBuilder = kitBuilderSerializer.decoder(kitElement);
+            kitBuilder.build();
+            kitElements.add(kitBuilder);
+        });
+
+        //Load PlayerTimeKit
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading SQL...");
         for (String playerTimeString : playerKitOperations.getAllString()) {
             PlayerTimerSystem playerTimerSystem = playerKitTimeSerializer.decoder(playerTimeString);

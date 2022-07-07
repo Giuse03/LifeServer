@@ -17,10 +17,14 @@ public class JoinEvent implements Listener {
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
     }
 
+    /*
+     * Check if player has a HomeBuilder instance
+     */
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (homeLoaderService.getHome(e.getPlayer().getUniqueId()) == null)
+        if (homeLoaderService.getHome(e.getPlayer().getUniqueId()) == null) {
             homeLoaderService.getHomeBuilders().add(new HomeBuilder(e.getPlayer().getUniqueId()));
+        }
     }
 
 }

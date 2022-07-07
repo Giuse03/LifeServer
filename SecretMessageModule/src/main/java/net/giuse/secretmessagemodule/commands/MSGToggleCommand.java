@@ -21,11 +21,15 @@ public class MSGToggleCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not supported from console");
             return;
         }
         Player player = (Player) commandSender;
+
+        //Enable or disable MSG-Toggle
         if (secretMessageModule.getPlayerMsgToggle().contains(player)) {
             player.sendMessage(secretMessageModule.getMessages("msgtoggle").replace("%status%", "§cOFF"));
             secretMessageModule.getPlayerMsgToggle().remove(player);

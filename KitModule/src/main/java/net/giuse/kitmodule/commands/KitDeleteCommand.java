@@ -26,7 +26,7 @@ public class KitDeleteCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        //Check if Sender is a Player
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not Supported From Console");
             return;

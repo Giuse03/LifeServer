@@ -28,21 +28,28 @@ public class TpaCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not Supported From Console");
             return;
         }
         Player sender = (Player) commandSender;
 
+        //Check if player isn't selected
         if (args.length == 0) {
             sender.sendMessage(teleportModule.getMessage("select-player"));
             return;
         }
+
         Player target = Bukkit.getPlayer(args[0]);
+
+        //Check if target is online
         if (target == null) {
             sender.sendMessage(teleportModule.getMessage("player-not-found"));
             return;
         }
+
+        //Send request to the target
         sender.sendMessage(teleportModule.getMessage("tpa-request-sender").replace("%playername%", target.getName()));
         target.sendMessage(teleportModule.getMessage("tpa-request-receiver").replace("%playername%", sender.getName()));
         teleportRequestService.getPendingRequests().add(new PendingRequest(sender, target, TpType.TPA));

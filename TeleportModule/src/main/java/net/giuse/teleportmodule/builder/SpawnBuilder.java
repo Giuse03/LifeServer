@@ -7,18 +7,16 @@ import org.bukkit.Location;
 @Getter
 @RequiredArgsConstructor
 public class SpawnBuilder {
-
     private final Location location;
-
 
     @Override
     public String toString() {
-        return location.getWorld().getName() + "," +
-                location.getBlockX() + "," +
-                location.getBlockY() + "," +
-                location.getBlockZ() + "," +
-                location.getYaw() + "," +
-                location.getPitch();
+        return location.getWorld().getName().concat(",")
+                .concat(String.valueOf(location.getX()))
+                .concat(",").concat(String.valueOf(location.getY()))
+                .concat(",").concat(String.valueOf(location.getZ()))
+                .concat(",").concat(String.valueOf(location.getYaw()))
+                .concat(",").concat(String.valueOf(location.getPitch()));
     }
 
 }

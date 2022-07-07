@@ -26,14 +26,20 @@ public class SecretChatProcess {
         this.secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
     }
 
+    /*
+     * Send a message from Sender to Receiver
+     */
     public void send() {
+        //Check if msg-toggle is ON
         if (secretMessageModule.getPlayerMsgToggle().contains(receiver) || secretMessageModule.getPlayerMsgToggle().contains(sender)) {
             sender.sendMessage(secretMessageModule.getMessages("msgtoggle-on"));
             return;
         }
-
+        //Send Message
         receiver.sendMessage(ChatColor.translateAlternateColorCodes('&', secretMessageModule.getMessage().get("receiver")).replace("%sender_name%", sender.getName()).replace("%text%", text));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', secretMessageModule.getMessage().get("sender")).replace("%receiver_name%", receiver.getName()).replace("%text%", text));
+
+        //Update sender and Receiver
         secretChatBuilder.setSender(sender);
         secretChatBuilder.setReceiver(receiver);
         secretChatBuilder.setText(text);

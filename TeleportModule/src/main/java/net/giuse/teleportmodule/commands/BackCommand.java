@@ -24,19 +24,23 @@ public class BackCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not Supported From Console");
             return;
         }
         Player player = (Player) commandSender;
-        if (teleportModule.getBackLocations().containsKey(player)) {
-            player.sendMessage(teleportModule.getMessage("back"));
-            Location location = player.getLocation();
-            PaperLib.teleportAsync(player, teleportModule.getBackLocations().get(player));
-            teleportModule.getBackLocations().put(player, location);
-        } else {
-            player.sendMessage(teleportModule.getMessage("back-no-location"));
 
+        //Check if there is any back location
+        if (!teleportModule.getBackLocations().containsKey(player)) {
+            player.sendMessage(teleportModule.getMessage("back-no-location"));
+            return;
         }
+
+        //Teleport to back location
+        player.sendMessage(teleportModule.getMessage("back"));
+        Location location = player.getLocation();
+        PaperLib.teleportAsync(player, teleportModule.getBackLocations().get(player));
+        teleportModule.getBackLocations().put(player, location);
     }
 }

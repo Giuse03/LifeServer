@@ -10,7 +10,6 @@ import java.util.UUID;
 @Getter
 @RequiredArgsConstructor
 public class HomeBuilder {
-
     private final HashMap<String, Location> locations = new HashMap<>();
     private final UUID owner;
 
@@ -21,24 +20,13 @@ public class HomeBuilder {
         homeSerialized.append(owner.toString()).append(":");
         for (String s : locations.keySet()) {
             i++;
-            if (i == locations.keySet().size()) {
-                homeSerialized.append(s)
-                        .append(",")
-                        .append(locations.get(s).getWorld().getName())
-                        .append(",").append(locations.get(s).getX())
-                        .append(",").append(locations.get(s).getY())
-                        .append(",").append(locations.get(s).getZ())
-                        .append(",").append(locations.get(s).getYaw())
-                        .append(",").append(locations.get(s).getPitch());
-            } else {
-                homeSerialized.append(s)
-                        .append(",")
-                        .append(locations.get(s).getWorld().getName())
-                        .append(",").append(locations.get(s).getX())
-                        .append(",").append(locations.get(s).getY())
-                        .append(",").append(locations.get(s).getZ())
-                        .append(",").append(locations.get(s).getYaw())
-                        .append(",").append(locations.get(s).getPitch()).append(";");
+            homeSerialized.append(s).append(",").append(locations.get(s).getWorld().getName()).append(",").append(locations.get(s).getX())
+                    .append(",").append(locations.get(s).getY()).append(",")
+                    .append(locations.get(s).getZ()).append(",")
+                    .append(locations.get(s).getYaw())
+                    .append(",").append(locations.get(s).getPitch());
+            if (i != locations.keySet().size()) {
+                homeSerialized.append(",");
             }
         }
         return homeSerialized.toString();

@@ -14,9 +14,7 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class TpacceptCommand extends AbstractCommand {
-
     private final TeleportModule teleportModule;
-
     private final TeleportRequestService teleportRequestService;
 
     @Inject
@@ -25,21 +23,25 @@ public class TpacceptCommand extends AbstractCommand {
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
         setNoPerm(teleportModule.getMessage("no-perms"));
-
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not Supported From Console");
             return;
         }
         Player player = (Player) commandSender;
+
+
+        //Check if there is any Pending Request
         if (teleportRequestService.getPending(player.getUniqueId()) == null) {
             player.sendMessage(teleportModule.getMessage("no-pending-request"));
             return;
         }
 
+        //Check the type of PendingRequest
         PendingRequest pendingRequest = teleportRequestService.getPending(player.getUniqueId());
         if (pendingRequest.getTpType().equals(TpType.TPA)) {
             teleportModule.getBackLocations().put(pendingRequest.getSender(), pendingRequest.getSender().getLocation());
@@ -48,6 +50,8 @@ public class TpacceptCommand extends AbstractCommand {
             teleportModule.getBackLocations().put(pendingRequest.getReceiver(), pendingRequest.getReceiver().getLocation());
             PaperLib.teleportAsync(pendingRequest.getReceiver(), pendingRequest.getSender().getLocation());
         }
+
+        //Accept Pending Request
         pendingRequest.getSender().sendMessage(teleportModule.getMessage("teleport-player").replace("%playername%", pendingRequest.getReceiver().getName()));
         player.sendMessage(teleportModule.getMessage("request-accept-receiver").replace("%playername%", player.getName()));
         teleportRequestService.getPendingRequests().remove(pendingRequest);

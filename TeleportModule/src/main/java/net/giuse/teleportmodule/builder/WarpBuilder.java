@@ -11,7 +11,6 @@ public class WarpBuilder {
     private final String name;
     private final Location location;
 
-
     @Override
     public String toString() {
         return name.concat(":")

@@ -21,15 +21,17 @@ public class SetSpawnCommand extends AbstractCommand {
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         setNoPerm(teleportModule.getMessage("no-perms"));
-
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not Supported From Console");
             return;
         }
+
+        //Set Spawn
         Player player = (Player) commandSender;
         spawnLoaderService.setSpawnBuilder(new SpawnBuilder(player.getLocation()));
         commandSender.sendMessage(teleportModule.getMessage("setspawn"));

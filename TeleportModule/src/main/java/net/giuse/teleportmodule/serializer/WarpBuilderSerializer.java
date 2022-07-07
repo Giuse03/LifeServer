@@ -8,15 +8,24 @@ import org.bukkit.Location;
 
 public class WarpBuilderSerializer implements Serializer<WarpBuilder> {
 
+    /*
+     * Convert WarpBuilder to String
+     */
     @Override
     public String encode(WarpBuilder warpBuilder) {
         return warpBuilder.toString();
     }
 
+    /*
+     * Convert String to WarpBuilder
+     */
     @Override
     public WarpBuilder decoder(String str) {
+        //Split string
         String[] splitWarp = str.split(":");
         String[] splitLocation = splitWarp[1].split(",");
+
+        //Insert args for build a WarpBuilder
         return new WarpBuilder(splitWarp[0],
                 new Location(Bukkit.getWorld(splitLocation[0]),
                         Double.parseDouble(splitLocation[1]),

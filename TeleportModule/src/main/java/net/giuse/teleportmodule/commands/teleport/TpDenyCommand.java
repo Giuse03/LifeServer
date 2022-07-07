@@ -26,16 +26,20 @@ public class TpDenyCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        //Check if sender is Console
         if (commandSender instanceof ConsoleCommandSender) {
             commandSender.sendMessage("Not Supported");
             return;
         }
         Player sender = (Player) commandSender;
+
+        //Check if are Pending Requests
         if (teleportRequestService.getPending(sender.getUniqueId()) == null) {
             sender.sendMessage(teleportModule.getMessage("no-pending-request"));
             return;
         }
 
+        //Deny Pending Requests
         PendingRequest pendingRequest = teleportRequestService.getPending(sender.getUniqueId());
         pendingRequest.getSender().sendMessage(teleportModule.getMessage("request-refused").replace("%playername%", pendingRequest.getReceiver().getName()));
         teleportRequestService.getPendingRequests().remove(pendingRequest);

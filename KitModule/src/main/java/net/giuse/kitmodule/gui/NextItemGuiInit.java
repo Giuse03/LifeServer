@@ -29,6 +29,7 @@ public class NextItemGuiInit implements ItemInitializer {
             ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
             if (kitModule.getConfigManager().getKitYaml().getInt("inventory.page") != 1 && string.equalsIgnoreCase("nextpage")) {
                 for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
+
                     //Create a ItemBuilderStack
                     ItemstackBuilder itemstackBuilder = new ItemstackBuilder(
                             Material.getMaterial(itemsConfig.getString("material").toUpperCase()), itemsConfig.getInt("amount"))
