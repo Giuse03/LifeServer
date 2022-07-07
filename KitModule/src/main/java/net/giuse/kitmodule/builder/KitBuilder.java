@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 @Getter
 public class KitBuilder {
     private final String name;
+
     private final int coolDown;
     private String base64;
 

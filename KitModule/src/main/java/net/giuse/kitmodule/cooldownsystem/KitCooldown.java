@@ -12,7 +12,6 @@ import net.giuse.kitmodule.builder.KitBuilder;
 public class KitCooldown {
     @Getter
     private final KitBuilder kitBuilder;
-
     @Getter
     @Setter
     private int variableCoolDown = 0;

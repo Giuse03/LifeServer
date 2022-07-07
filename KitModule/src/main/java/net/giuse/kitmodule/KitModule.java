@@ -37,7 +37,7 @@ public class KitModule extends Services implements Savable {
     @Getter
     private final FileManager configManager = new FileManager();
     @Getter
-    private Serializer<KitBuilder> kitBuilderSerializer;
+    private final Serializer<KitBuilder> kitBuilderSerializer = new KitSerializer();
     @Inject
     private MainModule mainModule;
     @Getter
@@ -56,8 +56,6 @@ public class KitModule extends Services implements Savable {
         playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
         kitOperations = mainModule.getInjector().getSingleton(KitOperations.class);
         playerKitOperations = mainModule.getInjector().getSingleton(PlayerKitOperations.class);
-        kitBuilderSerializer = mainModule.getInjector().getSingleton(KitSerializer.class);
-
 
         //Initialize Files
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
@@ -69,7 +67,6 @@ public class KitModule extends Services implements Savable {
             messages.put(messageConfig, configManager.getMessagesYaml().getString("messages." + messageConfig));
         }
         messages.put("no-perms", mainModule.getConfig().getString("no-perms"));
-
 
         //Load Kit and PlayerTimeKit
         kitOperations.getAllString().forEach(kitElement -> kitElements.add(kitBuilderSerializer.decoder(kitElement)));

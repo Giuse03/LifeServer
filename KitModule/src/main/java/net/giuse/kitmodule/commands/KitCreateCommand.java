@@ -21,7 +21,6 @@ import java.util.List;
  * Command /kitcreate for create a kit
  */
 public class KitCreateCommand extends AbstractCommand {
-
     private final KitModule kitModule;
 
     @Inject

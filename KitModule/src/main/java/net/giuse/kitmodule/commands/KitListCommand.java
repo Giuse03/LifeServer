@@ -22,7 +22,6 @@ public class KitListCommand extends AbstractCommand {
         super("kitlist", "lifeserver.kitlist", true);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         setNoPerm(kitModule.getMessage("no-perms"));
-
     }
 
     @Override

@@ -16,14 +16,12 @@ import javax.inject.Inject;
 
 public class KitDeleteCommand extends AbstractCommand {
     private final KitModule kitModule;
-
     @Inject
     public KitDeleteCommand(MainModule mainModule) {
         super("kitdelete", "lifeserver.kitdelete", true);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         setNoPerm(kitModule.getMessage("no-perms"));
     }
-
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         //Check if Sender is a Player

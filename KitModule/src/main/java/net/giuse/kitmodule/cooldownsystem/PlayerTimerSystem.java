@@ -23,11 +23,8 @@ public class PlayerTimerSystem extends BukkitRunnable {
      */
     @Override
     public void run() {
-        for (KitCooldown kitCooldown : kitsCooldown) {
-            if (kitCooldown.getVariableCoolDown() > 0) {
-                kitCooldown.setVariableCoolDown(kitCooldown.getVariableCoolDown() - 1);
-            }
-        }
+        kitsCooldown.stream().filter(kitCooldown -> kitCooldown.getVariableCoolDown() > 0)
+                .forEach(kitCooldown -> kitCooldown.setVariableCoolDown(kitCooldown.getVariableCoolDown() - 1));
     }
 
     /*

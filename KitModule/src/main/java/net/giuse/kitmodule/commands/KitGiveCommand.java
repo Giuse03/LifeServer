@@ -27,7 +27,6 @@ public class KitGiveCommand extends AbstractCommand {
         this.mainModule = mainModule;
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         setNoPerm(kitModule.getMessage("no-perms"));
-
     }
 
     @Override

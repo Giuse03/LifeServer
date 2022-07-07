@@ -12,14 +12,7 @@ import javax.inject.Inject;
  */
 
 public class KitSerializer implements Serializer<KitBuilder> {
-
-    private final KitModule kitModule;
-
-    @Inject
-    public KitSerializer(MainModule mainModule) {
-        this.kitModule = (KitModule) mainModule.getService(KitModule.class);
-    }
-
+    
     /**
      * Convert String to KitBuilder
      */
@@ -37,10 +30,8 @@ public class KitSerializer implements Serializer<KitBuilder> {
     public String encode(KitBuilder kitBuilder) {
         //Insert name in a StringBuilder
         return kitBuilder.getName() + ":" +
-
                 //Insert cooldown of Kit in a StringBuilder
                 kitBuilder.getCoolDown() + ":" +
-
                 //Insert serialized itemstack in a StringBuilder
                 kitBuilder.getBase64();
     }
