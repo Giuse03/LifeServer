@@ -6,6 +6,9 @@ import lombok.Setter;
 import net.giuse.kitmodule.builder.KitBuilder;
 
 
+/*
+ * Timer System for each Kit
+ */
 public class KitCooldown {
     @Getter
     private final KitBuilder kitBuilder;

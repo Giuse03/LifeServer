@@ -29,6 +29,9 @@ public class EventManager implements Listener {
     }
 
 
+    /*
+     * Check if player on join has the timer tasks of kits
+     */
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (kitModule.getPlayerTime(e.getPlayer().getUniqueId()) == null) {

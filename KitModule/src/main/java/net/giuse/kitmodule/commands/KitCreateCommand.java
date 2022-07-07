@@ -29,7 +29,6 @@ public class KitCreateCommand extends AbstractCommand {
         super("kitcreate", "lifeserver.kitcreate", false);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         setNoPerm(kitModule.getMessage("no-perms"));
-
     }
 
     @Override
