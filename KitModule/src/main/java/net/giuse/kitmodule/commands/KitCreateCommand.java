@@ -74,7 +74,9 @@ public class KitCreateCommand extends AbstractCommand {
 
             //Create Kit
             List<ItemStack> itemStackList = new ArrayList<>();
-            Arrays.stream(p.getInventory().getContents()).filter(stacks -> stacks != null && !stacks.getType().equals(Material.AIR)).forEach(itemStackList::add);
+            Arrays.stream(p.getInventory().getContents())
+                    .filter(stacks -> stacks != null && !stacks.getType().equals(Material.AIR))
+                    .forEach(itemStackList::add);
             KitBuilder kitBuilder = new KitBuilder(args[0], Integer.parseInt(args[1])).setBase(UtilsItemStack.listItemStackToBase64(itemStackList));
             kitModule.getKitElements().add(kitBuilder);
             kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.addKit(kitBuilder));

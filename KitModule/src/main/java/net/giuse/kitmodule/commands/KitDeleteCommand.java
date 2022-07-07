@@ -39,20 +39,14 @@ public class KitDeleteCommand extends AbstractCommand {
         Player p = (Player) commandSender;
         if (args.length == 0) {
             p.sendMessage(kitModule.getMessage("kit-insert-name-kit"));
-        } else {
-            if (kitModule.getKit(args[0]) != null) {
-
-                if (kitModule.getKit(args[0]) != null) {
-                    kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.removeKit(kitModule.getKit(args[0])));
-                    kitModule.getKitElements().remove(kitModule.getKit(args[0]));
-                } else {
-                    p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
-                }
-                p.sendMessage(kitModule.getMessage("kit-removed").replace("%kit%", args[0]));
-            } else {
-                p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
-
-            }
+            return;
         }
+        if (kitModule.getKit(args[0]) == null) {
+            p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
+            return;
+        }
+        kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.removeKit(kitModule.getKit(args[0])));
+        kitModule.getKitElements().remove(kitModule.getKit(args[0]));
+        p.sendMessage(kitModule.getMessage("kit-removed").replace("%kit%", args[0]));
     }
 }

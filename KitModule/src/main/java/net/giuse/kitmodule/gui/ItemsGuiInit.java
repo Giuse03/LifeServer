@@ -32,13 +32,13 @@ public class ItemsGuiInit implements ItemInitializer {
                 ItemstackBuilder itemstackBuilder = new ItemstackBuilder(Material.getMaterial(itemsConfig.getString("material").toUpperCase()), itemsConfig.getInt("amount"));
                 itemstackBuilder.setData((short) itemsConfig.getInt("data"));
                 itemstackBuilder.setName(itemsConfig.getString("display-name"));
-                if (itemsConfig.getString("enchant") != null) itemstackBuilder
-                        .setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),
-                                Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0]));
+                if (itemsConfig.getString("enchant") != null) {
+                    itemstackBuilder.setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),
+                            Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0]));
+                }
                 if (!itemsConfig.getStringList("lore").isEmpty()) {
                     itemstackBuilder.setLores(itemsConfig.getStringList("lore"));
                 }
-
                 ButtonBuilder button = new ButtonBuilder(
                         inventoryBuilder,
                         itemsConfig.getInt("position"),
@@ -46,7 +46,6 @@ public class ItemsGuiInit implements ItemInitializer {
                         itemstackBuilder.toItem(),
                         false, false, true);
                 button.setEvent(inventoryClickEvent -> {
-
                     if (itemsConfig.getString("givekit") != null) {
                         Player player = (Player) inventoryClickEvent.getWhoClicked();
                         player.performCommand("kit " + itemsConfig.getString("givekit"));

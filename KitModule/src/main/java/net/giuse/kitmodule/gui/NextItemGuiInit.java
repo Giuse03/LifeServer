@@ -27,23 +27,21 @@ public class NextItemGuiInit implements ItemInitializer {
         ConfigurationSection configurationSection = kitModule.getConfigManager().getKitYaml().getConfigurationSection("inventory.items");
         for (String string : configurationSection.getKeys(false)) {
             ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
-            if (kitModule.getConfigManager().getKitYaml().getInt("inventory.page") != 1) {
-                if (string.equalsIgnoreCase("nextpage")) {
-                    for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
-                        ItemstackBuilder itemstackBuilder = new ItemstackBuilder(Material.getMaterial(itemsConfig.getString("material").toUpperCase()),
-                                itemsConfig.getInt("amount"))
-                                .setName(itemsConfig.getString("display-name"))
-                                .setData((short) itemsConfig.getInt("data"));
-                        if (itemsConfig.getString("enchant") != null) {
-                            itemstackBuilder.setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),
-                                    Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0])).toItem();
-                        }
-                        inventoryBuilder.addButton(new ButtonBuilder(
-                                inventoryBuilder, itemsConfig.getInt("position"),
-                                i, itemstackBuilder.toItem()
-                                , true, false, true)
-                        );
+            if (kitModule.getConfigManager().getKitYaml().getInt("inventory.page") != 1 && string.equalsIgnoreCase("nextpage")) {
+                for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
+                    ItemstackBuilder itemstackBuilder = new ItemstackBuilder(Material.getMaterial(itemsConfig.getString("material").toUpperCase()),
+                            itemsConfig.getInt("amount"))
+                            .setName(itemsConfig.getString("display-name"))
+                            .setData((short) itemsConfig.getInt("data"));
+                    if (itemsConfig.getString("enchant") != null) {
+                        itemstackBuilder.setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),
+                                Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0])).toItem();
                     }
+                    inventoryBuilder.addButton(new ButtonBuilder(
+                            inventoryBuilder, itemsConfig.getInt("position"),
+                            i, itemstackBuilder.toItem()
+                            , true, false, true)
+                    );
                 }
             }
         }

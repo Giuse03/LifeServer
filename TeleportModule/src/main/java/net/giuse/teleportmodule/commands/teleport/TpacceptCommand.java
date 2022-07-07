@@ -37,19 +37,20 @@ public class TpacceptCommand extends AbstractCommand {
         Player player = (Player) commandSender;
         if (teleportRequestService.getPending(player.getUniqueId()) == null) {
             player.sendMessage(teleportModule.getMessage("no-pending-request"));
-        } else {
-            PendingRequest pendingRequest = teleportRequestService.getPending(player.getUniqueId());
-            if (pendingRequest.getTpType().equals(TpType.TPA)) {
-                teleportModule.getBackLocations().put(pendingRequest.getSender(), pendingRequest.getSender().getLocation());
-                PaperLib.teleportAsync(pendingRequest.getSender(), pendingRequest.getReceiver().getLocation());
-            } else {
-                teleportModule.getBackLocations().put(pendingRequest.getReceiver(), pendingRequest.getReceiver().getLocation());
-                PaperLib.teleportAsync(pendingRequest.getReceiver(), pendingRequest.getSender().getLocation());
-            }
-            pendingRequest.getSender().sendMessage(teleportModule.getMessage("teleport-player").replace("%playername%", pendingRequest.getReceiver().getName()));
-            player.sendMessage(teleportModule.getMessage("request-accept-receiver").replace("%playername%", player.getName()));
-            teleportRequestService.getPendingRequests().remove(pendingRequest);
-
+            return;
         }
+
+        PendingRequest pendingRequest = teleportRequestService.getPending(player.getUniqueId());
+        if (pendingRequest.getTpType().equals(TpType.TPA)) {
+            teleportModule.getBackLocations().put(pendingRequest.getSender(), pendingRequest.getSender().getLocation());
+            PaperLib.teleportAsync(pendingRequest.getSender(), pendingRequest.getReceiver().getLocation());
+        } else {
+            teleportModule.getBackLocations().put(pendingRequest.getReceiver(), pendingRequest.getReceiver().getLocation());
+            PaperLib.teleportAsync(pendingRequest.getReceiver(), pendingRequest.getSender().getLocation());
+        }
+        pendingRequest.getSender().sendMessage(teleportModule.getMessage("teleport-player").replace("%playername%", pendingRequest.getReceiver().getName()));
+        player.sendMessage(teleportModule.getMessage("request-accept-receiver").replace("%playername%", player.getName()));
+        teleportRequestService.getPendingRequests().remove(pendingRequest);
+
     }
 }

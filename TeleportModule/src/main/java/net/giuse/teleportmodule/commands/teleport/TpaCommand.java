@@ -36,15 +36,15 @@ public class TpaCommand extends AbstractCommand {
 
         if (args.length == 0) {
             sender.sendMessage(teleportModule.getMessage("select-player"));
-        } else {
-            Player target = Bukkit.getPlayer(args[0]);
-            if (target == null) {
-                sender.sendMessage(teleportModule.getMessage("player-not-found"));
-                return;
-            }
-            sender.sendMessage(teleportModule.getMessage("tpa-request-sender").replace("%playername%", target.getName()));
-            target.sendMessage(teleportModule.getMessage("tpa-request-receiver").replace("%playername%", sender.getName()));
-            teleportRequestService.getPendingRequests().add(new PendingRequest(sender, target, TpType.TPA));
+            return;
         }
+        Player target = Bukkit.getPlayer(args[0]);
+        if (target == null) {
+            sender.sendMessage(teleportModule.getMessage("player-not-found"));
+            return;
+        }
+        sender.sendMessage(teleportModule.getMessage("tpa-request-sender").replace("%playername%", target.getName()));
+        target.sendMessage(teleportModule.getMessage("tpa-request-receiver").replace("%playername%", sender.getName()));
+        teleportRequestService.getPendingRequests().add(new PendingRequest(sender, target, TpType.TPA));
     }
 }

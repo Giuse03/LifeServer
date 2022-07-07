@@ -33,16 +33,16 @@ public class KitListCommand extends AbstractCommand {
         }
         Player p = (Player) sender;
         if (p.hasPermission("lifeserver.kit.list")) {
-            if (kitModule.getKitElements().isEmpty()) {
-                p.sendMessage(kitModule.getMessage("kit-list-empty"));
-            } else {
-                StringBuilder sb = new StringBuilder();
-                kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
-                p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
-            }
-        } else {
             p.sendMessage(kitModule.getMessage("no-perms"));
+            return;
+        }
 
+        if (kitModule.getKitElements().isEmpty()) {
+            p.sendMessage(kitModule.getMessage("kit-list-empty"));
+        } else {
+            StringBuilder sb = new StringBuilder();
+            kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
+            p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
         }
     }
 }

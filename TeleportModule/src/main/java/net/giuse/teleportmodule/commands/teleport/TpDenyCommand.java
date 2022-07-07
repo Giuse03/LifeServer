@@ -33,10 +33,12 @@ public class TpDenyCommand extends AbstractCommand {
         Player sender = (Player) commandSender;
         if (teleportRequestService.getPending(sender.getUniqueId()) == null) {
             sender.sendMessage(teleportModule.getMessage("no-pending-request"));
-        } else {
-            PendingRequest pendingRequest = teleportRequestService.getPending(sender.getUniqueId());
-            pendingRequest.getSender().sendMessage(teleportModule.getMessage("request-refused").replace("%playername%", pendingRequest.getReceiver().getName()));
-            teleportRequestService.getPendingRequests().remove(pendingRequest);
+            return;
         }
+
+        PendingRequest pendingRequest = teleportRequestService.getPending(sender.getUniqueId());
+        pendingRequest.getSender().sendMessage(teleportModule.getMessage("request-refused").replace("%playername%", pendingRequest.getReceiver().getName()));
+        teleportRequestService.getPendingRequests().remove(pendingRequest);
+
     }
 }

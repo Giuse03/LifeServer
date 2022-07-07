@@ -35,15 +35,15 @@ public class TpaHereCommand extends AbstractCommand {
         Player sender = (Player) commandSender;
         if (args.length == 0) {
             sender.sendMessage(("select-player"));
-        } else {
-            Player target = Bukkit.getPlayer(args[0]);
-            if (target == null) {
-                sender.sendMessage(teleportModule.getMessage("player-not-found"));
-                return;
-            }
-            sender.sendMessage(teleportModule.getMessage("tpahere-request-sender").replace("%playername%", target.getName()));
-            target.sendMessage(teleportModule.getMessage("tpahere-request-receiver").replace("%playername%", sender.getName()));
-            teleportRequestService.getPendingRequests().add(new PendingRequest(sender, target, TpType.TPA_HERE));
+            return;
         }
+        Player target = Bukkit.getPlayer(args[0]);
+        if (target == null) {
+            sender.sendMessage(teleportModule.getMessage("player-not-found"));
+            return;
+        }
+        sender.sendMessage(teleportModule.getMessage("tpahere-request-sender").replace("%playername%", target.getName()));
+        target.sendMessage(teleportModule.getMessage("tpahere-request-receiver").replace("%playername%", sender.getName()));
+        teleportRequestService.getPendingRequests().add(new PendingRequest(sender, target, TpType.TPA_HERE));
     }
 }

@@ -57,7 +57,6 @@ public class UtilsItemStack {
      * <p>
      * <p/>
      * <p>
-     * Base off of {@link #fromBase64(String)}.
      *
      * @param data Base64 string to convert to ItemStack array.
      * @return ItemStack array created from the Base64 string.
