@@ -42,8 +42,12 @@ public class KitCreateCommand extends AbstractCommand {
         //Check args
         if (args.length == 0) {
             p.sendMessage(kitModule.getMessage("kit-insert-name-kit"));
-        } else if (args.length == 1) {
+            return;
+        }
+
+        if (args.length == 1) {
             p.sendMessage(kitModule.getMessage("kit-cooldown"));
+            return;
         }
 
         //Check if Number is valid

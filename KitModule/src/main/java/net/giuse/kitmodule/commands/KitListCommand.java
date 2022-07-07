@@ -34,7 +34,7 @@ public class KitListCommand extends AbstractCommand {
 
         //Check if player has permission
         Player p = (Player) sender;
-        if (p.hasPermission("lifeserver.kit.list")) {
+        if (!p.hasPermission("lifeserver.kit.list")) {
             p.sendMessage(kitModule.getMessage("no-perms"));
             return;
         }

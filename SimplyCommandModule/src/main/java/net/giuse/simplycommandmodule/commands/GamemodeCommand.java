@@ -34,7 +34,9 @@ public class GamemodeCommand extends AbstractCommand {
                 player.sendMessage(simplyCommandService.getMex("gamemode-available"));
                 return;
             }
+
             setGamemode(args[0], player);
+            return;
         }
 
 

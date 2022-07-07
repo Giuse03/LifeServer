@@ -69,4 +69,5 @@ public class FlyCommand extends AbstractCommand {
         commandSender.sendMessage(simplyCommandService.getMex("fly-enable-other").replace("%player_name%", target.getName()));
         target.sendMessage(simplyCommandService.getMex("fly-enable"));
     }
+
 }

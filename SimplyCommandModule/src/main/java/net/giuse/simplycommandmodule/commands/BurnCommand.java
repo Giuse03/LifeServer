@@ -39,6 +39,31 @@ public class BurnCommand extends AbstractCommand {
             return;
         }
 
+        if (args.length == 1) {
+
+            if (commandSender instanceof ConsoleCommandSender) {
+                Player target = Bukkit.getPlayer(args[0]);
+
+                if (target == null) {
+                    commandSender.sendMessage(simplyCommandService.getMex("player-not-online"));
+                    return;
+                }
+
+                target.setFireTicks(20);
+                commandSender.sendMessage(simplyCommandService.getMex("burning").replace("%player_name%", target.getName()).replace("%seconds%", "20"));
+                return;
+            }
+
+            Player player = (Player) commandSender;
+            if (!NumberUtils.isNumber(args[0])) {
+                commandSender.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[1]));
+                return;
+            }
+            player.setFireTicks(Integer.parseInt(args[0]));
+            commandSender.sendMessage(simplyCommandService.getMex("burning").replace("%player_name%", player.getName()).replace("%seconds%", args[1]));
+            return;
+        }
+
         if (!commandSender.hasPermission("lifeserver.burn.other")) {
             commandSender.sendMessage(simplyCommandService.getMex("no-perms"));
         }
@@ -50,24 +75,15 @@ public class BurnCommand extends AbstractCommand {
             return;
         }
 
-
-        if (args.length == 1) {
-            target.setFireTicks(20 * 20);
-            commandSender.sendMessage(simplyCommandService.getMex("burning").replace("%player_name%", target.getName()).replace("%seconds%", "20"));
-            return;
-        }
-
-        if (NumberUtils.isNumber(args[1])) {
+        if (!NumberUtils.isNumber(args[1])) {
             commandSender.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[1]));
             return;
         }
 
-        if (Integer.parseInt(args[1]) >= 0 && (Integer.parseInt(args[1]) <= 10)) {
-            commandSender.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[1]));
-            return;
-        }
 
         target.setFireTicks(Integer.parseInt(args[1]));
         commandSender.sendMessage(simplyCommandService.getMex("burning").replace("%player_name%", target.getName()).replace("%seconds%", args[1]));
+        commandSender.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[1]));
+
     }
 }

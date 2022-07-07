@@ -14,15 +14,12 @@ import javax.inject.Inject;
 
 public class SpeedCommand extends AbstractCommand {
     private final SimplyCommandService simplyCommandService;
-
     @Inject
     public SpeedCommand(MainModule mainModule) {
         super("speed", "lifeserver.speed", false);
         simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
         setNoPerm(simplyCommandService.getMex("no-perms"));
-
     }
-
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
@@ -36,8 +33,8 @@ public class SpeedCommand extends AbstractCommand {
             return;
         }
         if (args.length == 1) {
-            if (NumberUtils.isNumber(args[0])) {
-                player.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[0]));
+            if (!NumberUtils.isNumber(args[0])) {
+                player.sendMessage(simplyCommandService.getMex("speed-invalid-number-time").replace("%invalid_number%", args[0]));
                 return;
             }
 
@@ -46,7 +43,7 @@ public class SpeedCommand extends AbstractCommand {
                 return;
             }
 
-            player.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[0]));
+            player.sendMessage(simplyCommandService.getMex("speed-invalid-number-time").replace("%invalid_number%", args[0]));
             return;
         }
 

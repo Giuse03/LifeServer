@@ -57,11 +57,12 @@ public class KitGiveCommand extends AbstractCommand {
             //Check if there are kits
             if (kitModule.getKitElements().isEmpty()) {
                 p.sendMessage(kitModule.getMessage("kit-list-empty"));
-            } else {
-                StringBuilder sb = new StringBuilder();
-                kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
-                p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
+                return;
             }
+            StringBuilder sb = new StringBuilder();
+            kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
+            p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
+
             return;
         }
 
