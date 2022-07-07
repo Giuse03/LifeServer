@@ -38,43 +38,41 @@ public class KitGiveCommand extends AbstractCommand {
         }
         Player p = (Player) sender;
         if (args.length == 0) {
-            if (p.hasPermission("lifeserver.kit.list")) {
-                if (mainModule.getConfig().getBoolean("use-kit-gui")) {
-                    KitGui guiManager = mainModule.getInjector().getSingleton(KitGui.class);
-                    guiManager.openInv(p);
-                    return;
-                }
-                if (kitModule.getKitElements().isEmpty()) {
-                    p.sendMessage(kitModule.getMessage("kit-list-empty"));
-                } else {
-                    StringBuilder sb = new StringBuilder();
-                    kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
-                    p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
-                }
-            } else {
+            if (!p.hasPermission("lifeserver.kit.list")) {
                 p.sendMessage(kitModule.getMessage("no-perms"));
-
+                return;
+            }
+            if (mainModule.getConfig().getBoolean("use-kit-gui")) {
+                KitGui guiManager = mainModule.getInjector().getSingleton(KitGui.class);
+                guiManager.openInv(p);
+                return;
+            }
+            if (kitModule.getKitElements().isEmpty()) {
+                p.sendMessage(kitModule.getMessage("kit-list-empty"));
+            } else {
+                StringBuilder sb = new StringBuilder();
+                kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
+                p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
             }
         } else {
-            if (p.hasPermission("lifeserver.kit." + args[0])) {
-                if (kitModule.getKit(args[0]) != null) {
-                    KitBuilder kitBuilder = kitModule.getKit(args[0]);
-                    if (kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().anyMatch(kitCooldown -> kitCooldown.getKitBuilder().equals(kitBuilder))) {
-                        KitCooldown kitCooldown = kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().filter(kitCooldowns -> kitCooldowns.getKitBuilder().equals(kitBuilder)).findFirst().get();
-                        if (kitCooldown.getVariableCoolDown() == 0) {
-                            kitModule.getPlayerTime(p.getUniqueId()).start(kitCooldown);
-                            kitBuilder.giveItems(p);
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', kitModule.getMessage("kit-receive").replace("%kit%", kitBuilder.getName())));
-                        } else {
-                            p.sendMessage(kitModule.getMessage("kit-wait").replace("%time%", Utils.formatTime(kitCooldown.getVariableCoolDown())));
-                        }
-                    }
-                } else {
-                    p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
-                }
-            } else {
+            if (!p.hasPermission("lifeserver.kit." + args[0])) {
                 p.sendMessage(kitModule.getMessage("no-perms"));
-
+                return;
+            }
+            if (kitModule.getKit(args[0]) == null) {
+                p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
+                return;
+            }
+            KitBuilder kitBuilder = kitModule.getKit(args[0]);
+            if (kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().anyMatch(kitCooldown -> kitCooldown.getKitBuilder().equals(kitBuilder))) {
+                KitCooldown kitCooldown = kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().filter(kitCooldowns -> kitCooldowns.getKitBuilder().equals(kitBuilder)).findFirst().get();
+                if (kitCooldown.getVariableCoolDown() == 0) {
+                    kitModule.getPlayerTime(p.getUniqueId()).start(kitCooldown);
+                    kitBuilder.giveItems(p);
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', kitModule.getMessage("kit-receive").replace("%kit%", kitBuilder.getName())));
+                } else {
+                    p.sendMessage(kitModule.getMessage("kit-wait").replace("%time%", Utils.formatTime(kitCooldown.getVariableCoolDown())));
+                }
             }
         }
     }
