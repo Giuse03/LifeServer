@@ -37,7 +37,7 @@ public class MoneyCommand extends AbstractCommand {
         }
 
         if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) != null) {
-            p.sendMessage(this.economyService.getMessage("economy-balance-other").replace("%money%", String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())).replace("%player%", args[1]));
+            p.sendMessage(this.economyService.getMessage("economy-balance-other").replace("%money%", String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())).replace("%player%", args[0]));
             return;
         }
         p.sendMessage(this.economyService.getMessage("economy-neverJoin"));

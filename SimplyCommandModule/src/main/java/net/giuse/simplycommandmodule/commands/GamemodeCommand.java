@@ -51,39 +51,44 @@ public class GamemodeCommand extends AbstractCommand {
             return;
         }
 
-        setGamemode(args[0], target.getPlayer());
+        if(setGamemode(args[0], target.getPlayer())){
+            commandSender.sendMessage(simplyCommandService.getMex("gamemode-other").replace("%gamemode%",args[0]).replace("%player_name% ",target.getName()));
+            return;
+        }
+        commandSender.sendMessage(simplyCommandService.getMex("gamemode-available"));
     }
 
 
     /*
      * Gamemode Selector
      */
-    private void setGamemode(String gamemode, Player player) {
+    private boolean setGamemode(String gamemode, Player player) {
 
         if (gamemode.equalsIgnoreCase("creative") || gamemode.equalsIgnoreCase("1")) {
             player.setGameMode(GameMode.CREATIVE);
             player.sendMessage(simplyCommandService.getMex("gamemode").replace("%gamemode%", "creative"));
-            return;
+            return true;
         }
 
         if (gamemode.equalsIgnoreCase("survival") || gamemode.equalsIgnoreCase("0")) {
             player.setGameMode(GameMode.SURVIVAL);
             player.sendMessage(simplyCommandService.getMex("gamemode").replace("%gamemode%", "survival"));
-            return;
+            return true;
         }
 
         if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("2")) {
             player.setGameMode(GameMode.ADVENTURE);
             player.sendMessage(simplyCommandService.getMex("gamemode").replace("%gamemode%", "adventure"));
-            return;
+            return true;
         }
 
         if (gamemode.equalsIgnoreCase("spectator") || gamemode.equalsIgnoreCase("3")) {
             player.setGameMode(GameMode.SPECTATOR);
             player.sendMessage(simplyCommandService.getMex("gamemode").replace("%gamemode%", "spectator"));
-            return;
+            return true;
         }
         player.sendMessage(simplyCommandService.getMex("gamemode-available"));
+        return false;
     }
 }
 
