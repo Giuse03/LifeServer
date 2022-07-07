@@ -65,40 +65,28 @@ public class SpeedCommand extends AbstractCommand {
         }
 
         if (Integer.parseInt(args[1]) >= 0 && (Integer.parseInt(args[1]) <= 10)) {
-            setSpeed(player, target, Float.valueOf(args[1]));
-            return;
+            if (setSpeed(target, Float.valueOf(args[1]))) {
+                player.sendMessage(simplyCommandService.getMex("speed-set-other").replace("%player_name%", target.getName()).replace("%number%", args[1]));
+                return;
+            }
+            player.sendMessage(simplyCommandService.getMex("walk-set-other").replace("%player_name%", target.getName()).replace("%number%", args[1]));
         }
-
         player.sendMessage(simplyCommandService.getMex("speed-invalid-number-time").replace("%invalid_number%", args[0]));
 
 
     }
 
 
-    private void setSpeed(Player player, Float speed) {
+    private boolean setSpeed(Player player, Float speed) {
         if (player.isFlying()) {
             player.setFlySpeed(speed / 10);
             player.sendMessage(simplyCommandService.getMex("speed-set").replace("%number%", String.valueOf(speed)));
-            return;
+            return true;
         }
         player.setWalkSpeed(speed / 10);
         player.sendMessage(simplyCommandService.getMex("walk-set").replace("%number%", String.valueOf(speed)));
+        return false;
     }
 
-
-    private void setSpeed(Player player, Player target, Float speed) {
-        if (target.isFlying()) {
-            target.setFlySpeed(speed / 10);
-            target.sendMessage(simplyCommandService.getMex("speed-set").replace("%number%", String.valueOf(speed)));
-            player.sendMessage(simplyCommandService.getMex("speed-set-other").replace("%player_name%", target.getName()).replace("%number%", String.valueOf(speed)));
-            return;
-        }
-
-        target.setWalkSpeed(speed / 10);
-        target.sendMessage(simplyCommandService.getMex("walk-set").replace("%number%", String.valueOf(speed)));
-        player.sendMessage(simplyCommandService.getMex("walk-set-other").replace("%player_name%", target.getName()).replace("%number%", String.valueOf(speed)));
-
-
-    }
 
 }
