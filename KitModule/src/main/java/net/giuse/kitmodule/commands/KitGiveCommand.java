@@ -32,11 +32,14 @@ public class KitGiveCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        //Check if Sender is Player
         if (sender instanceof ConsoleCommandSender) {
             sender.sendMessage("Not Supported From Console");
             return;
         }
         Player p = (Player) sender;
+
+        //Check if show kit list or kit gui
         if (args.length == 0) {
             if (!p.hasPermission("lifeserver.kit.list")) {
                 p.sendMessage(kitModule.getMessage("no-perms"));
@@ -54,27 +57,31 @@ public class KitGiveCommand extends AbstractCommand {
                 kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
                 p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
             }
-        } else {
-            if (!p.hasPermission("lifeserver.kit." + args[0])) {
-                p.sendMessage(kitModule.getMessage("no-perms"));
-                return;
-            }
-            if (kitModule.getKit(args[0]) == null) {
-                p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
-                return;
-            }
-            KitBuilder kitBuilder = kitModule.getKit(args[0]);
-            if (kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().anyMatch(kitCooldown -> kitCooldown.getKitBuilder().equals(kitBuilder))) {
-                KitCooldown kitCooldown = kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().filter(kitCooldowns -> kitCooldowns.getKitBuilder().equals(kitBuilder)).findFirst().get();
-                if (kitCooldown.getVariableCoolDown() == 0) {
-                    kitModule.getPlayerTime(p.getUniqueId()).start(kitCooldown);
-                    kitBuilder.giveItems(p);
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', kitModule.getMessage("kit-receive").replace("%kit%", kitBuilder.getName())));
-                } else {
-                    p.sendMessage(kitModule.getMessage("kit-wait").replace("%time%", Utils.formatTime(kitCooldown.getVariableCoolDown())));
-                }
+            return;
+        }
+        //Check if player has permission
+        if (!p.hasPermission("lifeserver.kit." + args[0])) {
+            p.sendMessage(kitModule.getMessage("no-perms"));
+            return;
+        }
+        //Check if kit exists
+        if (kitModule.getKit(args[0]) == null) {
+            p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
+            return;
+        }
+
+        //Give kit to Player
+        KitBuilder kitBuilder = kitModule.getKit(args[0]);
+        if (kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().anyMatch(kitCooldown -> kitCooldown.getKitBuilder().equals(kitBuilder))) {
+            KitCooldown kitCooldown = kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().filter(kitCooldowns -> kitCooldowns.getKitBuilder().equals(kitBuilder)).findFirst().get();
+            if (kitCooldown.getVariableCoolDown() == 0) {
+                kitModule.getPlayerTime(p.getUniqueId()).start(kitCooldown);
+                kitBuilder.giveItems(p);
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', kitModule.getMessage("kit-receive").replace("%kit%", kitBuilder.getName())));
+            } else {
+                p.sendMessage(kitModule.getMessage("kit-wait").replace("%time%", Utils.formatTime(kitCooldown.getVariableCoolDown())));
             }
         }
     }
-
 }
+

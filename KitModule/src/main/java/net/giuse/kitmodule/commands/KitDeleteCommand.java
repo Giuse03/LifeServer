@@ -18,12 +18,9 @@ public class KitDeleteCommand extends AbstractCommand {
 
     private final KitModule kitModule;
 
-    private final MainModule mainModule;
-
     @Inject
     public KitDeleteCommand(MainModule mainModule) {
         super("kitdelete", "lifeserver.kitdelete", true);
-        this.mainModule = mainModule;
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         setNoPerm(kitModule.getMessage("no-perms"));
 

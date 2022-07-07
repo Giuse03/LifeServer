@@ -34,54 +34,57 @@ public class KitCreateCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        //Check if Sender is a Player
         if (sender instanceof ConsoleCommandSender) {
             sender.sendMessage("Not Supported From Console");
             return;
         }
+
         Player p = (Player) sender;
+        //Check args
         if (args.length == 0) {
             p.sendMessage(kitModule.getMessage("kit-insert-name-kit"));
         } else if (args.length == 1) {
             p.sendMessage(kitModule.getMessage("kit-cooldown"));
-        } else {
-            if (!NumberUtils.isNumber(args[1])) {
+        }
+
+        if (!NumberUtils.isNumber(args[1])) {
+            p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
+            return;
+        }
+        //Check if Number is valid
+        try {
+            if (Integer.parseInt(args[1]) < 0) {
                 p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
                 return;
             }
-            //Check if Number is valid
-            try {
-                if (Integer.parseInt(args[1]) < 0) {
-                    p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                p.sendMessage(kitModule.getMessage("kit-cooldown-max"));
-                return;
-            }
-
-
-            //Check if KitExists
-            if (kitModule.getKit(args[0]) != null) {
-                p.sendMessage(kitModule.getMessage("kit-already-exists"));
-                return;
-            }
-
-            //Check if Player has inventoryu Empty
-            if (isEmpty(p)) {
-                p.sendMessage(kitModule.getMessage("must-have-item"));
-                return;
-            }
-
-            //Create Kit
-            List<ItemStack> itemStackList = new ArrayList<>();
-            Arrays.stream(p.getInventory().getContents())
-                    .filter(stacks -> stacks != null && !stacks.getType().equals(Material.AIR))
-                    .forEach(itemStackList::add);
-            KitBuilder kitBuilder = new KitBuilder(args[0], Integer.parseInt(args[1])).setBase(UtilsItemStack.listItemStackToBase64(itemStackList));
-            kitModule.getKitElements().add(kitBuilder);
-            kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.addKit(kitBuilder));
-            p.sendMessage(kitModule.getMessage("kit-created").replace("%kit%", args[0]));
+        } catch (NumberFormatException e) {
+            p.sendMessage(kitModule.getMessage("kit-cooldown-max"));
+            return;
         }
+
+
+        //Check if KitExists
+        if (kitModule.getKit(args[0]) != null) {
+            p.sendMessage(kitModule.getMessage("kit-already-exists"));
+            return;
+        }
+
+        //Check if Player has inventoryu Empty
+        if (isEmpty(p)) {
+            p.sendMessage(kitModule.getMessage("must-have-item"));
+            return;
+        }
+
+        //Create Kit
+        List<ItemStack> itemStackList = new ArrayList<>();
+        Arrays.stream(p.getInventory().getContents())
+                .filter(stacks -> stacks != null && !stacks.getType().equals(Material.AIR))
+                .forEach(itemStackList::add);
+        KitBuilder kitBuilder = new KitBuilder(args[0], Integer.parseInt(args[1])).setBase(UtilsItemStack.listItemStackToBase64(itemStackList));
+        kitModule.getKitElements().add(kitBuilder);
+        kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.addKit(kitBuilder));
+        p.sendMessage(kitModule.getMessage("kit-created").replace("%kit%", args[0]));
     }
 
 
