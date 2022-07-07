@@ -22,11 +22,17 @@ public class PlayerKitTimeSerializer implements Serializer<PlayerTimerSystem> {
         this.kitModule = (KitModule) mainModule.getService(KitModule.class);
     }
 
+    /**
+     * Convert String to PlayerTimerSystem
+     */
     @Override
     public String encode(PlayerTimerSystem playerTimerSystem) {
         StringBuilder stringBuilder = new StringBuilder();
-        String uuid = playerTimerSystem.getUuid().toString();
-        stringBuilder.append(uuid).append(";");
+
+        //Set UUID to stringBuilder
+        stringBuilder.append(playerTimerSystem.getUuid().toString()).append(";");
+
+        //Encode KitCooldown to string
         int size = playerTimerSystem.getKitsCooldown().size();
         for (int i = 0; i < size; i++) {
             if (i == (size - 1)) {
@@ -39,16 +45,25 @@ public class PlayerKitTimeSerializer implements Serializer<PlayerTimerSystem> {
         return stringBuilder.toString();
     }
 
+    /**
+     * Convert  PlayerTimerSystem to String
+     */
     @Override
     public PlayerTimerSystem decoder(String str) {
         String[] decodePlayerKit = str.split(";");
         PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(UUID.fromString(decodePlayerKit[0]));
+
         for (String kitCooldownArg : decodePlayerKit[1].split(",")) {
             String[] kitCooldownStr = kitCooldownArg.split("_");
+
+            //Create kitCooldown with the args
             KitCooldown kitCooldown = new KitCooldown(kitModule.getKit(kitCooldownStr[0]));
             kitCooldown.setVariableCoolDown(Integer.parseInt(kitCooldownStr[1]));
+
+            //add kitCooldown to PlayerTimerSystem
             playerTimerSystem.getKitsCooldown().add(kitCooldown);
         }
+
         return playerTimerSystem;
     }
 }

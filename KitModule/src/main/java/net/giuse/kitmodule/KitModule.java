@@ -51,11 +51,14 @@ public class KitModule extends Services implements Savable {
     @SneakyThrows
     @Override
     public void load() {
+
         //Initialize Serializer and Databases
         playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
         kitOperations = mainModule.getInjector().getSingleton(KitOperations.class);
         playerKitOperations = mainModule.getInjector().getSingleton(PlayerKitOperations.class);
         kitBuilderSerializer = mainModule.getInjector().getSingleton(KitSerializer.class);
+
+
         //Initialize Files
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
         ReflectionsFiles.loadFiles(configManager);
@@ -67,8 +70,8 @@ public class KitModule extends Services implements Savable {
         }
         messages.put("no-perms", mainModule.getConfig().getString("no-perms"));
 
-        //Load Kit and PlayerTimeKit
 
+        //Load Kit and PlayerTimeKit
         kitOperations.getAllString().forEach(kitElement -> kitElements.add(kitBuilderSerializer.decoder(kitElement)));
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading SQL...");
         for (String playerTimeString : playerKitOperations.getAllString()) {
@@ -76,6 +79,7 @@ public class KitModule extends Services implements Savable {
             playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
             playerTimerSystems.add(playerTimerSystem);
         }
+
     }
 
     /**

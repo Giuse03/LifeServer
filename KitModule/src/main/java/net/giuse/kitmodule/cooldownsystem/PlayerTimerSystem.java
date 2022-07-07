@@ -44,7 +44,7 @@ public class PlayerTimerSystem extends BukkitRunnable {
         KitCooldown kitCooldown = new KitCooldown(kitBuilder);
         kitsCooldown.add(kitCooldown);
     }
-    
+
     /*
      * Remove kit from timer task
      */

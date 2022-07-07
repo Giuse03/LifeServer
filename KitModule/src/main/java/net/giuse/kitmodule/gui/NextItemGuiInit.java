@@ -26,10 +26,8 @@ public class NextItemGuiInit implements ItemInitializer {
         KitModule kitModule = (KitModule) mainModule.getService(KitModule.class);
         ConfigurationSection configurationSection = kitModule.getConfigManager().getKitYaml().getConfigurationSection("inventory.items");
         configurationSection.getKeys(false).forEach(string -> {
-        ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
-
+            ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
             if (kitModule.getConfigManager().getKitYaml().getInt("inventory.page") != 1 && string.equalsIgnoreCase("nextpage")) {
-
                 for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
                     //Create a ItemBuilderStack
                     ItemstackBuilder itemstackBuilder = new ItemstackBuilder(
@@ -37,10 +35,9 @@ public class NextItemGuiInit implements ItemInitializer {
                             itemsConfig.getInt("amount")).setName(itemsConfig.getString("display-name"))
                             .setData((short) itemsConfig.getInt("data"));
 
-
                     //Check there are enchantments from section
                     if (itemsConfig.getString("enchant") != null) {
-                        itemstackBuilder.setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0])).toItem();
+                        itemstackBuilder.setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]), Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0])).toItem();
                     }
 
                     //Add Item in Gui
