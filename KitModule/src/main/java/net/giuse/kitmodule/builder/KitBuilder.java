@@ -3,6 +3,7 @@ package net.giuse.kitmodule.builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import net.giuse.mainmodule.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,7 +27,7 @@ public class KitBuilder {
 
     @SneakyThrows
     public void giveItems(Player player) {
-        for (ItemStack item : UtilsItemStack.itemStackArrayFromBase64(base64)) {
+        for (ItemStack item : Utils.itemStackArrayFromBase64(base64)) {
             if (player.getInventory().firstEmpty() == -1) {
                 player.getLocation().getWorld().dropItemNaturally(player.getLocation(), item);
             } else {

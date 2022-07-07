@@ -4,6 +4,7 @@ import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
+import net.giuse.mainmodule.utils.Utils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -78,7 +79,7 @@ public class KitCreateCommand extends AbstractCommand {
         Arrays.stream(p.getInventory().getContents())
                 .filter(stacks -> stacks != null && !stacks.getType().equals(Material.AIR))
                 .forEach(itemStackList::add);
-        KitBuilder kitBuilder = new KitBuilder(args[0], Integer.parseInt(args[1])).setBase(UtilsItemStack.listItemStackToBase64(itemStackList));
+        KitBuilder kitBuilder = new KitBuilder(args[0], Integer.parseInt(args[1])).setBase(Utils.listItemStackToBase64(itemStackList));
         kitModule.getKitElements().add(kitBuilder);
         kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.addKit(kitBuilder));
         p.sendMessage(kitModule.getMessage("kit-created").replace("%kit%", args[0]));
