@@ -63,7 +63,7 @@ public class KitGiveCommand extends AbstractCommand {
                         KitCooldown kitCooldown = kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().filter(kitCooldowns -> kitCooldowns.getKitBuilder().equals(kitBuilder)).findFirst().get();
                         if (kitCooldown.getVariableCoolDown() == 0) {
                             kitModule.getPlayerTime(p.getUniqueId()).start(kitCooldown);
-                            kitBuilder.getItems().forEach(itemStack -> p.getInventory().addItem(kitModule.getItemStackSerializer().decoder(itemStack)));
+                            kitBuilder.giveItems(p);
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', kitModule.getMessage("kit-receive").replace("%kit%", kitBuilder.getName())));
                         } else {
                             p.sendMessage(kitModule.getMessage("kit-wait").replace("%time%", Utils.formatTime(kitCooldown.getVariableCoolDown())));

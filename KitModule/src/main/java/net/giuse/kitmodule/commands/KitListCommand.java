@@ -19,7 +19,7 @@ public class KitListCommand extends AbstractCommand {
 
     @Inject
     public KitListCommand(MainModule mainModule) {
-        super("kitlist", "lifeserver.kitlist", false);
+        super("kitlist", "lifeserver.kitlist", true);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         setNoPerm(kitModule.getMessage("no-perms"));
 

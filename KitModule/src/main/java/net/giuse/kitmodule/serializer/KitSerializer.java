@@ -1,13 +1,24 @@
 package net.giuse.kitmodule.serializer;
 
+import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.builder.KitBuilder;
+import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.serializer.Serializer;
+
+import javax.inject.Inject;
 
 /**
  * KitSerializer serializer for save in database
  */
 
 public class KitSerializer implements Serializer<KitBuilder> {
+
+    private final KitModule kitModule;
+
+    @Inject
+    public KitSerializer(MainModule mainModule) {
+        this.kitModule = (KitModule) mainModule.getService(KitModule.class);
+    }
 
     /**
      * Convert String to KitBuilder
@@ -16,13 +27,7 @@ public class KitSerializer implements Serializer<KitBuilder> {
     public KitBuilder decoder(String kitString) {
         //Split Kit Serialized
         String[] valueKitBuilder = kitString.split(":");
-
-        KitBuilder kitBuilder = new KitBuilder(valueKitBuilder[0], Integer.parseInt(valueKitBuilder[1]));
-
-        for (String s : valueKitBuilder[2].split(",")) {
-            kitBuilder.getItems().add(s);
-        }
-        return kitBuilder;
+        return new KitBuilder(valueKitBuilder[0], Integer.parseInt(valueKitBuilder[1])).setBase(valueKitBuilder[2]);
     }
 
     /**
@@ -30,26 +35,14 @@ public class KitSerializer implements Serializer<KitBuilder> {
      */
     @Override
     public String encode(KitBuilder kitBuilder) {
-        StringBuilder sb = new StringBuilder();
-
         //Insert name in a StringBuilder
-        sb.append(kitBuilder.getName()).append(":");
+        return kitBuilder.getName() + ":" +
 
-        //Insert cooldown of Kit in a StringBuilder
-        sb.append(kitBuilder.getCoolDown()).append(":");
+                //Insert cooldown of Kit in a StringBuilder
+                kitBuilder.getCoolDown() + ":" +
 
-        //Insert serialized itemstack in a StringBuilder
-        int size = kitBuilder.getItems().size();
-        for (int i = 0; i < kitBuilder.getItems().size(); i++) {
-            if (i == (size - 1)) {
-                sb.append(kitBuilder.getItems().get(i));
-            } else {
-                sb.append(kitBuilder.getItems().get(i)).append(",");
-            }
-        }
-
-        //return KitBuilder Serialized
-        return sb.toString();
+                //Insert serialized itemstack in a StringBuilder
+                kitBuilder.getBase64();
     }
 
 }

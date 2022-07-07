@@ -7,7 +7,6 @@ import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
 import net.giuse.kitmodule.databases.kit.KitOperations;
 import net.giuse.kitmodule.databases.kit.PlayerKitOperations;
 import net.giuse.kitmodule.files.FileManager;
-import net.giuse.kitmodule.serializer.ItemStackSerializer;
 import net.giuse.kitmodule.serializer.KitSerializer;
 import net.giuse.kitmodule.serializer.PlayerKitTimeSerializer;
 import net.giuse.mainmodule.MainModule;
@@ -17,7 +16,6 @@ import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
 import org.bukkit.ChatColor;
-import org.bukkit.inventory.ItemStack;
 
 import javax.inject.Inject;
 import java.nio.file.Files;
@@ -38,10 +36,9 @@ public class KitModule extends Services implements Savable {
     private final HashMap<String, String> messages = new HashMap<>();
     @Getter
     private final FileManager configManager = new FileManager();
+
     @Getter
-    private final Serializer<KitBuilder> kitBuilderSerializer = new KitSerializer();
-    @Getter
-    private final Serializer<ItemStack> itemStackSerializer = new ItemStackSerializer();
+    private Serializer<KitBuilder> kitBuilderSerializer;
     @Inject
     private MainModule mainModule;
     @Getter
@@ -59,7 +56,7 @@ public class KitModule extends Services implements Savable {
         playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
         kitOperations = mainModule.getInjector().getSingleton(KitOperations.class);
         playerKitOperations = mainModule.getInjector().getSingleton(PlayerKitOperations.class);
-
+        kitBuilderSerializer = mainModule.getInjector().getSingleton(KitSerializer.class);
         //Initialize Files
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
         ReflectionsFiles.loadFiles(configManager);
@@ -100,6 +97,21 @@ public class KitModule extends Services implements Savable {
         return -1;
     }
 
+
+    /**
+     * Save Sets of PlayerTimerSystem and Kit in a Database
+     */
+    @Override
+    public void save() {
+        mainModule.getConnectorSQLite().openConnect();
+        playerKitOperations.dropTable();
+        playerKitOperations.createTable();
+        playerTimerSystems.forEach(playerTimeSystem -> playerKitOperations.insert(playerKitTimeSerializer.encode(playerTimeSystem)));
+        kitOperations.dropTable();
+        kitOperations.createTable();
+        kitElements.forEach(kitBuilder -> kitOperations.insert(kitBuilderSerializer.encode(kitBuilder)));
+    }
+
     /**
      * Search PlayerTimerSystem from Set
      */
@@ -119,21 +131,6 @@ public class KitModule extends Services implements Savable {
      */
     public String getMessage(String key) {
         return ChatColor.translateAlternateColorCodes('&', messages.get(key));
-    }
-
-
-    /**
-     * Save Sets of PlayerTimerSystem and Kit in a Database
-     */
-    @Override
-    public void save() {
-        mainModule.getConnectorSQLite().openConnect();
-        playerKitOperations.dropTable();
-        playerKitOperations.createTable();
-        playerTimerSystems.forEach(playerTimeSystem -> playerKitOperations.insert(playerKitTimeSerializer.encode(playerTimeSystem)));
-        kitOperations.dropTable();
-        kitOperations.createTable();
-        kitElements.forEach(kitBuilder -> kitOperations.insert(kitBuilderSerializer.encode(kitBuilder)));
     }
 
 

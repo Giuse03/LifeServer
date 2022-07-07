@@ -36,4 +36,8 @@ public class PlayerTimerSystem extends BukkitRunnable {
         kitsCooldown.add(kitCooldown);
     }
 
+    public void removeKit(KitBuilder kitBuilder) {
+        kitsCooldown.remove(kitsCooldown.stream().filter(kitCooldown -> kitCooldown.getKitBuilder().getName().equalsIgnoreCase(kitBuilder.getName())).findFirst().get());
+    }
+
 }
