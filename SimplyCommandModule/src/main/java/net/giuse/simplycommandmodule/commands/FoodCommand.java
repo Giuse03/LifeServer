@@ -6,6 +6,7 @@ import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
 
@@ -22,13 +23,14 @@ public class FoodCommand extends AbstractCommand {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (args.length == 0) {
-            if (commandSender instanceof Player) {
-                Player player = (Player) commandSender;
-                player.setFoodLevel(20);
-                player.sendMessage(simplyCommandService.getMex("food"));
-                return;
-            }
             commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+            return;
+        }
+        if (commandSender instanceof Player) {
+            Player player = (Player) commandSender;
+            player.setFoodLevel(20);
+            player.sendMessage(simplyCommandService.getMex("food"));
+            return;
         }
 
         if (!commandSender.hasPermission("lifeserver.food.other")) {

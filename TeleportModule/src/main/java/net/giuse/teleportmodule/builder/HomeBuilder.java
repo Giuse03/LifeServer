@@ -26,7 +26,7 @@ public class HomeBuilder {
                     .append(locations.get(s).getYaw())
                     .append(",").append(locations.get(s).getPitch());
             if (i != locations.keySet().size()) {
-                homeSerialized.append(",");
+                homeSerialized.append(";");
             }
         }
         return homeSerialized.toString();

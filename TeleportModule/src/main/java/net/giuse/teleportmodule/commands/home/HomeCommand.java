@@ -55,6 +55,7 @@ public class HomeCommand extends AbstractCommand {
                         i++;
                         if (i == homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().size()) {
                             listHome.append(s);
+                            break;
                         }
                         listHome.append(s).append(",");
                     }

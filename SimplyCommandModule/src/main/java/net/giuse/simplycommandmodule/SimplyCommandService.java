@@ -53,7 +53,7 @@ public class SimplyCommandService extends Services {
             mainModule.getServer().getPluginManager().registerEvents(new FoodEvent(), mainModule);
         }
         if (mainModule.getConfig().getBoolean("always-day")) {
-            new BukkitRunnable() {
+            new  BukkitRunnable() {
                 @Override
                 public void run() {
                     for (World world : Bukkit.getWorlds()) {
