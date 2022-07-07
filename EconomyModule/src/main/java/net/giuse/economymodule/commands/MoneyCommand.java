@@ -29,14 +29,19 @@ public class MoneyCommand extends AbstractCommand {
         final Player p = (Player) commandSender;
         if (args.length == 0) {
             p.sendMessage(this.economyService.getMessage("economy-balance").replace("%money%", String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())));
-        } else if (p.hasPermission("lifeserver.balance.other")) {
+            return;
+        }
+
+        if (p.hasPermission("lifeserver.balance.other")) {
             if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) != null) {
                 p.sendMessage(this.economyService.getMessage("economy-balance-other").replace("%money%", String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())).replace("%player%", args[1]));
-            } else {
-                p.sendMessage(this.economyService.getMessage("economy-neverJoin"));
+                return;
             }
-        } else {
-            p.sendMessage(this.economyService.getMessage("no-perms"));
+            p.sendMessage(this.economyService.getMessage("economy-neverJoin"));
+            return;
         }
+
+        p.sendMessage(this.economyService.getMessage("no-perms"));
+
     }
 }

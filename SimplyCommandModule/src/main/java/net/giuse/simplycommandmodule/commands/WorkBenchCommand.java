@@ -23,8 +23,10 @@ public class WorkBenchCommand extends AbstractCommand {
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
             player.openWorkbench(null, true);
-        } else {
-            commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+            return;
         }
+
+        commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+
     }
 }

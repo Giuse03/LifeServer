@@ -59,6 +59,7 @@ public class DelHomeCommand extends AbstractCommand {
             //Delete home
             homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(args[0].toLowerCase());
             sender.sendMessage(teleportModule.getMessage("deleted_home"));
+            return;
         }
 
         //Delete Home

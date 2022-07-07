@@ -75,6 +75,7 @@ public class HomeCommand extends AbstractCommand {
             teleportModule.getBackLocations().put(sender, sender.getLocation());
             PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0].toLowerCase()));
             sender.sendMessage(teleportModule.getMessage("teleported"));
+            return;
         }
 
         //Teleport player to the default home

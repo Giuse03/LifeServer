@@ -22,11 +22,13 @@ public class GodEvent implements Listener {
 
     @EventHandler
     public void onGod(EntityDamageByEntityEvent e) {
+
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             if (simplyCommandService.getStringsNameGods().contains(e.getEntity().getName())) {
                 e.setCancelled(true);
             }
         }
+
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             if (simplyCommandService.getStringsNameGods().contains(e.getDamager().getName())) {
                 e.setCancelled(true);

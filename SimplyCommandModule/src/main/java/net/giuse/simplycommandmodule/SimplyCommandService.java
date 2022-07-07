@@ -30,7 +30,6 @@ public class SimplyCommandService extends Services {
     @Inject
     private MainModule mainModule;
 
-
     /**
      * This is Module of Simply Command
      * Most of these commands are not async executable so they will not pass through the process engine

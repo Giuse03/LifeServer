@@ -29,6 +29,7 @@ public class BroadcastCommand extends AbstractCommand {
         for (String arg : args) {
             sb.append(arg).append(" ");
         }
+
         Bukkit.getOnlinePlayers().forEach(onlinePlayers -> onlinePlayers.sendMessage(simplyCommandService.getMex("broadcast").replace("%message%", sb.toString())));
 
     }

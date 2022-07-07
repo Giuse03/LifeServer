@@ -65,7 +65,6 @@ public class FileManager extends AbstractConfig {
         messageSimpleFileYml.set("messages.simplecommand.god-other-disabled", "&aGod &2» %player_name% isn't now a god!");
         messageSimpleFileYml.set("messages.simplecommand.player-not-online", "&7This player is offline");
         messageSimpleFileYml.set("messages.simplecommand.not-player", "&cYou must be player!");
-
         saveConfig();
     }
 

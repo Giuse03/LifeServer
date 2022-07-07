@@ -30,9 +30,8 @@ public class HatCommand extends AbstractCommand {
                 player.getInventory().setHelmet(player.getInventory().getItemInMainHand());
                 player.getInventory().setItemInMainHand(null);
             }
-
-        } else {
-            commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+            return;
         }
+        commandSender.sendMessage(simplyCommandService.getMex("not-player"));
     }
 }
