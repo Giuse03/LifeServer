@@ -37,6 +37,13 @@ public class SudoCommand extends AbstractCommand {
             commandSender.sendMessage(simplyCommandService.getMex("player-not-online"));
             return;
         }
+
+        if(sb.toString().startsWith("chat:")){
+            target.chat(sb.toString().replace("chat:",""));
+            commandSender.sendMessage(simplyCommandService.getMex("sudo-forced").replace("%command%", sb.toString()).replace("%player_name%", target.getName()));
+            return;
+        }
+
         target.performCommand(sb.toString());
         commandSender.sendMessage(simplyCommandService.getMex("sudo-forced").replace("%command%", sb.toString()).replace("%player_name%", target.getName()));
 
