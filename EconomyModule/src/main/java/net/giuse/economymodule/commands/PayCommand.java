@@ -31,32 +31,32 @@ public class PayCommand extends AbstractCommand {
         final Player p = (Player) commandSender;
         if (args.length <= 1) {
             p.sendMessage(this.economyService.getMessage("economy-pay-args"));
-        } else {
-
-            if (!NumberUtils.isNumber(args[1])) {
-                p.sendMessage(this.economyService.getMessage("economy-number"));
-                return;
-            }
-
-            if (Double.parseDouble(args[1]) < 0.0) {
-                p.sendMessage(this.economyService.getMessage("economy-number"));
-                return;
-            }
-
-            if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) == null) {
-                p.sendMessage(this.economyService.getMessage("economy-neverJoin"));
-                return;
-            }
-            if (this.economyService.getCustomEcoManager().getBalance(p) >= Double.parseDouble(args[1])) {
-                final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId());
-                this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(econPlayer.getPlayer()), Double.parseDouble(args[1]));
-                this.economyService.getCustomEcoManager().withdrawPlayer(p, Double.parseDouble(args[1]));
-                p.sendMessage(this.economyService.getMessage("economy-pay-send").replace("%player%", Bukkit.getPlayer(econPlayer.getPlayer()).getName()).replace("%amount%", args[1]));
-                Bukkit.getPlayer(econPlayer.getPlayer()).sendMessage(this.economyService.getMessage("economy-pay-receive").replace("%player%", p.getName()).replace("%amount%", args[1]));
-                return;
-            }
-            p.sendMessage(this.economyService.getMessage("economy-no-money"));
-
+            return;
         }
+        if (!NumberUtils.isNumber(args[1])) {
+            p.sendMessage(this.economyService.getMessage("economy-number"));
+            return;
+        }
+
+        if (Double.parseDouble(args[1]) < 0.0) {
+            p.sendMessage(this.economyService.getMessage("economy-number"));
+            return;
+        }
+
+        if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) == null) {
+            p.sendMessage(this.economyService.getMessage("economy-neverJoin"));
+            return;
+        }
+
+        if (this.economyService.getCustomEcoManager().getBalance(p) >= Double.parseDouble(args[1])) {
+            final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId());
+            this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(econPlayer.getPlayer()), Double.parseDouble(args[1]));
+            this.economyService.getCustomEcoManager().withdrawPlayer(p, Double.parseDouble(args[1]));
+            p.sendMessage(this.economyService.getMessage("economy-pay-send").replace("%player%", Bukkit.getPlayer(econPlayer.getPlayer()).getName()).replace("%amount%", args[1]));
+            Bukkit.getPlayer(econPlayer.getPlayer()).sendMessage(this.economyService.getMessage("economy-pay-receive").replace("%player%", p.getName()).replace("%amount%", args[1]));
+            return;
+        }
+        p.sendMessage(this.economyService.getMessage("economy-no-money"));
+
     }
 }

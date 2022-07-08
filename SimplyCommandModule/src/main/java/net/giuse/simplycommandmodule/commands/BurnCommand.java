@@ -55,6 +55,7 @@ public class BurnCommand extends AbstractCommand {
             }
 
             Player player = (Player) commandSender;
+
             if (!NumberUtils.isNumber(args[0])) {
                 commandSender.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[0]));
                 return;

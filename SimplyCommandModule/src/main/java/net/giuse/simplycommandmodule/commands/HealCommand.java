@@ -5,6 +5,7 @@ import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
@@ -24,14 +25,14 @@ public class HealCommand extends AbstractCommand {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (args.length == 0) {
-            if (commandSender instanceof Player) {
-                Player player = (Player) commandSender;
-                player.setHealth(20);
-                player.sendMessage(simplyCommandService.getMex("heal"));
+            if (commandSender instanceof ConsoleCommandSender) {
+                commandSender.sendMessage(simplyCommandService.getMex("not-player"));
                 return;
             }
-            commandSender.sendMessage(simplyCommandService.getMex("not-player"));
-
+            Player player = (Player) commandSender;
+            player.setHealth(20);
+            player.sendMessage(simplyCommandService.getMex("heal"));
+            return;
         }
 
         if (!commandSender.hasPermission("lifeserver.heal.other")) {

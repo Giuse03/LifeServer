@@ -5,6 +5,7 @@ import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,37 +25,37 @@ public class EnchantCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        if (commandSender instanceof Player) {
-            Player player = (Player) commandSender;
-            if (args.length == 0) {
-                player.sendMessage(simplyCommandService.getMex("enchant-usage"));
-                return;
-            }
-
-            if (args.length == 1) {
-                player.sendMessage(simplyCommandService.getMex("enchant-insert-level"));
-                return;
-            }
-
-            if (Enchantment.getByName(args[0]) == null) {
-                player.sendMessage(simplyCommandService.getMex("enchant-invalid").replace("%enchant%", args[0]));
-                return;
-            }
-
-            if (NumberUtils.isNumber(args[1]) && Integer.parseInt(args[1]) < 0) {
-                player.sendMessage(simplyCommandService.getMex("enchant-correct-insert-level"));
-                return;
-            }
-
-            ItemStack hand = player.getInventory().getItemInMainHand();
-            ItemMeta itemMeta = player.getInventory().getItemInMainHand().getItemMeta();
-            hand.addUnsafeEnchantment(Enchantment.getByName(args[0]), Integer.parseInt(args[1]));
-            itemMeta.addEnchant(Enchantment.getByName(args[0]), Integer.parseInt(args[1]), true);
-            hand.setItemMeta(itemMeta);
-            player.updateInventory();
+        if (commandSender instanceof ConsoleCommandSender) {
+            commandSender.sendMessage(simplyCommandService.getMex("not-player"));
             return;
         }
-        commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+        Player player = (Player) commandSender;
 
+        if (args.length == 0) {
+            player.sendMessage(simplyCommandService.getMex("enchant-usage"));
+            return;
+        }
+
+        if (args.length == 1) {
+            player.sendMessage(simplyCommandService.getMex("enchant-insert-level"));
+            return;
+        }
+
+        if (Enchantment.getByName(args[0]) == null) {
+            player.sendMessage(simplyCommandService.getMex("enchant-invalid").replace("%enchant%", args[0]));
+            return;
+        }
+
+        if (NumberUtils.isNumber(args[1]) && Integer.parseInt(args[1]) < 0) {
+            player.sendMessage(simplyCommandService.getMex("enchant-correct-insert-level"));
+            return;
+        }
+
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        ItemMeta itemMeta = player.getInventory().getItemInMainHand().getItemMeta();
+        hand.addUnsafeEnchantment(Enchantment.getByName(args[0]), Integer.parseInt(args[1]));
+        itemMeta.addEnchant(Enchantment.getByName(args[0]), Integer.parseInt(args[1]), true);
+        hand.setItemMeta(itemMeta);
+        player.updateInventory();
     }
 }
