@@ -15,7 +15,7 @@ public class EconomyOperations implements DBOperations {
 
     @Override
     public ArrayList<String> getAllString() {
-        final ArrayList<String> allStrings = new ArrayList<String>();
+        final ArrayList<String> allStrings = new ArrayList<>();
         try (final PreparedStatement st = this.mainModule.getConnectorSQLite().getConnection().prepareStatement("SELECT * FROM Economy")) {
             final ResultSet rs = st.executeQuery();
             while (rs.next()) {

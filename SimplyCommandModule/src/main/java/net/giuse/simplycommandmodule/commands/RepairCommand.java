@@ -15,6 +15,7 @@ import java.util.Objects;
 
 public class RepairCommand extends AbstractCommand {
     private final SimplyCommandService simplyCommandService;
+
     @Inject
     public RepairCommand(MainModule mainModule) {
         super("repair", "lifeserver.repair", false);

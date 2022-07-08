@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 public class SudoCommand extends AbstractCommand {
     private final SimplyCommandService simplyCommandService;
+
     @Inject
     public SudoCommand(MainModule mainModule) {
         super("sudo", "lifeserver.sudo", false);
@@ -38,8 +39,8 @@ public class SudoCommand extends AbstractCommand {
             return;
         }
 
-        if(sb.toString().startsWith("chat:")){
-            target.chat(sb.toString().replace("chat:",""));
+        if (sb.toString().startsWith("chat:")) {
+            target.chat(sb.toString().replace("chat:", ""));
             commandSender.sendMessage(simplyCommandService.getMex("sudo-forced").replace("%command%", sb.toString()).replace("%player_name%", target.getName()));
             return;
         }

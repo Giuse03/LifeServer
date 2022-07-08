@@ -18,7 +18,7 @@ public class TpHereCommand extends AbstractCommand {
 
     @Inject
     public TpHereCommand(MainModule mainModule) {
-        super("tphere", "lifeserver.tphere", true);
+        super("tphere", "lifeserver.tphere", false);
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         setNoPerm(teleportModule.getMessage("no-perms"));
 

@@ -12,10 +12,10 @@
         <option value="$PROJECT_DIR$/KitModule/pom.xml" />
         <option value="$PROJECT_DIR$/MainModule/pom.xml" />
         <option value="$PROJECT_DIR$/JarCompileModule/pom.xml" />
-        <option value="$PROJECT_DIR$/TeleportModule/pom.xml" />
         <option value="$PROJECT_DIR$/SecretMessageModule/pom.xml" />
         <option value="$PROJECT_DIR$/EconomyModule/pom.xml" />
         <option value="$PROJECT_DIR$/SimplyCommandModule/pom.xml" />
+        <option value="$PROJECT_DIR$/TeleportModule/pom.xml" />
       </list>
     </option>
   </component>

@@ -1,12 +1,12 @@
 package net.giuse.kitmodule.gui;
 
+import com.cryptomorin.xseries.XMaterial;
 import eu.giuse.inventorylib.ButtonBuilder;
 import eu.giuse.inventorylib.InventoryBuilder;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.builder.ItemstackBuilder;
 import net.giuse.mainmodule.gui.ItemInitializer;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 
@@ -32,7 +32,7 @@ public class NextItemGuiInit implements ItemInitializer {
 
                     //Create a ItemBuilderStack
                     ItemstackBuilder itemstackBuilder = new ItemstackBuilder(
-                            Material.getMaterial(itemsConfig.getString("material").toUpperCase()), itemsConfig.getInt("amount"))
+                            XMaterial.matchXMaterial(itemsConfig.getString("material").toUpperCase()).get().parseMaterial(), itemsConfig.getInt("amount"))
                             .setName(itemsConfig.getString("display-name")).setData((short) itemsConfig.getInt("data"));
 
                     //Check there are enchantments from section

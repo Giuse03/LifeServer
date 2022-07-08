@@ -33,6 +33,7 @@ public class KitGui implements GuiInitializer {
     public void initInv() {
 
         //Create Inventory Builder
+
         InventoryBuilder inventoryBuilder = new InventoryBuilder(
                 mainModule,
                 kitModule.getConfigManager().getKitYaml().getInt("inventory.rows"),

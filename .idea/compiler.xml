@@ -2,17 +2,18 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="EconomyModule" />
         <module name="SimplyCommandModule" />
-        <module name="TeleportModulez" />
         <module name="KitModule" />
         <module name="MainModule" />
         <module name="SecretMessageModule" />
         <module name="LifeServer" />
+        <module name="TeleportModule" />
         <module name="JarCompileModule" />
       </profile>
     </annotationProcessing>

@@ -79,6 +79,12 @@
                                     <pattern>org.reflections</pattern>
                                     <shadedPattern>net.lib.reflections</shadedPattern>
                                 </relocation>
+
+                                <relocation>
+                                    <pattern>com.cryptomorin</pattern>
+                                    <shadedPattern>net.lib.cryptomorin</shadedPattern>
+                                </relocation>
+
                             </relocations>
 
                         </configuration>

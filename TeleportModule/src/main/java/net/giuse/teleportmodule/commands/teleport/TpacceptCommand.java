@@ -19,7 +19,7 @@ public class TpacceptCommand extends AbstractCommand {
 
     @Inject
     public TpacceptCommand(MainModule mainModule) {
-        super("tpaccept", "lifeserver.tpaccept", true);
+        super("tpaccept", "lifeserver.tpaccept", false);
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
         setNoPerm(teleportModule.getMessage("no-perms"));
@@ -50,7 +50,6 @@ public class TpacceptCommand extends AbstractCommand {
             teleportModule.getBackLocations().put(pendingRequest.getReceiver(), pendingRequest.getReceiver().getLocation());
             PaperLib.teleportAsync(pendingRequest.getReceiver(), pendingRequest.getSender().getLocation());
         }
-
         //Accept Pending Request
         pendingRequest.getSender().sendMessage(teleportModule.getMessage("teleport-player").replace("%playername%", pendingRequest.getReceiver().getName()));
         player.sendMessage(teleportModule.getMessage("request-accept-receiver").replace("%playername%", player.getName()));

@@ -16,7 +16,7 @@ public class TpCommand extends AbstractCommand {
 
     @Inject
     public TpCommand(MainModule mainModule) {
-        super("tp", "lifeserver.tp", true);
+        super("tp", "lifeserver.tp", false);
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         setNoPerm(teleportModule.getMessage("no-perms"));
     }

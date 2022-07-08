@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
+//TODO Better Invsee, Offline Player Too
 public class InvseeCommand extends AbstractCommand {
     private final SimplyCommandService simplyCommandService;
 
@@ -44,4 +45,5 @@ public class InvseeCommand extends AbstractCommand {
 
         player.openInventory(target.getInventory());
     }
+
 }

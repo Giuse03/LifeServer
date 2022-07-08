@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 public class SpeedCommand extends AbstractCommand {
     private final SimplyCommandService simplyCommandService;
+
     @Inject
     public SpeedCommand(MainModule mainModule) {
         super("speed", "lifeserver.speed", false);

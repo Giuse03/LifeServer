@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 public class GamemodeCommand extends AbstractCommand {
     private final SimplyCommandService simplyCommandService;
+
     @Inject
     public GamemodeCommand(MainModule mainModule) {
         super("gamemode", "lifeserver.gamemode", false);
@@ -51,8 +52,8 @@ public class GamemodeCommand extends AbstractCommand {
             return;
         }
 
-        if(setGamemode(args[0], target.getPlayer())){
-            commandSender.sendMessage(simplyCommandService.getMex("gamemode-other").replace("%gamemode%",args[0]).replace("%player_name% ",target.getName()));
+        if (setGamemode(args[0], target.getPlayer())) {
+            commandSender.sendMessage(simplyCommandService.getMex("gamemode-other").replace("%gamemode%", args[0]).replace("%player_name% ", target.getName()));
             return;
         }
         commandSender.sendMessage(simplyCommandService.getMex("gamemode-available"));
