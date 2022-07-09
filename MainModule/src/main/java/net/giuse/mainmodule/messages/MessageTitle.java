@@ -18,8 +18,6 @@ public class MessageTitle implements Message {
     @Getter
     private final int fadeIn,stay,fadeOut;
     private final String id;
-
-
     @Override
     public String getID() {
         return id;

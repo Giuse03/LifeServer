@@ -7,27 +7,23 @@ import net.giuse.mainmodule.messages.MessageChat;
 import net.giuse.mainmodule.messages.MessageTitle;
 import net.giuse.mainmodule.messages.interfaces.Message;
 import net.giuse.mainmodule.messages.interfaces.MessageLoader;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageLoaderKit implements MessageLoader {
+public class MessageLoaderKit extends MessageLoader {
     private final ArrayList<Message> arrayListMessage = new ArrayList<>();
-    private final MainModule mainModule;
     private final KitModule kitModule;
 
     @Inject
     public MessageLoaderKit(MainModule mainModule) {
-        this.mainModule = mainModule;
+        super(mainModule);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
     }
+
 
     @Override
     public void load() {
@@ -75,32 +71,6 @@ public class MessageLoaderKit implements MessageLoader {
         return messagesGet;
     }
 
-    /*
-     * Send title to Player
-     */
-    @Override
-    public void sendTitle(Player player, Component title,Component subTitle,int fadeIn,int stay,int fadeOut) {
-        Title.Times times = Title.Times.times(Duration.ofMillis(fadeIn), Duration.ofMillis(stay), Duration.ofMillis(fadeOut));
-        Title titleToSend = Title.title(title, subTitle, times);
-        mainModule.getAdventure().player(player).showTitle(titleToSend);
-    }
-
-
-    /*
-     * Send message to Player
-     */
-    @Override
-    public void sendChat(Player player, Component messageChat) {
-        mainModule.getAdventure().player(player).sendMessage(messageChat);
-    }
-
-    /*
-     * Send message to Player
-     */
-    @Override
-    public void sendActionBar(Player player, Component send) {
-         mainModule.getAdventure().player(player).sendActionBar(send);
-    }
 
 
 }

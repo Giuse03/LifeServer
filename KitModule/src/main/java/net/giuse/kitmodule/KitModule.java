@@ -39,7 +39,6 @@ public class KitModule extends Services implements Savable {
     @Getter
     private Serializer<PlayerTimerSystem> playerKitTimeSerializer;
     private DBOperations kitOperations, playerKitOperations;
-
     @Getter
     private MessageLoaderKit messageLoaderKit;
 
