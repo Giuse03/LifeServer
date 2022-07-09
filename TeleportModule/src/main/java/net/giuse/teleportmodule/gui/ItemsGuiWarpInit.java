@@ -1,5 +1,7 @@
 package net.giuse.teleportmodule.gui;
 
+import com.cryptomorin.xseries.XEnchantment;
+import com.cryptomorin.xseries.XMaterial;
 import eu.giuse.inventorylib.ButtonBuilder;
 import eu.giuse.inventorylib.InventoryBuilder;
 import net.giuse.mainmodule.MainModule;
@@ -27,14 +29,14 @@ public class ItemsGuiWarpInit implements ItemInitializer {
             if (!string.equalsIgnoreCase("previouspage") && !string.equalsIgnoreCase("nextpage")) {
 
                 //Create ItemStackBuilder
-                ItemstackBuilder itemstackBuilder = new ItemstackBuilder(Material.getMaterial(itemsConfig.getString("material").toUpperCase()), itemsConfig.getInt("amount"));
+                ItemstackBuilder itemstackBuilder = new ItemstackBuilder(XMaterial.matchXMaterial(itemsConfig.getString("material").toUpperCase()).get().parseMaterial(), itemsConfig.getInt("amount"));
                 itemstackBuilder.setData((short) itemsConfig.getInt("data"));
                 itemstackBuilder.setName(itemsConfig.getString("display-name"));
 
                 //Check there are enchantments from section
                 if (itemsConfig.getString("enchant") != null) itemstackBuilder
                         .setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),
-                                Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0]));
+                                XEnchantment.matchXEnchantment(itemsConfig.getString("enchant").split(":")[0]).get().getEnchant());
 
                 //Check there are lores from section
                 if (!itemsConfig.getStringList("lore").isEmpty()) {

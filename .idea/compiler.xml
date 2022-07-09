@@ -9,11 +9,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="EconomyModule" />
         <module name="SimplyCommandModule" />
+        <module name="TeleportModulez" />
         <module name="KitModule" />
         <module name="MainModule" />
         <module name="SecretMessageModule" />
-        <module name="LifeServer" />
         <module name="TeleportModule" />
+        <module name="LifeServer" />
         <module name="JarCompileModule" />
       </profile>
     </annotationProcessing>

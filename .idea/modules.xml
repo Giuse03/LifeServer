@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/SecretMessageModule/SecretMessageModule.iml" filepath="$PROJECT_DIR$/SecretMessageModule/SecretMessageModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/SimplyCommandModule/SimplyCommandModule.iml" filepath="$PROJECT_DIR$/SimplyCommandModule/SimplyCommandModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/TeleportModule/TeleportModule.iml" filepath="$PROJECT_DIR$/TeleportModule/TeleportModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TeleportModule/TeleportModulez.iml" filepath="$PROJECT_DIR$/TeleportModule/TeleportModulez.iml" />
     </modules>
   </component>
 </project>

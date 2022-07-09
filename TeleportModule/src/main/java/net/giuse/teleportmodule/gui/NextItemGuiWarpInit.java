@@ -1,5 +1,7 @@
 package net.giuse.teleportmodule.gui;
 
+import com.cryptomorin.xseries.XEnchantment;
+import com.cryptomorin.xseries.XMaterial;
 import eu.giuse.inventorylib.ButtonBuilder;
 import eu.giuse.inventorylib.InventoryBuilder;
 import net.giuse.mainmodule.MainModule;
@@ -28,7 +30,7 @@ public class NextItemGuiWarpInit implements ItemInitializer {
                 for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
 
                     //Create a ItemBuilderStack
-                    ItemstackBuilder itemstackBuilder = new ItemstackBuilder(Material.getMaterial(itemsConfig.getString("material").toUpperCase()),
+                    ItemstackBuilder itemstackBuilder = new ItemstackBuilder(XMaterial.matchXMaterial(itemsConfig.getString("material").toUpperCase()).get().parseMaterial(),
                             itemsConfig.getInt("amount"))
                             .setName(itemsConfig.getString("display-name"))
                             .setData((short) itemsConfig.getInt("data"));
@@ -36,7 +38,7 @@ public class NextItemGuiWarpInit implements ItemInitializer {
                     //Check there are enchantments from section
                     if (itemsConfig.getString("enchant") != null) {
                         itemstackBuilder.setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),
-                                Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0])).toItem();
+                                XEnchantment.matchXEnchantment(itemsConfig.getString("enchant").split(":")[0]).get().getEnchant()).toItem();
                     }
 
                     //Add Item in Gui

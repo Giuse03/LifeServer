@@ -1,5 +1,6 @@
 package net.giuse.kitmodule.gui;
 
+import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import eu.giuse.inventorylib.ButtonBuilder;
 import eu.giuse.inventorylib.InventoryBuilder;
@@ -38,7 +39,7 @@ public class ItemsGuiInit implements ItemInitializer {
                 //Check there are enchantments from section
                 if (itemsConfig.getString("enchant") != null) {
                     itemstackBuilder.setEnchant(Integer.parseInt(itemsConfig.getString("enchant").split(":")[1]),
-                            Enchantment.getByName(itemsConfig.getString("enchant").split(":")[0]));
+                            XEnchantment.matchXEnchantment(itemsConfig.getString("enchant").split(":")[0]).get().getEnchant());
                 }
 
                 //Check there are lores from section

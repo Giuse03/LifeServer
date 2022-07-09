@@ -12,8 +12,6 @@ import javax.inject.Inject;
 
 public class HealCommand extends AbstractCommand {
     private final SimplyCommandService simplyCommandService;
-
-
     @Inject
     public HealCommand(MainModule mainModule) {
         super("heal", "lifeserver.heal", false);

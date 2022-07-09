@@ -85,8 +85,43 @@
                                     <shadedPattern>net.lib.cryptomorin</shadedPattern>
                                 </relocation>
 
+                                <relocation>
+                                    <pattern>org.intellij</pattern>
+                                    <shadedPattern>net.lib.intellij</shadedPattern>
+                                </relocation>
+
+                                <relocation>
+                                    <pattern>org.jetbrains</pattern>
+                                    <shadedPattern>net.lib.jetbrains</shadedPattern>
+                                </relocation>
+
+
+                                <relocation>
+                                    <pattern>com.google.gson</pattern>
+                                    <shadedPattern>net.lib.google.gson</shadedPattern>
+                                </relocation>
+
+
+                                <relocation>
+                                    <pattern>net.kyori</pattern>
+                                    <shadedPattern>net.lib.kyori</shadedPattern>
+                                </relocation>
+
+
                             </relocations>
 
+
+                            <filters>
+                            <filter>
+                                <artifact>*:*</artifact>
+                                <excludes>
+                                    <exclude>com/cryptomorin/xseries/XBiome*</exclude>
+                                    <exclude>com/cryptomorin/xseries/NMSExtras*</exclude>
+                                    <exclude>com/cryptomorin/xseries/NoteBlockMusic*</exclude>
+                                    <exclude>com/cryptomorin/xseries/messages/*</exclude>
+                                </excludes>
+                            </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>

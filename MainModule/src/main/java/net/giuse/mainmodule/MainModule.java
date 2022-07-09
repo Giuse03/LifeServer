@@ -12,6 +12,7 @@ import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.gui.GuiInitializer;
 import net.giuse.mainmodule.services.Services;
 import net.giuse.mainmodule.utils.Utils;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,8 @@ import org.reflections.Reflections;
 import java.util.HashMap;
 
 public class MainModule extends JavaPlugin {
+
+    public static String version = Bukkit.getBukkitVersion();
     @Getter
     private final Injector injector = new InjectorBuilder().addDefaultHandlers("net.giuse").create();
     private final Reflections reflections = new Reflections("net.giuse");
@@ -27,6 +30,7 @@ public class MainModule extends JavaPlugin {
     private final ConnectorSQLite connectorSQLite = new ConnectorSQLite();
     private HashMap<Services, Integer> servicesByPriority = new HashMap<>();
 
+    @Getter private BukkitAudiences adventure;
     /*
      * Enable MainModule
      */
@@ -75,6 +79,7 @@ public class MainModule extends JavaPlugin {
 
         getLogger().info("§aLifeserver started in " + (System.currentTimeMillis() - millis) + "ms...");
         connectorSQLite.closeConnection();
+        this.adventure = BukkitAudiences.create(this);
     }
 
     /*
