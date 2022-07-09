@@ -32,6 +32,7 @@ public class KitGiveCommand extends AbstractCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+
         //Check if Sender is Player
         if (sender instanceof ConsoleCommandSender) {
             sender.sendMessage("Not Supported From Console");
