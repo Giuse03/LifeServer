@@ -21,7 +21,7 @@ public class HoverCommand extends AbstractCommand {
     private MainModule mainModule;
 
     public HoverCommand() {
-        super("test", "permission", false);
+        super("test", "permission", true);
     }
 
     @Override
