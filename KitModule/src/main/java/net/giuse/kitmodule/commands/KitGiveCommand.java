@@ -85,7 +85,6 @@ public class KitGiveCommand extends AbstractCommand {
         KitBuilder kitBuilder = kitModule.getKit(args[0]);
         KitCooldown kitCooldown = kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().filter(kitCooldowns -> kitCooldowns.getKitBuilder().equals(kitBuilder)).findFirst().get();
         if (kitCooldown.getVariableCoolDown() != 0) {
-            System.out.println(Utils.formatTime(kitCooldown.getVariableCoolDown()));
             Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-wait","%time%=" + Utils.formatTime(kitCooldown.getVariableCoolDown()));
             return;
         }
