@@ -7,6 +7,7 @@ import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
 import net.giuse.kitmodule.databases.kit.KitOperations;
 import net.giuse.kitmodule.databases.kit.PlayerKitOperations;
 import net.giuse.kitmodule.files.FileManager;
+import net.giuse.kitmodule.messages.MessageLoaderKit;
 import net.giuse.kitmodule.serializer.KitSerializer;
 import net.giuse.kitmodule.serializer.PlayerKitTimeSerializer;
 import net.giuse.mainmodule.MainModule;
@@ -15,12 +16,8 @@ import net.giuse.mainmodule.databases.Savable;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
-import org.bukkit.ChatColor;
 
 import javax.inject.Inject;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -33,7 +30,6 @@ public class KitModule extends Services implements Savable {
     private final Set<PlayerTimerSystem> playerTimerSystems = new HashSet<>();
     @Getter
     private final Set<KitBuilder> kitElements = new HashSet<>();
-    private final HashMap<String, String> messages = new HashMap<>();
     @Getter
     private final FileManager configManager = new FileManager();
     @Getter
@@ -44,6 +40,8 @@ public class KitModule extends Services implements Savable {
     private Serializer<PlayerTimerSystem> playerKitTimeSerializer;
     private DBOperations kitOperations, playerKitOperations;
 
+    @Getter
+    private MessageLoaderKit messageLoaderKit;
 
     /**
      * Load Module Kit
@@ -56,19 +54,14 @@ public class KitModule extends Services implements Savable {
         playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
         kitOperations = mainModule.getInjector().getSingleton(KitOperations.class);
         playerKitOperations = mainModule.getInjector().getSingleton(PlayerKitOperations.class);
+        messageLoaderKit = mainModule.getInjector().getSingleton(MessageLoaderKit.class);
 
         //Initialize Files
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
         ReflectionsFiles.loadFiles(configManager);
-        if (Files.size(Paths.get("plugins/LifeServer/messages/messages_kit.yml")) == 0) {
-            configManager.messagesLoader();
-        }
-        for (String messageConfig : configManager.getMessagesYaml().getConfigurationSection("messages").getKeys(true)) {
-            messages.put(messageConfig, configManager.getMessagesYaml().getString("messages." + messageConfig));
-        }
-        messages.put("no-perms", mainModule.getConfig().getString("no-perms"));
 
         //Load Kit
+        messageLoaderKit.load();
         kitOperations.getAllString().forEach(kitElement -> {
             KitBuilder kitBuilder = kitBuilderSerializer.decoder(kitElement);
             kitBuilder.build();
@@ -118,6 +111,7 @@ public class KitModule extends Services implements Savable {
         kitElements.forEach(kitBuilder -> kitOperations.insert(kitBuilderSerializer.encode(kitBuilder)));
     }
 
+
     /**
      * Search PlayerTimerSystem from Set
      */
@@ -131,14 +125,6 @@ public class KitModule extends Services implements Savable {
     public KitBuilder getKit(String searchKitBuilder) {
         return kitElements.stream().filter(kitBuilder -> kitBuilder.getName().equalsIgnoreCase(searchKitBuilder)).findFirst().orElse(null);
     }
-
-    /**
-     * Search a Message from HashMap
-     */
-    public String getMessage(String key) {
-        return ChatColor.translateAlternateColorCodes('&', messages.get(key));
-    }
-
 
 }
 

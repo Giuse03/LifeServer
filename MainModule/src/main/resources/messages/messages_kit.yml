@@ -1,0 +1,196 @@
+messages:
+  #1
+  kit-cooldown:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7Insert cooldown of kit'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7Insert cooldown of kit'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Insert cooldown of kit'
+  #2
+  kit-cooldown-valid:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7Insert valid cooldown of kit'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7Insert valid cooldown of kit'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Insert cooldown of kit'
+  #3
+  kit-cooldown-max:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7Max cooldown is 2147483647'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7Max cooldown is 2147483647'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Max cooldown is 2147483647'
+  #4
+  kit-doesnt-exists:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7This kit doesn''t exists'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7This kit doesn''t exists'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&2Kit &a» &7This kit doesn''t exists'
+  #5
+  kit-insert-name-kit:
+    title:
+      send-title: true
+      main-title: "&2[&a Kit &2]"
+      subtitle: '&7Insert name of kit'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7Insert name of kit'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&2Kit &a» &7Insert name of kit'
+  #6
+  kit-already-exists:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7This kit already exists'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7This kit already exists'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&2Kit &a» &7This kit already exists'
+  #7
+  kit-created:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7You created the kit %kit%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7You created the kit %kit%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&2Kit &a» &7You created the kit %kit%'
+  #8
+  kit-removed:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7You removed the kit %kit%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7You removed the kit %kit%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&2Kit &a» &7You removed the kit %kit%'
+  #9
+  kit-list:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7%listkit%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7%listkit%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&2Kit &a» &7%listkit%'
+  #10
+  kit-list-empty:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7No kit available'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7No kit available'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&2Kit &a» &7No kit available'
+  #11
+  kit-wait:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7You must wait %time%.'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7You must wait %time%.'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You must wait %time%.'
+  #12
+  kit-receive:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7You received the kit %kit%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7You received the kit %kit%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You received the kit %kit%'
+  #12+1
+  must-have-item:
+    title:
+      send-title: true
+      main-title: '&2[&a Kit &2]'
+      subtitle: '&7Your inventory is empty'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Kit &a» &7Your inventory is empty'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Your inventory is empty'

@@ -27,7 +27,8 @@ public class KitCreateCommand extends AbstractCommand {
     public KitCreateCommand(MainModule mainModule) {
         super("kitcreate", "lifeserver.kitcreate", false);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
-        setNoPerm(kitModule.getMessage("no-perms"));
+        setNoPerm("No Perm");
+
     }
 
     @Override
@@ -41,40 +42,41 @@ public class KitCreateCommand extends AbstractCommand {
         Player p = (Player) sender;
         //Check args
         if (args.length == 0) {
-            p.sendMessage(kitModule.getMessage("kit-insert-name-kit"));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-insert-name-kit");
             return;
         }
 
         if (args.length == 1) {
-            p.sendMessage(kitModule.getMessage("kit-cooldown"));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-cooldown");
             return;
         }
 
         //Check if Number is valid
         if (!NumberUtils.isNumber(args[1])) {
-            p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-cooldown-valid");
             return;
         }
         try {
             if (Integer.parseInt(args[1]) < 0) {
-                p.sendMessage(kitModule.getMessage("kit-cooldown-valid"));
+                Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-cooldown-valid");
                 return;
             }
         } catch (NumberFormatException e) {
-            p.sendMessage(kitModule.getMessage("kit-cooldown-max"));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-cooldown-max");
+
             return;
         }
 
 
         //Check if KitExists
         if (kitModule.getKit(args[0]) != null) {
-            p.sendMessage(kitModule.getMessage("kit-already-exists"));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-already-exists");
             return;
         }
 
         //Check if Player has inventoryu Empty
         if (isEmpty(p)) {
-            p.sendMessage(kitModule.getMessage("must-have-item"));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"must-have-item");
             return;
         }
 
@@ -87,7 +89,8 @@ public class KitCreateCommand extends AbstractCommand {
         kitBuilder.build();
         kitModule.getKitElements().add(kitBuilder);
         kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.addKit(kitBuilder));
-        p.sendMessage(kitModule.getMessage("kit-created").replace("%kit%", args[0]));
+        Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-created","%kit%="+args[0]);
+
     }
 
 

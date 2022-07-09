@@ -52,6 +52,7 @@ public class MainModule extends JavaPlugin {
         saveResource("config.yml", false);
         saveResource("kit_gui_config.yml", false);
         saveResource("warp_gui_config.yml", false);
+        saveResource("messages/messages_kit.yml", false);
 
         //Load SQL
         ReflectionsFiles.loadFiles(new SQLFile());

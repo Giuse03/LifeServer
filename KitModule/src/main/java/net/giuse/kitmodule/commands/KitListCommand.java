@@ -1,8 +1,14 @@
 package net.giuse.kitmodule.commands;
 
 import net.giuse.kitmodule.KitModule;
+import net.giuse.kitmodule.messages.MessageLoaderKit;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
+import net.giuse.mainmodule.messages.MessageChat;
+import net.giuse.mainmodule.messages.MessageTitle;
+import net.giuse.mainmodule.messages.interfaces.Message;
+import net.giuse.mainmodule.messages.type.MessageType;
+import net.giuse.mainmodule.utils.Utils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -17,11 +23,12 @@ import javax.inject.Inject;
 public class KitListCommand extends AbstractCommand {
     private final KitModule kitModule;
 
+    private MessageLoaderKit messageLoaderKit;
     @Inject
     public KitListCommand(MainModule mainModule) {
         super("kitlist", "lifeserver.kitlist", true);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
-        setNoPerm(kitModule.getMessage("no-perms"));
+        setNoPerm("No Perm");
     }
 
     @Override
@@ -35,19 +42,19 @@ public class KitListCommand extends AbstractCommand {
         //Check if player has permission
         Player p = (Player) sender;
         if (!p.hasPermission("lifeserver.kit.list")) {
-            p.sendMessage(kitModule.getMessage("no-perms"));
+            p.sendMessage("No Perm");
             return;
         }
 
         //Check if there are kits
         if (kitModule.getKitElements().isEmpty()) {
-            p.sendMessage(kitModule.getMessage("kit-list-empty"));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-list-empty");
             return;
         }
 
         //Show a list of kit to player
         StringBuilder sb = new StringBuilder();
         kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
-        p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
+        Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-list","%listkit%="+ sb.deleteCharAt(sb.length() - 1));
     }
 }

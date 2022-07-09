@@ -31,6 +31,7 @@ public class FileManager extends AbstractConfig {
     /**
      * Load Messages in messages_kit.yml
      */
+    /*
     public void messagesLoader() {
         setFile(messagesFile);
         setYamlConfiguration(messagesYaml);
@@ -49,5 +50,6 @@ public class FileManager extends AbstractConfig {
         messagesYaml.set("messages.must-have-item", "&2Kit &a» &7Your inventory is empty");
         saveConfig();
     }
+     */
 
 }

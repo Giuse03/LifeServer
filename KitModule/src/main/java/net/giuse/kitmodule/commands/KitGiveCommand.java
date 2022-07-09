@@ -26,7 +26,8 @@ public class KitGiveCommand extends AbstractCommand {
         super("kit", "lifeserver.kit", false);
         this.mainModule = mainModule;
         kitModule = (KitModule) mainModule.getService(KitModule.class);
-        setNoPerm(kitModule.getMessage("no-perms"));
+        setNoPerm("No Perm");
+
     }
 
     @Override
@@ -43,7 +44,8 @@ public class KitGiveCommand extends AbstractCommand {
 
             //Check if player has permission
             if (!p.hasPermission("lifeserver.kit.list")) {
-                p.sendMessage(kitModule.getMessage("no-perms"));
+                p.sendMessage("No Perm");
+
                 return;
             }
 
@@ -56,25 +58,26 @@ public class KitGiveCommand extends AbstractCommand {
 
             //Check if there are kits
             if (kitModule.getKitElements().isEmpty()) {
-                p.sendMessage(kitModule.getMessage("kit-list-empty"));
+                Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-list-empty");
                 return;
             }
             StringBuilder sb = new StringBuilder();
             kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
-            p.sendMessage(kitModule.getMessage("kit-list").replace("%listkit%", sb.deleteCharAt(sb.length() - 1).toString()));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-list","%listkit%="+ sb.deleteCharAt(sb.length() - 1));
 
             return;
         }
 
         //Check if player has permission
         if (!p.hasPermission("lifeserver.kit." + args[0])) {
-            p.sendMessage(kitModule.getMessage("no-perms"));
+            p.sendMessage("No Perm");
+
             return;
         }
 
         //Check if kit exists
         if (kitModule.getKit(args[0]) == null) {
-            p.sendMessage(kitModule.getMessage("kit-doesnt-exists"));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-doesnt-exists");
             return;
         }
 
@@ -82,14 +85,15 @@ public class KitGiveCommand extends AbstractCommand {
         KitBuilder kitBuilder = kitModule.getKit(args[0]);
         KitCooldown kitCooldown = kitModule.getPlayerTime(p.getUniqueId()).getKitsCooldown().stream().filter(kitCooldowns -> kitCooldowns.getKitBuilder().equals(kitBuilder)).findFirst().get();
         if (kitCooldown.getVariableCoolDown() != 0) {
-            p.sendMessage(kitModule.getMessage("kit-wait").replace("%time%", Utils.formatTime(kitCooldown.getVariableCoolDown())));
+            System.out.println(Utils.formatTime(kitCooldown.getVariableCoolDown()));
+            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-wait","%time%=" + Utils.formatTime(kitCooldown.getVariableCoolDown()));
             return;
         }
 
         //Give kit to Player
         kitModule.getPlayerTime(p.getUniqueId()).start(kitCooldown);
         kitBuilder.giveItems(p);
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', kitModule.getMessage("kit-receive").replace("%kit%", kitBuilder.getName())));
+        Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-receive","%kit%=" + kitBuilder.getName());
     }
 }
 
