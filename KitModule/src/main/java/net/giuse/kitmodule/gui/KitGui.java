@@ -3,6 +3,7 @@ package net.giuse.kitmodule.gui;
 
 import eu.giuse.inventorylib.InventoryBuilder;
 import lombok.Getter;
+import net.giuse.engine.Worker;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.gui.GuiInitializer;
@@ -15,30 +16,26 @@ import javax.inject.Inject;
  */
 
 public class KitGui implements GuiInitializer {
-    private final MainModule mainModule;
-    private final KitModule kitModule;
     @Getter
     private InventoryBuilder inventoryBuilder;
-
     @Inject
-    public KitGui(MainModule mainModule) {
-        this.mainModule = mainModule;
-        this.kitModule = (KitModule) mainModule.getService(KitModule.class);
-    }
-
+    private MainModule mainModule;
+    @Inject
+    private Worker worker;
     /*
      * Initialize Inventory
      */
     @Override
     public void initInv() {
+        KitModule kitModule = (KitModule) mainModule.getService(KitModule.class);
 
         //Create Inventory Builder
-
         InventoryBuilder inventoryBuilder = new InventoryBuilder(
                 mainModule,
                 kitModule.getConfigManager().getKitYaml().getInt("inventory.rows"),
                 kitModule.getConfigManager().getKitYaml().getString("inventory.title"),
-                kitModule.getConfigManager().getKitYaml().getInt("inventory.page")).createInvs();
+                kitModule.getConfigManager().getKitYaml().getInt("inventory.page"),
+                worker).createInvs();
 
         //Initialize items
         mainModule.getInjector().getSingleton(NextItemGuiInit.class).initItems(inventoryBuilder);

@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import eu.giuse.inventorylib.ButtonBuilder;
 import eu.giuse.inventorylib.InventoryBuilder;
+import net.giuse.engine.Worker;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.builder.ItemstackBuilder;
 import net.giuse.mainmodule.gui.ItemInitializer;
@@ -16,7 +17,8 @@ import javax.inject.Inject;
 public class ItemsGuiWarpInit implements ItemInitializer {
     @Inject
     private MainModule mainModule;
-
+    @Inject
+    private Worker worker;
 
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
@@ -47,13 +49,14 @@ public class ItemsGuiWarpInit implements ItemInitializer {
                         itemsConfig.getInt("position"),
                         itemsConfig.getInt("page"),
                         itemstackBuilder.toItem(),
-                        false, false, true);
+                        false, false, true,worker);
 
                 //Set Event of the button
                 button.setEvent(inventoryClickEvent -> {
                     if (itemsConfig.getString("warp") != null) {
                         Player player = (Player) inventoryClickEvent.getWhoClicked();
                         player.performCommand("warp " + itemsConfig.getString("warp"));
+                        inventoryClickEvent.getWhoClicked().closeInventory();
                     }
                 });
                 inventoryBuilder.addButton(button);

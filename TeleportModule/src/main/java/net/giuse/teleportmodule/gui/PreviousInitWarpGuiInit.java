@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import eu.giuse.inventorylib.ButtonBuilder;
 import eu.giuse.inventorylib.InventoryBuilder;
+import net.giuse.engine.Worker;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.builder.ItemstackBuilder;
 import net.giuse.mainmodule.gui.ItemInitializer;
@@ -16,7 +17,8 @@ public class PreviousInitWarpGuiInit implements ItemInitializer {
 
     @Inject
     private MainModule mainModule;
-
+    @Inject
+    private Worker worker;
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
         TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
@@ -42,7 +44,7 @@ public class PreviousInitWarpGuiInit implements ItemInitializer {
                     inventoryBuilder.addButton(new ButtonBuilder(
                             inventoryBuilder, itemsConfig.getInt("position"),
                             i, itemstackBuilder.toItem()
-                            , false, true, true)
+                            , false, true, true,worker)
                     );
                 }
             }

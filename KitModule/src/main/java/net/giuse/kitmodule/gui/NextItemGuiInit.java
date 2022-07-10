@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import eu.giuse.inventorylib.ButtonBuilder;
 import eu.giuse.inventorylib.InventoryBuilder;
+import net.giuse.engine.Worker;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.builder.ItemstackBuilder;
@@ -20,6 +21,8 @@ public class NextItemGuiInit implements ItemInitializer {
 
     @Inject
     private MainModule mainModule;
+    @Inject
+    private Worker worker;
 
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
@@ -44,7 +47,7 @@ public class NextItemGuiInit implements ItemInitializer {
                     inventoryBuilder.addButton(new ButtonBuilder(
                             inventoryBuilder, itemsConfig.getInt("position"),
                             i, itemstackBuilder.toItem()
-                            , true, false, true)
+                            , true, false, true,worker)
                     );
                 }
             }
