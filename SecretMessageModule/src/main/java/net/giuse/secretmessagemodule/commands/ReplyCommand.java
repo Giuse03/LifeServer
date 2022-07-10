@@ -1,6 +1,7 @@
 package net.giuse.secretmessagemodule.commands;
 
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.secretmessagemodule.SecretChatBuilder;
@@ -18,13 +19,16 @@ public class ReplyCommand extends AbstractCommand {
     private final SecretMessageModule secretMessageModule;
 
     private final SecretChatProcess secretChatProcess;
+    
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public ReplyCommand(MainModule mainModule) {
         super("reply", "lifeserver.reply", true);
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
         secretChatProcess = mainModule.getInjector().getSingleton(SecretChatProcess.class);
-        setNoPerm(secretMessageModule.getMessages("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        
 
     }
 
@@ -43,13 +47,13 @@ public class ReplyCommand extends AbstractCommand {
 
         //Check if text lenght is 0
         if (args.length == 0) {
-            sender.sendMessage(secretMessageModule.getMessages("insert-text"));
+            messageBuilder.setCommandSender(sender).setIDMessage("insert-text").sendMessage();
             return;
         }
 
         //Check if exists receiver
         if (secretMessageModule.getReceiverSecretChat(sender.getUniqueId()) == null && secretMessageModule.getSenderSecretChat(sender.getUniqueId()) == null) {
-            sender.sendMessage(secretMessageModule.getMessages("nobody-reply"));
+            messageBuilder.setCommandSender(sender).setIDMessage("nobody-reply").sendMessage();
             return;
         }
 
@@ -59,7 +63,7 @@ public class ReplyCommand extends AbstractCommand {
 
             //Check if Receiver isn't Online
             if (!secret.getReceiver().isOnline()) {
-                sender.sendMessage(secretMessageModule.getMessages("nobody-reply"));
+                messageBuilder.setCommandSender(sender).setIDMessage("nobody-reply").sendMessage();
                 return;
             }
 
@@ -81,7 +85,7 @@ public class ReplyCommand extends AbstractCommand {
         //Check if Receiver isn't Online
         secret = secretMessageModule.getReceiverSecretChat(sender.getUniqueId());
         if (!secret.getSender().isOnline()) {
-            sender.sendMessage(secretMessageModule.getMessages("nobody-reply"));
+            messageBuilder.setCommandSender(sender).setIDMessage("nobody-reply").sendMessage();
             return;
         }
 

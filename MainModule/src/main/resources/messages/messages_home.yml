@@ -1,0 +1,107 @@
+messages:
+  #1
+  teleport:
+    title:
+      send-title: true
+      main-title: '&2[&a Home &2]'
+      subtitle: '&7Teleported to home'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Home &a» &7Teleported to home'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Teleported to home'
+  #2
+  sethome:
+    title:
+      send-title: true
+      main-title: '&2[&a Home &2]'
+      subtitle: '&7Home created!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Home &a» &7Home created!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Home created!'
+  #3
+  deleted_home:
+    title:
+      send-title: true
+      main-title: '&2[&a Home &2]'
+      subtitle: '&7Home deleted!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Home &a» &7Home deleted!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Home deleted!'
+  #4
+  home_list:
+    title:
+      send-title: true
+      main-title: '&2[&a Home &2]'
+      subtitle: '&7Available home: %list%.'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Home &a» &7Available home: %list%.'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Available home: %list%.'
+  #5
+  no_home_found:
+    title:
+      send-title: true
+      main-title: '&2[&a Home &2]'
+      subtitle: '&7No home found!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Home &a» &7No home found!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7No home found!'
+  #6
+  max_home_reached:
+    title:
+      send-title: true
+      main-title: '&2[&a Home &2]'
+      subtitle: '&7Max Home Reached!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Home &a» &7Max Home Reached!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Max Home Reached!'
+  #7
+  select-home:
+    title:
+      send-title: true
+      main-title: '&2[&a Home &2]'
+      subtitle: '&7Select a home to delete!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Home &a» &7Select a home to delete!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Select a home to delete!'
+

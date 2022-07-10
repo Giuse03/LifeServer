@@ -1,6 +1,8 @@
 package net.giuse.teleportmodule.commands.teleport;
 
 import io.papermc.lib.PaperLib;
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -14,15 +16,18 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class TpacceptCommand extends AbstractCommand {
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
     private final TeleportRequestService teleportRequestService;
+    private final TeleportModule teleportModule;
 
     @Inject
     public TpacceptCommand(MainModule mainModule) {
         super("tpaccept", "lifeserver.tpaccept", false);
+        messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -37,7 +42,7 @@ public class TpacceptCommand extends AbstractCommand {
 
         //Check if there is any Pending Request
         if (teleportRequestService.getPending(player.getUniqueId()) == null) {
-            player.sendMessage(teleportModule.getMessage("no-pending-request"));
+            messageBuilder.setCommandSender(player).setIDMessage("no-pending-request").sendMessage();
             return;
         }
 
@@ -51,8 +56,9 @@ public class TpacceptCommand extends AbstractCommand {
             PaperLib.teleportAsync(pendingRequest.getReceiver(), pendingRequest.getSender().getLocation());
         }
         //Accept Pending Request
-        pendingRequest.getSender().sendMessage(teleportModule.getMessage("teleport-player").replace("%playername%", pendingRequest.getReceiver().getName()));
-        player.sendMessage(teleportModule.getMessage("request-accept-receiver").replace("%playername%", player.getName()));
+        messageBuilder.setCommandSender(pendingRequest.getSender()).setIDMessage("teleport-player").sendMessage(new TextReplacer().match("%playername%").replaceWith( pendingRequest.getReceiver().getName()));
+        messageBuilder.setCommandSender(player).setIDMessage("request-accept-receiver").sendMessage(new TextReplacer().match("%playername%").replaceWith(player.getName()));
+
         teleportRequestService.getPendingRequests().remove(pendingRequest);
 
     }

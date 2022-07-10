@@ -1,8 +1,8 @@
 package net.giuse.simplycommandmodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -11,19 +11,20 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class EnderchestCommand extends AbstractCommand {
-    private final SimplyCommandService simplyCommandService;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public EnderchestCommand(MainModule mainModule) {
         super("enderchest", "lifeserver.enderchest", false);
-        simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-        setNoPerm(simplyCommandService.getMex("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof ConsoleCommandSender) {
-            commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("not-player").sendMessage();
             return;
         }
         Player player = (Player) commandSender;
@@ -34,12 +35,12 @@ public class EnderchestCommand extends AbstractCommand {
         }
 
         if (!player.hasPermission("lifeserver.enderchest.other")) {
-            commandSender.sendMessage(simplyCommandService.getMex("no-perms"));
+            commandSender.sendMessage("No Perms");
             return;
         }
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage(simplyCommandService.getMex("player-not-online"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("player-not-online").sendMessage();
             return;
         }
         player.openInventory(target.getEnderChest());

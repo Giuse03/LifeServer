@@ -1,0 +1,226 @@
+messages:
+  #1
+  economy-balance:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7Your balance is %money%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7Your balance is %money%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Your balance is %money%'
+  #2
+  economy-addMoney:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7%moneyadd%  have been added in your account New balance> %money%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7%moneyadd%  have been added in your account New balance> %money%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%moneyadd%  have been added in your account New balance> %money%'
+  #3
+  economy-setMoney:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7 Your balance has been set New balance> %money%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7 Your balance has been set New balance> %money%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 Your balance has been set New balance> %money%'
+  #4
+  economy-removeMoney:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7%moneyadd%  have been removed in your account. New balance> %money%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7%moneyadd%  have been removed in your account. New balance> %money%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%moneyadd%  have been removed in your account. New balance> %money%'
+  #5
+  economy-cantAfford:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7You can''t afford this purchase'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7You can''t afford this purchase'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You can''t afford this purchase'
+  #6
+  economy-neverJoin:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7 This player has never joined the server'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7 This player has never joined the server'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 This player has never joined the server'
+  #7
+  economy-balance-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7%player% balance> %money%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7%player% balance> %money%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%player% balance> %money%'
+  #8
+  economy-addMoney-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7%moneyadd%  have been added in %player% account balance> %money%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7%moneyadd%  have been added in %player% account balance> %money%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%moneyadd%  have been added in %player% account balance> %money%'
+  #9
+  economy-setMoney-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7 Your balance has been set in %player% account New balance> %money%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7 Your balance has been set in %player% account New balance> %money%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 Your balance has been set in %player% account New balance> %money%'
+  #10
+  economy-removeMoney-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7%moneyadd% have been removed in %player% account balance> %money%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7%moneyadd% have been removed in %player% account balance> %money%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%moneyadd% have been removed in %player% account balance> %money%'
+  #11
+  economy-number:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7Invalid number'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7Invalid number'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Invalid number'
+  #12
+  economy-pay-send:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7You paid %player% %amount% dollars'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7You paid %player% %amount% dollars'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You paid %player% %amount% dollars'
+ #13
+  economy-pay-receive:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7You received from %player% %amount% dollars'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7You received from %player% %amount% dollars'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You received from %player% %amount% dollars'
+  #14
+  economy-pay-args:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&a/pay <player> <amount>'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &a/pay <player> <amount>'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&a/pay <player> <amount>'
+  #15
+  economy-no-money:
+    title:
+      send-title: true
+      main-title: '&2[&a Economy &2]'
+      subtitle: '&7You haven''t money for this pay'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Economy &a» &7You haven''t money for this pay'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You haven''t money for this pay'

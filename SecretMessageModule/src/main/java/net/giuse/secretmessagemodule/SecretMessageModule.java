@@ -6,6 +6,7 @@ import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.services.Services;
 import net.giuse.secretmessagemodule.files.FileManager;
+import net.giuse.secretmessagemodule.messageloader.MessageLoaderSecret;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -21,8 +22,6 @@ public final class SecretMessageModule extends Services {
     private final Set<Player> playerMsgToggle = new HashSet<>();
     @Getter
     private final Set<Player> playerSocialSpy = new HashSet<>();
-    @Getter
-    private final HashMap<String, String> message = new HashMap<>();
     @Inject
     private MainModule mainModule;
     @Getter
@@ -37,16 +36,8 @@ public final class SecretMessageModule extends Services {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eSecretChatModule§9] §7Loading SecretChats...");
         //Load Files
         ReflectionsFiles.loadFiles(fileManager = new FileManager());
-        if (Files.size(Paths.get("plugins/LifeServer/messages/messages_secret_chat.yml")) == 0) {
-            fileManager.messagesMsgLoader();
-        }
-
-        //Load Messages
-        for (String messageConfig : fileManager.getMessagesSecretChatYaml().getConfigurationSection("messages.msg").getKeys(true)) {
-            message.put(messageConfig, fileManager.getMessagesSecretChatYaml().getString("messages.msg." + messageConfig));
-        }
-        message.put("no-perms", mainModule.getConfig().getString("no-perms"));
-
+        MessageLoaderSecret messageLoaderSecret = mainModule.getInjector().getSingleton(MessageLoaderSecret.class);
+        messageLoaderSecret.load();
     }
 
     /*
@@ -81,13 +72,6 @@ public final class SecretMessageModule extends Services {
         return secretsChats.stream()
                 .filter(secretsChats -> secretsChats.getReceiver().getUniqueId().equals(uuid))
                 .findFirst().orElse(null);
-    }
-
-    /*
-     * Get Message from a HashMap
-     */
-    public String getMessages(String key) {
-        return ChatColor.translateAlternateColorCodes('&', message.get(key));
     }
 
 

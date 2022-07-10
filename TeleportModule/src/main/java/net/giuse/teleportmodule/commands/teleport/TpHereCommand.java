@@ -1,6 +1,8 @@
 package net.giuse.teleportmodule.commands.teleport;
 
 import io.papermc.lib.PaperLib;
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -13,15 +15,17 @@ import javax.inject.Inject;
 
 public class TpHereCommand extends AbstractCommand {
 
+    private final MessageBuilder messageBuilder;
+
     private final TeleportModule teleportModule;
-
-
     @Inject
     public TpHereCommand(MainModule mainModule) {
         super("tphere", "lifeserver.tphere", false);
+        messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
 
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -35,7 +39,7 @@ public class TpHereCommand extends AbstractCommand {
 
         //Check if player isn't selected
         if (args.length == 0) {
-            sender.sendMessage(teleportModule.getMessage("select-player"));
+            messageBuilder.setCommandSender(sender).setIDMessage("select-player").sendMessage();
             return;
         }
 
@@ -45,7 +49,7 @@ public class TpHereCommand extends AbstractCommand {
 
             //Check if Target is online
             if (target == null) {
-                sender.sendMessage(teleportModule.getMessage("player-not-found"));
+                messageBuilder.setCommandSender(sender).setIDMessage("player-not-found").sendMessage();
                 return;
             }
 
@@ -61,13 +65,13 @@ public class TpHereCommand extends AbstractCommand {
 
         //Check if targets are online
         if (firstTarget == null || secondTarget == null) {
-            sender.sendMessage(teleportModule.getMessage("player-not-found"));
+            messageBuilder.setCommandSender(sender).setIDMessage("player-not-found").sendMessage();
             return;
         }
 
         //Teleport targets
         teleportModule.getBackLocations().put(sender, sender.getLocation());
         PaperLib.teleportAsync(secondTarget, firstTarget.getLocation());
-        sender.sendMessage(teleportModule.getMessage("teleport-player").replace("%playername%", sender.getName()));
+        messageBuilder.setCommandSender(sender).setIDMessage("teleport-player").sendMessage(new TextReplacer().match("%playername%").replaceWith(sender.getName()));
     }
 }

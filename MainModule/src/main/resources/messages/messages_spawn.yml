@@ -1,0 +1,61 @@
+messages:
+  #1
+  setspawn:
+    title:
+      send-title: true
+      main-title: '&2[&a Spawn &2]'
+      subtitle: '&7Spawn Setted'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Spawn &a» &7Spawn Setted'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Spawn Setted'
+  #2
+  removespawn:
+    title:
+      send-title: true
+      main-title: '&2[&a Spawn &2]'
+      subtitle: '&7Spawn Removed!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Spawn &a» &7Spawn Removed!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Spawn Removed!'
+  #3
+  teleported-spawn:
+    title:
+      send-title: true
+      main-title: '&2[&a Spawn &2]'
+      subtitle: '&7Teleported Spawn!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Spawn &a» &7Teleported Spawn!!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Teleported Spawn!'
+  #4
+  no-spawn:
+    title:
+      send-title: true
+      main-title: '&2[&a Spawn &2]'
+      subtitle: '&7Spawn not found!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Spawn &a» &7Spawn not found!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Spawn not found!'

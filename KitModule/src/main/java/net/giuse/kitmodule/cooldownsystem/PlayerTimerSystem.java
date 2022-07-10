@@ -6,7 +6,6 @@ import net.giuse.kitmodule.builder.KitBuilder;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 /*
  * Timer System
@@ -14,8 +13,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Getter
 public class PlayerTimerSystem extends BukkitRunnable {
-
-    private final UUID uuid;
     private final ArrayList<KitCooldown> kitsCooldown = new ArrayList<>();
 
     /*
@@ -23,8 +20,7 @@ public class PlayerTimerSystem extends BukkitRunnable {
      */
     @Override
     public void run() {
-        kitsCooldown.stream().filter(kitCooldown -> kitCooldown.getVariableCoolDown() > 0)
-                .forEach(kitCooldown -> kitCooldown.setVariableCoolDown(kitCooldown.getVariableCoolDown() - 1));
+        kitsCooldown.stream().filter(kitCooldown -> kitCooldown.getVariableCoolDown() > 0).forEach(kitCooldown -> kitCooldown.setVariableCoolDown(kitCooldown.getVariableCoolDown() - 1));
     }
 
     /*
@@ -37,16 +33,16 @@ public class PlayerTimerSystem extends BukkitRunnable {
     /*
      * Add kit from timer task
      */
-    public void addKit(KitBuilder kitBuilder) {
-        KitCooldown kitCooldown = new KitCooldown(kitBuilder);
+    public void addKit(String name,KitBuilder kitBuilder) {
+        KitCooldown kitCooldown = new KitCooldown(name,kitBuilder);
         kitsCooldown.add(kitCooldown);
     }
 
     /*
      * Remove kit from timer task
      */
-    public void removeKit(KitBuilder kitBuilder) {
-        kitsCooldown.remove(kitsCooldown.stream().filter(kitCooldown -> kitCooldown.getKitBuilder().getName().equalsIgnoreCase(kitBuilder.getName())).findFirst().get());
+    public void removeKit(String name) {
+        kitsCooldown.remove(kitsCooldown.stream().filter(kitCooldown -> kitCooldown.getNameKit().equalsIgnoreCase(name)).findFirst().get());
     }
 
 }

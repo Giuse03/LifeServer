@@ -1,7 +1,10 @@
 package net.giuse.kitmodule;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.giuse.engine.ProcessEngine;
 import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
 import net.giuse.kitmodule.databases.kit.KitOperations;
@@ -10,6 +13,8 @@ import net.giuse.kitmodule.files.FileManager;
 import net.giuse.kitmodule.messages.MessageLoaderKit;
 import net.giuse.kitmodule.serializer.KitSerializer;
 import net.giuse.kitmodule.serializer.PlayerKitTimeSerializer;
+import net.giuse.kitmodule.serializer.serializedobject.KitSerialized;
+import net.giuse.kitmodule.serializer.serializedobject.PlayerKitTimeSerialized;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.databases.DBOperations;
 import net.giuse.mainmodule.databases.Savable;
@@ -18,8 +23,6 @@ import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
 
 import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -27,20 +30,19 @@ import java.util.UUID;
  */
 public class KitModule extends Services implements Savable {
     @Getter
-    private final Set<PlayerTimerSystem> playerTimerSystems = new HashSet<>();
+    private Cache<UUID, PlayerTimerSystem> cachePlayerKit;
     @Getter
-    private final Set<KitBuilder> kitElements = new HashSet<>();
+    private Cache<String, KitBuilder> kitElements;
     @Getter
     private final FileManager configManager = new FileManager();
     @Getter
-    private final Serializer<KitBuilder> kitBuilderSerializer = new KitSerializer();
+    private final Serializer<KitSerialized> kitBuilderSerializer = new KitSerializer();
     @Inject
     private MainModule mainModule;
     @Getter
-    private Serializer<PlayerTimerSystem> playerKitTimeSerializer;
+    private Serializer<PlayerKitTimeSerialized> playerKitTimeSerializer;
     private DBOperations kitOperations, playerKitOperations;
-    @Getter
-    private MessageLoaderKit messageLoaderKit;
+
 
     /**
      * Load Module Kit
@@ -53,26 +55,30 @@ public class KitModule extends Services implements Savable {
         playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
         kitOperations = mainModule.getInjector().getSingleton(KitOperations.class);
         playerKitOperations = mainModule.getInjector().getSingleton(PlayerKitOperations.class);
-        messageLoaderKit = mainModule.getInjector().getSingleton(MessageLoaderKit.class);
+        MessageLoaderKit messageLoaderKit = mainModule.getInjector().getSingleton(MessageLoaderKit.class);
 
         //Initialize Files
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
         ReflectionsFiles.loadFiles(configManager);
+        messageLoaderKit.load();
 
         //Load Kit
+        mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading SQL...");
+        kitElements =  Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
+        cachePlayerKit = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
         messageLoaderKit.load();
         kitOperations.getAllString().forEach(kitElement -> {
-            KitBuilder kitBuilder = kitBuilderSerializer.decoder(kitElement);
-            kitBuilder.build();
-            kitElements.add(kitBuilder);
+            KitSerialized kitSerialized = kitBuilderSerializer.decoder(kitElement);
+            kitSerialized.getKitBuilder().build();
+            kitElements.put(kitSerialized.getName(), kitSerialized.getKitBuilder());
         });
 
         //Load PlayerTimeKit
-        mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading SQL...");
         for (String playerTimeString : playerKitOperations.getAllString()) {
-            PlayerTimerSystem playerTimerSystem = playerKitTimeSerializer.decoder(playerTimeString);
-            playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
-            playerTimerSystems.add(playerTimerSystem);
+            System.out.println(playerTimeString);
+            PlayerKitTimeSerialized playerTimerSystem = playerKitTimeSerializer.decoder(playerTimeString);
+            playerTimerSystem.getPlayerTimerSystem().runTaskTimerAsynchronously(mainModule, 20L, 20L);
+            cachePlayerKit.put(playerTimerSystem.getUuid(), playerTimerSystem.getPlayerTimerSystem());
         }
 
     }
@@ -100,14 +106,15 @@ public class KitModule extends Services implements Savable {
      * Save Sets of PlayerTimerSystem and Kit in a Database
      */
     @Override
+    @SneakyThrows
     public void save() {
         mainModule.getConnectorSQLite().openConnect();
         playerKitOperations.dropTable();
         playerKitOperations.createTable();
-        playerTimerSystems.forEach(playerTimeSystem -> playerKitOperations.insert(playerKitTimeSerializer.encode(playerTimeSystem)));
+        cachePlayerKit.asMap().forEach(((uuid, playerTimerSystem) -> playerKitOperations.insert(playerKitTimeSerializer.encode(new PlayerKitTimeSerialized(uuid, playerTimerSystem)))));
         kitOperations.dropTable();
         kitOperations.createTable();
-        kitElements.forEach(kitBuilder -> kitOperations.insert(kitBuilderSerializer.encode(kitBuilder)));
+        kitElements.asMap().forEach((name, kitBuilder) -> kitOperations.insert(kitBuilderSerializer.encode(new KitSerialized(name, kitBuilder))));
     }
 
 
@@ -115,14 +122,14 @@ public class KitModule extends Services implements Savable {
      * Search PlayerTimerSystem from Set
      */
     public PlayerTimerSystem getPlayerTime(UUID playerUUID) {
-        return playerTimerSystems.stream().filter(playerTimerSystem -> playerTimerSystem.getUuid().equals(playerUUID)).findFirst().orElse(null);
+        return cachePlayerKit.getIfPresent(playerUUID);
     }
 
     /**
      * Search Kit  from Name in a Set
      */
     public KitBuilder getKit(String searchKitBuilder) {
-        return kitElements.stream().filter(kitBuilder -> kitBuilder.getName().equalsIgnoreCase(searchKitBuilder)).findFirst().orElse(null);
+        return kitElements.getIfPresent(searchKitBuilder.toLowerCase());
     }
 
 }

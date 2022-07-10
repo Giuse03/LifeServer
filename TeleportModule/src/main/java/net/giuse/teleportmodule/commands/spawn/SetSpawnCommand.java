@@ -1,5 +1,6 @@
 package net.giuse.teleportmodule.commands.spawn;
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -13,14 +14,15 @@ import javax.inject.Inject;
 
 public class SetSpawnCommand extends AbstractCommand {
     private final SpawnLoaderService spawnLoaderService;
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public SetSpawnCommand(MainModule mainModule) {
         super("setspawn", "lifeserver.setspawn", true);
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -34,6 +36,7 @@ public class SetSpawnCommand extends AbstractCommand {
         //Set Spawn
         Player player = (Player) commandSender;
         spawnLoaderService.setSpawnBuilder(new SpawnBuilder(player.getLocation()));
-        commandSender.sendMessage(teleportModule.getMessage("setspawn"));
+        messageBuilder.setCommandSender(commandSender).setIDMessage("setspawn").sendMessage();
+
     }
 }

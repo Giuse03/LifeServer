@@ -1,5 +1,7 @@
 package net.giuse.simplycommandmodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.simplycommandmodule.SimplyCommandService;
@@ -11,32 +13,36 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class GodCommand extends AbstractCommand {
+    private final MessageBuilder messageBuilder;
+
     private final SimplyCommandService simplyCommandService;
 
     @Inject
     public GodCommand(MainModule mainModule) {
         super("god", "lifeserver.god", true);
+        messageBuilder = mainModule.getMessageBuilder();
         simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-        setNoPerm(simplyCommandService.getMex("no-perms"));
 
+        setNoPerm("No perms");
+        
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (args.length == 0) {
             if (commandSender instanceof ConsoleCommandSender) {
-                commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+                messageBuilder.setCommandSender(commandSender).setIDMessage("not-player").sendMessage();
                 return;
             }
 
             Player player = (Player) commandSender;
             if (simplyCommandService.getStringsNameGods().contains(player.getName())) {
-                player.sendMessage(simplyCommandService.getMex("god-disabled"));
+                messageBuilder.setCommandSender(commandSender).setIDMessage("god-disabled").sendMessage();
                 simplyCommandService.getStringsNameGods().remove(player.getName());
                 return;
             }
 
-            player.sendMessage(simplyCommandService.getMex("god-enabled"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("god-enabled").sendMessage();
             simplyCommandService.getStringsNameGods().add(player.getName());
             return;
 
@@ -44,25 +50,25 @@ public class GodCommand extends AbstractCommand {
         }
 
         if (!commandSender.hasPermission("lifeserver.god.other")) {
-            commandSender.sendMessage(simplyCommandService.getMex("no-perms"));
+            commandSender.sendMessage("No Perms");
             return;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            commandSender.sendMessage(simplyCommandService.getMex("player-not-online"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("player-not-online").sendMessage();
             return;
         }
 
         if (simplyCommandService.getStringsNameGods().contains(target.getName())) {
-            target.sendMessage(simplyCommandService.getMex("god-disabled"));
-            commandSender.sendMessage(simplyCommandService.getMex("god-other-disabled").replace("%player_name%", target.getName()));
+            messageBuilder.setCommandSender(target).setIDMessage("god-disabled").sendMessage();
+            messageBuilder.setCommandSender(commandSender).setIDMessage("god-disabled-other").sendMessage(new TextReplacer().match("%player_name%").replaceWith(target.getName()));
             simplyCommandService.getStringsNameGods().remove(target.getName());
             return;
         }
 
-        target.sendMessage(simplyCommandService.getMex("god-enabled"));
-        commandSender.sendMessage(simplyCommandService.getMex("god-other-enabled").replace("%player_name%", target.getName()));
+        messageBuilder.setCommandSender(target).setIDMessage("god-enabled").sendMessage();
+        messageBuilder.setCommandSender(commandSender).setIDMessage("god-enabled-other").sendMessage(new TextReplacer().match("%player_name%").replaceWith(target.getName()));
         simplyCommandService.getStringsNameGods().add(target.getName());
     }
 

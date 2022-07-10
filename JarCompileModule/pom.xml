@@ -95,6 +95,11 @@
                                     <shadedPattern>net.lib.jetbrains</shadedPattern>
                                 </relocation>
 
+                                <relocation>
+                                    <pattern>org.checkerframework</pattern>
+                                    <shadedPattern>net.lib.checkerframework</shadedPattern>
+                                </relocation>
+
 
                                 <relocation>
                                     <pattern>com.google.gson</pattern>
@@ -108,19 +113,30 @@
                                 </relocation>
 
 
+
+                                <relocation>
+                                    <pattern>com.github</pattern>
+                                    <shadedPattern>net.lib.github</shadedPattern>
+                                </relocation>
+
+                                <relocation>
+                                    <pattern>com.google.errorprone</pattern>
+                                    <shadedPattern>net.lib.google.errorprone</shadedPattern>
+                                </relocation>
+
                             </relocations>
 
 
                             <filters>
-                            <filter>
-                                <artifact>*:*</artifact>
-                                <excludes>
-                                    <exclude>com/cryptomorin/xseries/XBiome*</exclude>
-                                    <exclude>com/cryptomorin/xseries/NMSExtras*</exclude>
-                                    <exclude>com/cryptomorin/xseries/NoteBlockMusic*</exclude>
-                                    <exclude>com/cryptomorin/xseries/messages/*</exclude>
-                                </excludes>
-                            </filter>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>com/cryptomorin/xseries/XBiome*</exclude>
+                                        <exclude>com/cryptomorin/xseries/NMSExtras*</exclude>
+                                        <exclude>com/cryptomorin/xseries/NoteBlockMusic*</exclude>
+                                        <exclude>com/cryptomorin/xseries/messages/*</exclude>
+                                    </excludes>
+                                </filter>
                             </filters>
                         </configuration>
                     </execution>

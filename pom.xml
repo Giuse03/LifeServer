@@ -74,18 +74,6 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/net.kyori/adventure-platform-bukkit -->
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.1.1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.1.1</version>
-        </dependency>
 
         <dependency>
             <groupId>io.papermc.paper</groupId>
@@ -108,6 +96,12 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>net.giuse</groupId>
+            <artifactId>EzMessage</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>eu.giuse</groupId>

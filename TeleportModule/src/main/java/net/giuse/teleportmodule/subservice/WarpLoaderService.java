@@ -33,19 +33,8 @@ public class WarpLoaderService extends Services implements Savable {
     @SneakyThrows
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Warps...");
-        TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
+
         warpOperations = mainModule.getInjector().getSingleton(WarpOperations.class);
-
-        //Load File
-        if (Files.size(Paths.get("plugins/LifeServer/messages/messages_warp.yml")) == 0) {
-            teleportModule.getFileManager().messagesWarpLoader();
-        }
-
-        //Load Message
-        for (String messageConfig : teleportModule.getFileManager().getMessagesWarpYaml().getConfigurationSection("messages.warp").getKeys(true)) {
-            teleportModule.getMessage().put(messageConfig, teleportModule.getFileManager().getMessagesWarpYaml().getString("messages.warp." + messageConfig));
-        }
-
         //Load Warps
         warpOperations.getAllString().forEach(warpBuild -> warpBuilders.add(warpBuilderSerializer.decoder(warpBuild)));
     }

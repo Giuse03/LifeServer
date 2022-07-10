@@ -1,16 +1,9 @@
 package net.giuse.mainmodule.utils;
 
 import lombok.SneakyThrows;
-import net.giuse.mainmodule.messages.MessageActionbar;
-import net.giuse.mainmodule.messages.MessageChat;
-import net.giuse.mainmodule.messages.MessageTitle;
-import net.giuse.mainmodule.messages.interfaces.MessageLoader;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -133,74 +126,6 @@ public class Utils {
         } catch (ClassNotFoundException e) {
             throw new IOException("Unable to decode class type.", e);
         }
-    }
-
-
-    /**
-     * Send Message to Player with Placeholders
-     */
-
-    public static void sendMessage(MessageLoader messageLoader, Player player, String idMessage, String... replace) {
-        messageLoader.getMessagesFromId(idMessage).forEach(message -> {
-            switch (message.getMessageType()) {
-
-                //Send Action Bar
-                case ACTION_BAR:
-                    MessageActionbar messageActionbar = (MessageActionbar) message;
-                    String placeHolder = messageActionbar.getMessageBar();
-                    if (replace.length == 0) {
-                        messageLoader.sendActionBar(player, Component.text(placeHolder));
-                        break;
-                    }
-                    for (String args : replace) {
-                        String[] arg = args.split("=");
-                        placeHolder = placeHolder.replace(arg[0], arg[1]);
-                    }
-                    Component newComponentReplaced = Component.text(placeHolder);
-                    messageLoader.sendActionBar(player, newComponentReplaced);
-                    break;
-
-                //SEND CHAT
-                case CHAT:
-                    MessageChat messageChat = (MessageChat) message;
-                    String messageToReplace = messageChat.getMessageChat();
-                    if (replace.length == 0) {
-                        messageLoader.sendChat(player, Component.text(messageToReplace));
-                        break;
-                    }
-                    String newComponent = null;
-                    for (String args : replace) {
-                        String[] arg = args.split("=");
-                        newComponent = messageToReplace.replace(arg[0], arg[1]);
-                    }
-                    Component newComponentReplacedText = Component.text(newComponent);
-                    messageLoader.sendChat(player, newComponentReplacedText);
-
-                    break;
-                //Send Title
-                case TITLE:
-                    MessageTitle messageTitle = (MessageTitle) message;
-                    String title = messageTitle.getTitle();
-                    String subTitle = messageTitle.getSubTitle();
-                    if (replace.length == 0) {
-                        TextComponent newTitleComponent = Component.text(title);
-                        TextComponent newSubTitleComponent = Component.text(subTitle);
-                        messageLoader.sendTitle(player, newTitleComponent, newSubTitleComponent, messageTitle.getFadeIn(), messageTitle.getStay(), messageTitle.getFadeOut());
-                        break;
-                    }
-                    String newTitle = null, newSubTitle = null;
-                    for (String args : replace) {
-                        String[] arg = args.split("=");
-                        newTitle = title.replace(arg[0], arg[1]);
-                        newSubTitle = subTitle.replace(arg[0], arg[1]);
-                    }
-                    TextComponent newTitleComponent = Component.text(newTitle);
-                    TextComponent newSubTitleComponent = Component.text(newSubTitle);
-                    messageLoader.sendTitle(player, newTitleComponent, newSubTitleComponent, messageTitle.getFadeIn(), messageTitle.getStay(), messageTitle.getFadeOut());
-                    break;
-            }
-
-        });
     }
 
 }

@@ -1,6 +1,8 @@
 package net.giuse.economymodule.commands;
 
 import net.giuse.economymodule.EconomyService;
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.Bukkit;
@@ -12,12 +14,15 @@ import javax.inject.Inject;
 
 public class MoneyCommand extends AbstractCommand {
     private final EconomyService economyService;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public MoneyCommand(final MainModule mainModule) {
         super("money", "lifeserver.money", true);
         this.economyService = (EconomyService) mainModule.getService(EconomyService.class);
-        this.setNoPerm(this.economyService.getMessage("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+
+        this.setNoPerm("No Perms");
     }
 
     @Override
@@ -28,18 +33,21 @@ public class MoneyCommand extends AbstractCommand {
         }
         final Player p = (Player) commandSender;
         if (args.length == 0) {
-            p.sendMessage(this.economyService.getMessage("economy-balance").replace("%money%", String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())));
+            messageBuilder.setCommandSender(p).setIDMessage("economy-balance").sendMessage(
+                    new TextReplacer().match("%money%").replaceWith(String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())));
             return;
         }
 
         if (!p.hasPermission("lifeserver.balance.other")) {
-            p.sendMessage(this.economyService.getMessage("no-perms"));
+            p.sendMessage("No Perms");
         }
 
         if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) != null) {
-            p.sendMessage(this.economyService.getMessage("economy-balance-other").replace("%money%", String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())).replace("%player%", args[0]));
+            messageBuilder.setCommandSender(p).setIDMessage("economy-balance-other").sendMessage(
+                    new TextReplacer().match("%money%").replaceWith(String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())),
+                    new TextReplacer().match("%player%").replaceWith(args[0]));
             return;
         }
-        p.sendMessage(this.economyService.getMessage("economy-neverJoin"));
+        messageBuilder.setCommandSender(p).setIDMessage("economy-neverJoin").sendMessage();
     }
 }

@@ -1,6 +1,5 @@
 package net.giuse.economymodule.economymanager;
 
-import net.giuse.economymodule.EconPlayer;
 import net.giuse.economymodule.EconomyService;
 import net.giuse.mainmodule.MainModule;
 import net.milkbowl.vault.economy.Economy;

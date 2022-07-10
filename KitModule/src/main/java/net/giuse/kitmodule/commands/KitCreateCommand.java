@@ -1,5 +1,7 @@
 package net.giuse.kitmodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.mainmodule.MainModule;
@@ -21,14 +23,17 @@ import java.util.List;
  * Command /kitcreate for create a kit
  */
 public class KitCreateCommand extends AbstractCommand {
+    private final MessageBuilder messageBuilder;
+
     private final KitModule kitModule;
 
     @Inject
     public KitCreateCommand(MainModule mainModule) {
         super("kitcreate", "lifeserver.kitcreate", false);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
-        setNoPerm("No Perm");
-
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -42,41 +47,43 @@ public class KitCreateCommand extends AbstractCommand {
         Player p = (Player) sender;
         //Check args
         if (args.length == 0) {
-            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-insert-name-kit");
+            messageBuilder.setCommandSender(p).setIDMessage("kit-insert-name-kit").sendMessage();
             return;
         }
 
         if (args.length == 1) {
-            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-cooldown");
+            messageBuilder.setCommandSender(p).setIDMessage("kit-cooldown").sendMessage();
+
             return;
         }
 
         //Check if Number is valid
         if (!NumberUtils.isNumber(args[1])) {
-            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-cooldown-valid");
+            messageBuilder.setCommandSender(p).setIDMessage("kit-cooldown-valid").sendMessage();
+
             return;
         }
         try {
             if (Integer.parseInt(args[1]) < 0) {
-                Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-cooldown-valid");
+                messageBuilder.setCommandSender(p).setIDMessage("kit-cooldown-valid").sendMessage();
                 return;
             }
         } catch (NumberFormatException e) {
-            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-cooldown-max");
+            messageBuilder.setCommandSender(p).setIDMessage("kit-cooldown-max").sendMessage();
 
             return;
         }
 
 
         //Check if KitExists
-        if (kitModule.getKit(args[0]) != null) {
-            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-already-exists");
+        if (kitModule.getKit(args[0].toLowerCase()) != null) {
+            messageBuilder.setCommandSender(p).setIDMessage("kit-already-exists").sendMessage();
             return;
         }
 
         //Check if Player has inventoryu Empty
         if (isEmpty(p)) {
-            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"must-have-item");
+            messageBuilder.setCommandSender(p).setIDMessage("must-have-item").sendMessage();
             return;
         }
 
@@ -85,11 +92,14 @@ public class KitCreateCommand extends AbstractCommand {
         Arrays.stream(p.getInventory().getContents())
                 .filter(stacks -> stacks != null && !stacks.getType().equals(Material.AIR))
                 .forEach(itemStackList::add);
-        KitBuilder kitBuilder = new KitBuilder(args[0], Integer.parseInt(args[1])).setBase(Utils.listItemStackToBase64(itemStackList));
+        KitBuilder kitBuilder = new KitBuilder(Integer.parseInt(args[1])).setBase(Utils.listItemStackToBase64(itemStackList));
         kitBuilder.build();
-        kitModule.getKitElements().add(kitBuilder);
-        kitModule.getPlayerTimerSystems().forEach(playerTimerSystem -> playerTimerSystem.addKit(kitBuilder));
-        Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-created","%kit%="+args[0]);
+
+        kitModule.getKitElements().put(args[0].toLowerCase(),kitBuilder);
+
+        kitModule.getCachePlayerKit().asMap().forEach((uuid, playerTimerSystem) -> playerTimerSystem.addKit(args[0],kitBuilder));
+
+        messageBuilder.setCommandSender(p).setIDMessage("kit-created").sendMessage(new TextReplacer().match("%kit%").replaceWith(args[0]));
 
     }
 

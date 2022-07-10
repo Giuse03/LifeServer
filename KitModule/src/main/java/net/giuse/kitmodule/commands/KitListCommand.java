@@ -1,17 +1,15 @@
 package net.giuse.kitmodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.kitmodule.KitModule;
-import net.giuse.kitmodule.messages.MessageLoaderKit;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.mainmodule.messages.MessageChat;
-import net.giuse.mainmodule.messages.MessageTitle;
-import net.giuse.mainmodule.messages.interfaces.Message;
-import net.giuse.mainmodule.messages.type.MessageType;
-import net.giuse.mainmodule.utils.Utils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 import javax.inject.Inject;
 
@@ -21,14 +19,16 @@ import javax.inject.Inject;
 
 
 public class KitListCommand extends AbstractCommand {
+    private final MessageBuilder messageBuilder;
     private final KitModule kitModule;
 
-    private MessageLoaderKit messageLoaderKit;
     @Inject
     public KitListCommand(MainModule mainModule) {
-        super("kitlist", "lifeserver.kitlist", true);
+        super("kitlist", "lifeserver.kitcreate", false);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
-        setNoPerm("No Perm");
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -42,19 +42,19 @@ public class KitListCommand extends AbstractCommand {
         //Check if player has permission
         Player p = (Player) sender;
         if (!p.hasPermission("lifeserver.kit.list")) {
-            p.sendMessage("No Perm");
+            p.sendMessage("No Perms");
             return;
         }
 
         //Check if there are kits
-        if (kitModule.getKitElements().isEmpty()) {
-            Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-list-empty");
+        if (kitModule.getKitElements().estimatedSize() == 0) {
+            messageBuilder.setCommandSender(p).setIDMessage("kit-list-empty").sendMessage();
             return;
         }
 
         //Show a list of kit to player
         StringBuilder sb = new StringBuilder();
-        kitModule.getKitElements().forEach(kitBuilder -> sb.append(kitBuilder.getName()).append(","));
-        Utils.sendMessage(kitModule.getMessageLoaderKit(),p,"kit-list","%listkit%="+ sb.deleteCharAt(sb.length() - 1));
+        kitModule.getKitElements().asMap().forEach((name,kitBuilder) -> sb.append(StringUtils.capitalize(name)).append(","));
+        messageBuilder.setCommandSender(p).setIDMessage("kit-list").sendMessage(new TextReplacer().match("%listkit%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
     }
 }

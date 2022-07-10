@@ -1,5 +1,7 @@
 package net.giuse.secretmessagemodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.secretmessagemodule.SecretMessageModule;
@@ -11,12 +13,17 @@ import javax.inject.Inject;
 
 public class MSGToggleCommand extends AbstractCommand {
     private final SecretMessageModule secretMessageModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public MSGToggleCommand(MainModule mainModule) {
         super("msgtoggle", "lifeserver.msgtoggle", true);
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
-        setNoPerm(secretMessageModule.getMessages("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+
+        setNoPerm("No Perms");
+        
+
     }
 
     @Override
@@ -31,10 +38,10 @@ public class MSGToggleCommand extends AbstractCommand {
 
         //Enable or disable MSG-Toggle
         if (secretMessageModule.getPlayerMsgToggle().contains(player)) {
-            player.sendMessage(secretMessageModule.getMessages("msgtoggle").replace("%status%", "§cOFF"));
+            messageBuilder.setCommandSender(player).setIDMessage("msgtoggle").sendMessage(new TextReplacer().match("%status%").replaceWith( "§cOFF"));
             secretMessageModule.getPlayerMsgToggle().remove(player);
         } else {
-            player.sendMessage(secretMessageModule.getMessages("msgtoggle").replace("%status%", "§aON"));
+            messageBuilder.setCommandSender(player).setIDMessage("msgtoggle").sendMessage(new TextReplacer().match("%status%").replaceWith("§aON"));
             secretMessageModule.getPlayerMsgToggle().add(player);
 
         }

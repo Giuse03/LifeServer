@@ -1,21 +1,22 @@
 package net.giuse.simplycommandmodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
 public class WorkBenchCommand extends AbstractCommand {
-    private final SimplyCommandService simplyCommandService;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public WorkBenchCommand(MainModule mainModule) {
         super("workbench", "lifeserver.workbench", false);
-        simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-        setNoPerm(simplyCommandService.getMex("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -26,7 +27,7 @@ public class WorkBenchCommand extends AbstractCommand {
             return;
         }
 
-        commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+        messageBuilder.setCommandSender(commandSender).setIDMessage("not-player").sendMessage();
 
     }
 }

@@ -1,5 +1,6 @@
 package net.giuse.teleportmodule.commands.home;
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -13,14 +14,15 @@ import javax.inject.Inject;
 
 public class SetHomeCommand extends AbstractCommand {
     private final HomeLoaderService homeLoaderService;
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public SetHomeCommand(MainModule mainModule) {
         super("sethome", "lifeserver.sethome", true);
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -47,13 +49,14 @@ public class SetHomeCommand extends AbstractCommand {
 
                     //Check if player has reached max home
                     if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == maxHomes) {
-                        sender.sendMessage(teleportModule.getMessage("max_home_reached"));
+                        messageBuilder.setCommandSender(sender).setIDMessage("max_home_reached").sendMessage();
+
                         return;
                     }
 
                     //Check if there is a name
                     if (args.length == 0) {
-                        sender.sendMessage(teleportModule.getMessage("sethome"));
+                        messageBuilder.setCommandSender(sender).setIDMessage("sethome").sendMessage();
                         //Set Home
                         homeLoaderService.getHome(sender.getUniqueId()).getLocations().put("default", sender.getLocation());
                         return;
@@ -66,7 +69,7 @@ public class SetHomeCommand extends AbstractCommand {
                     }
 
                     //Set Home
-                    sender.sendMessage(teleportModule.getMessage("sethome"));
+                    messageBuilder.setCommandSender(sender).setIDMessage("sethome").sendMessage();
                     homeLoaderService.getHome(sender.getUniqueId()).getLocations().put(args[0].toLowerCase(), sender.getLocation());
                 }
             }
@@ -74,7 +77,7 @@ public class SetHomeCommand extends AbstractCommand {
         }
 
         //Set Home
-        sender.sendMessage(teleportModule.getMessage("sethome"));
+        messageBuilder.setCommandSender(sender).setIDMessage("sethome").sendMessage();
         homeLoaderService.getHome(sender.getUniqueId()).getLocations().put("default", sender.getLocation());
     }
 }

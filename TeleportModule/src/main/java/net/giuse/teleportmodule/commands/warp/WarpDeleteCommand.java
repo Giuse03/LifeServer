@@ -1,5 +1,7 @@
 package net.giuse.teleportmodule.commands.warp;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -13,14 +15,15 @@ import javax.inject.Inject;
 public class WarpDeleteCommand extends AbstractCommand {
     private final WarpLoaderService warpLoaderService;
 
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public WarpDeleteCommand(MainModule mainModule) {
         super("warpdelete", "lifeserver.warpdelete", true);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
+        messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -34,19 +37,19 @@ public class WarpDeleteCommand extends AbstractCommand {
 
         //Check if name length is 0
         if (args.length == 0) {
-            p.sendMessage(teleportModule.getMessage("warp-insert-name"));
+            messageBuilder.setCommandSender(p).setIDMessage("warp-insert-name").sendMessage();
             return;
         }
 
         //Check if warp exists
         if (warpLoaderService.getWarp(args[0]) == null) {
-            p.sendMessage(teleportModule.getMessage("warp-no-exists"));
+            messageBuilder.setCommandSender(p).setIDMessage("warp-no-exists").sendMessage();
             return;
         }
 
         //Delete Warp
         warpLoaderService.getWarpBuilders().remove(warpLoaderService.getWarp(args[0]));
-        p.sendMessage(teleportModule.getMessage("warp-removed").replace("%name%", args[0]));
+        messageBuilder.setCommandSender(p).setIDMessage("warp-removed").sendMessage(new TextReplacer().match("%name%").replaceWith(args[0]));
     }
 
 }

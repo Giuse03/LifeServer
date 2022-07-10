@@ -1,5 +1,7 @@
 package net.giuse.teleportmodule.commands.warp;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -13,14 +15,15 @@ import javax.inject.Inject;
 
 public class WarpCreateCommand extends AbstractCommand {
     private final WarpLoaderService warpLoaderService;
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public WarpCreateCommand(MainModule mainModule) {
         super("warpcreate", "lifeserver.warpcreate", true);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
+        messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -34,13 +37,13 @@ public class WarpCreateCommand extends AbstractCommand {
 
         //Check if name length is 0
         if (args.length == 0) {
-            p.sendMessage(teleportModule.getMessage("warp-insert-name"));
+            messageBuilder.setCommandSender(p).setIDMessage("warp-insert-name").sendMessage();
             return;
         }
 
         //Check warp exists
         if (warpLoaderService.getWarp(args[0]) != null) {
-            p.sendMessage(teleportModule.getMessage("warp-already-exists"));
+            messageBuilder.setCommandSender(p).setIDMessage("warp-already-exists").sendMessage();
             return;
         }
 
@@ -51,6 +54,6 @@ public class WarpCreateCommand extends AbstractCommand {
         }
         //Create warp
         warpLoaderService.getWarpBuilders().add(new WarpBuilder(args[0], p.getLocation()));
-        p.sendMessage(teleportModule.getMessage("warp-created").replace("%name%", args[0]));
+        messageBuilder.setCommandSender(p).setIDMessage("warp-created").sendMessage(new TextReplacer().match("%name%").replaceWith(args[0]));
     }
 }

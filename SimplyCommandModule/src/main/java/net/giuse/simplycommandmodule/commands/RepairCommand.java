@@ -1,9 +1,9 @@
 package net.giuse.simplycommandmodule.commands;
 
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -14,50 +14,52 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class RepairCommand extends AbstractCommand {
-    private final SimplyCommandService simplyCommandService;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public RepairCommand(MainModule mainModule) {
         super("repair", "lifeserver.repair", false);
-        simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-        setNoPerm(simplyCommandService.getMex("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof ConsoleCommandSender) {
-            commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("not-player").sendMessage();
             return;
         }
         Player player = (Player) commandSender;
 
         if (args.length == 0) {
-            player.sendMessage(simplyCommandService.getMex("repair-usage"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("repair-usage").sendMessage();
             return;
         }
 
         if (args[0].equalsIgnoreCase("hand")) {
             if (!player.hasPermission("lifeserver.repair.hand")) {
-                commandSender.sendMessage(simplyCommandService.getMex("no-perms"));
+                commandSender.sendMessage("No Perms");
                 return;
             }
             if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                player.sendMessage(simplyCommandService.getMex("repair-nothing"));
+                messageBuilder.setCommandSender(commandSender).setIDMessage("repair-nothing").sendMessage();
                 return;
             }
             player.getInventory().getItemInMainHand().setDurability((short) 0);
-            player.sendMessage(simplyCommandService.getMex("repair-hand"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("repair-hand").sendMessage();
         }
 
         if (args[0].equalsIgnoreCase("all")) {
             if (!player.hasPermission("lifeserver.repair.all")) {
-                commandSender.sendMessage(simplyCommandService.getMex("no-perms"));
+                commandSender.sendMessage("No Perms");
                 return;
             }
 
             Arrays.stream(player.getInventory().getContents()).filter(Objects::nonNull).forEach(itemStack -> itemStack.setDurability((short) 0));
-            player.sendMessage(simplyCommandService.getMex("repair-all"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("repair-all").sendMessage();
+
         }
     }
 }

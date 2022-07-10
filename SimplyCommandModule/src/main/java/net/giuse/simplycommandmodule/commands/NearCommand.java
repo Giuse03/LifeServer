@@ -1,9 +1,10 @@
 package net.giuse.simplycommandmodule.commands;
 
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -14,19 +15,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class NearCommand extends AbstractCommand {
-    private final SimplyCommandService simplyCommandService;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public NearCommand(MainModule mainModule) {
         super("near", "lifeserver.near", false);
-        simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-        setNoPerm(simplyCommandService.getMex("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof ConsoleCommandSender) {
-            commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("not-player").sendMessage();
             return;
         }
 
@@ -37,12 +39,12 @@ public class NearCommand extends AbstractCommand {
         Bukkit.getOnlinePlayers().stream().filter(other -> other.getLocation().distance(player.getLocation()) <= 10 && !player.equals(other)).forEach(playerNear -> players.add(playerNear.getName()));
 
         if (players.isEmpty()) {
-            player.sendMessage(simplyCommandService.getMex("near-nobody"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("near-nobody").sendMessage();
             return;
         }
 
         players.forEach(i -> stringBuilder.append(i).append(","));
-        player.sendMessage(simplyCommandService.getMex("near").replace("%player_list%", stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString()));
+        messageBuilder.setCommandSender(commandSender).setIDMessage("near").sendMessage(new TextReplacer().match("%player_list%").replaceWith(stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString()));
 
     }
 }

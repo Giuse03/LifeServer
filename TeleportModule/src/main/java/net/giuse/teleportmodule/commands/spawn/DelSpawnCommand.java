@@ -1,5 +1,6 @@
 package net.giuse.teleportmodule.commands.spawn;
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -11,15 +12,15 @@ import javax.inject.Inject;
 
 public class DelSpawnCommand extends AbstractCommand {
     private final SpawnLoaderService spawnLoaderService;
-
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public DelSpawnCommand(MainModule mainModule) {
         super("delspawn", "lifeserver.delspawn", true);
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -32,6 +33,6 @@ public class DelSpawnCommand extends AbstractCommand {
 
         //Delete Spawn
         spawnLoaderService.setSpawnBuilder(null);
-        commandSender.sendMessage(teleportModule.getMessage("removespawn"));
+        messageBuilder.setCommandSender(commandSender).setIDMessage("removespawn").sendMessage();
     }
 }

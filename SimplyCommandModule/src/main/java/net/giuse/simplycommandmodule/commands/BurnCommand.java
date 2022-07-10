@@ -1,8 +1,9 @@
 package net.giuse.simplycommandmodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -13,14 +14,15 @@ import javax.inject.Inject;
 
 public class BurnCommand extends AbstractCommand {
 
-    private final SimplyCommandService simplyCommandService;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public BurnCommand(MainModule mainModule) {
         super("burn", "lifeserver.burn", false);
-        simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-        setNoPerm(simplyCommandService.getMex("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
 
+        setNoPerm("No perms");
+        
     }
 
 
@@ -29,13 +31,14 @@ public class BurnCommand extends AbstractCommand {
         if (args.length == 0) {
 
             if (commandSender instanceof ConsoleCommandSender) {
-                commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+                messageBuilder.setCommandSender(commandSender).setIDMessage("not-player").sendMessage();
                 return;
             }
 
             Player player = (Player) commandSender;
             player.setFireTicks(20 * 20);
-            player.sendMessage(simplyCommandService.getMex("burning").replace("%player_name%", player.getName()).replace("%seconds%", "20"));
+            messageBuilder.setCommandSender(player).setIDMessage("burning").sendMessage(new TextReplacer().match("%seconds%").replaceWith("20"));
+
             return;
         }
 
@@ -45,44 +48,55 @@ public class BurnCommand extends AbstractCommand {
                 Player target = Bukkit.getPlayer(args[0]);
 
                 if (target == null) {
-                    commandSender.sendMessage(simplyCommandService.getMex("player-not-online"));
+                    messageBuilder.setCommandSender(commandSender).setIDMessage("not-player").sendMessage();
                     return;
                 }
 
                 target.setFireTicks(20);
-                commandSender.sendMessage(simplyCommandService.getMex("burning").replace("%player_name%", target.getName()).replace("%seconds%", "20"));
+                messageBuilder.setCommandSender(commandSender).setIDMessage("burning").sendMessage(
+                        new TextReplacer().match("%player_name%").replaceWith(target.getName()),
+                        new TextReplacer().match("%seconds%").replaceWith("20"));
                 return;
             }
 
             Player player = (Player) commandSender;
 
             if (!NumberUtils.isNumber(args[0])) {
-                commandSender.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[0]));
+                messageBuilder.setCommandSender(commandSender).setIDMessage("burn-invalid-number-time").sendMessage(new TextReplacer().match("%invalid_number%").replaceWith(args[0]));
                 return;
             }
             player.setFireTicks(Integer.parseInt(args[0]));
-            commandSender.sendMessage(simplyCommandService.getMex("burning").replace("%player_name%", player.getName()).replace("%seconds%", args[0]));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("burning").sendMessage(
+                    new TextReplacer().match("%seconds%").replaceWith(args[0]),
+                    new TextReplacer().match("%player_name%").replaceWith(player.getName()));
             return;
         }
 
         if (!commandSender.hasPermission("lifeserver.burn.other")) {
-            commandSender.sendMessage(simplyCommandService.getMex("no-perms"));
+            commandSender.sendMessage("No Perms");
         }
 
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            commandSender.sendMessage(simplyCommandService.getMex("player-not-online"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("player-not-online").sendMessage();
+
             return;
         }
 
         if (!NumberUtils.isNumber(args[1])) {
-            commandSender.sendMessage(simplyCommandService.getMex("burn-invalid-number-time").replace("%invalid_number%", args[1]));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("burn-invalid-number-time").sendMessage(new TextReplacer().match("%invalid_number%").replaceWith(args[1]));
             return;
         }
 
 
         target.setFireTicks(Integer.parseInt(args[1]));
-        commandSender.sendMessage(simplyCommandService.getMex("burning").replace("%player_name%", target.getName()).replace("%seconds%", args[1]));
+        messageBuilder.setCommandSender(target).setIDMessage("burning").sendMessage(
+                new TextReplacer().match("%player_name%").replaceWith(target.getName()),
+                new TextReplacer().match("%seconds%").replaceWith(args[1]));
+
+        messageBuilder.setCommandSender(commandSender).setIDMessage("burning").sendMessage(
+                new TextReplacer().match("%player_name%").replaceWith(target.getName()),
+                new TextReplacer().match("%seconds%").replaceWith(args[1]));
     }
 }

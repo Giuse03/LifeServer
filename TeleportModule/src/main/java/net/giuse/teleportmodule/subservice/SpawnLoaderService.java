@@ -33,21 +33,10 @@ public class SpawnLoaderService extends Services implements Savable {
     @SneakyThrows
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Spawn...");
-        TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         spawnOperations = mainModule.getInjector().getSingleton(SpawnOperations.class);
 
         //Load from database
         spawnOperations.getAllString().forEach(newSpawnBuilder -> spawnBuilder = spawnBuilderSerializer.decoder(newSpawnBuilder));
-
-        //Load File
-        if (Files.size(Paths.get("plugins/LifeServer/messages/messages_spawn.yml")) == 0) {
-            teleportModule.getFileManager().setMessagesSpawn();
-        }
-
-        //Load Message
-        for (String messageConfig : teleportModule.getFileManager().getMessagesSpawnYaml().getConfigurationSection("messages.spawn").getKeys(true)) {
-            teleportModule.getMessage().put(messageConfig, teleportModule.getFileManager().getMessagesSpawnYaml().getString("messages.spawn." + messageConfig));
-        }
     }
 
     /*

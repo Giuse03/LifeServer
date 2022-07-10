@@ -1,0 +1,183 @@
+messages:
+  #1
+  select-player:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7Select a Player'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2»&7Select a Player'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Select a Player'
+  #2
+  teleport-player:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7Teleporting to %playername%...'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2» &7Teleporting to %playername%...'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Teleporting to %playername%...'
+  #3
+  player-not-found:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7This player isn''t online'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2» &7This player isn''t online'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7This player isn''t online'
+  #4
+  tpa-request-sender:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7Tpa sent to %playername%...'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2» &7Tpa sent to %playername%...'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Tpa sent to %playername%...'
+  #5
+  tpa-request-receiver:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&2%playername% wants to come to YOU'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2» &2%playername% wants to come to YOU\n &aType &2/tpaccept &2for accept request \n&2Type &2/tpdeny&a for refuse the request'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&aType &2/tpaccept &2for accept request \n&2Type &2/tpdeny&a for refuse the request'
+  #6
+  tpahere-request-sender:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: ' &7TpaHere sent to %playername%...'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2»  &7TpaHere sent to %playername%...'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: ' &7TpaHere sent to %playername%...'
+  #7
+  tpahere-request-receiver:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&2%playername% wants you to come to HIM'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2» &2%playername% wants you to come to HIM\n &aType &2/tpaccept &2for accept request \n&2Type &2/tpdeny&a for refuse the request'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&aType &2/tpaccept &2for accept request \n&2Type &2/tpdeny&a for refuse the request'
+  #8
+  no-pending-request:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7There aren''t requests pending'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2» &7There aren''t requests pending'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7There aren''t requests pending'
+  #9
+  request-refused:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7%playername% refused your teleport request'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2» &7%playername% refused your teleport request'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%playername% refused your teleport request'
+#10
+  request-accept-receiver:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7%playername% is coming to you'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2» &7%playername% is coming to you'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%playername% is coming to you'
+#11
+  back:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7Teleported on previous location'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aBack &2» &7Teleported on previous location'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Teleported on previous location'
+#12
+  back-no-location:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7No previous location found!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&2Back &a» &7No previous location found!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7No previous location found!'
+
+

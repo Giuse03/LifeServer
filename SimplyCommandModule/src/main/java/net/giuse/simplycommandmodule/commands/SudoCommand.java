@@ -1,8 +1,9 @@
 package net.giuse.simplycommandmodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,19 +11,20 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class SudoCommand extends AbstractCommand {
-    private final SimplyCommandService simplyCommandService;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public SudoCommand(MainModule mainModule) {
         super("sudo", "lifeserver.sudo", false);
-        simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-        setNoPerm(simplyCommandService.getMex("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (args.length == 0 || args.length == 1) {
-            commandSender.sendMessage(simplyCommandService.getMex("sudo-usage"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("sudo-usage").sendMessage();
             return;
         }
 
@@ -35,18 +37,24 @@ public class SudoCommand extends AbstractCommand {
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            commandSender.sendMessage(simplyCommandService.getMex("player-not-online"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("player-not-online").sendMessage();
+
             return;
         }
 
         if (sb.toString().startsWith("chat:")) {
             target.chat(sb.toString().replace("chat:", ""));
-            commandSender.sendMessage(simplyCommandService.getMex("sudo-forced").replace("%command%", sb.toString()).replace("%player_name%", target.getName()));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("sudo-forced").sendMessage(
+                    new TextReplacer().match("%command%").replaceWith(sb.toString()),
+                    new TextReplacer().match("%player_name%").replaceWith(target.getName()));
+
             return;
         }
 
         target.performCommand(sb.toString());
-        commandSender.sendMessage(simplyCommandService.getMex("sudo-forced").replace("%command%", sb.toString()).replace("%player_name%", target.getName()));
+        messageBuilder.setCommandSender(commandSender).setIDMessage("sudo-forced").sendMessage(
+                new TextReplacer().match("%command%").replaceWith(sb.toString()),
+                new TextReplacer().match("%player_name%").replaceWith(target.getName()));
 
     }
 }

@@ -1,6 +1,8 @@
 package net.giuse.teleportmodule.commands.teleport;
 
 import io.papermc.lib.PaperLib;
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -12,13 +14,16 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class TpCommand extends AbstractCommand {
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
+    private final TeleportModule teleportModule;
     @Inject
     public TpCommand(MainModule mainModule) {
         super("tp", "lifeserver.tp", false);
+        messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -32,7 +37,7 @@ public class TpCommand extends AbstractCommand {
 
         //Check if player isn't selected
         if (args.length == 0) {
-            sender.sendMessage(teleportModule.getMessage("select-player"));
+            messageBuilder.setCommandSender(sender).setIDMessage("select-player").sendMessage();
             return;
         }
 
@@ -42,14 +47,14 @@ public class TpCommand extends AbstractCommand {
 
             //Check if target is online
             if (target == null) {
-                sender.sendMessage(teleportModule.getMessage("player-not-found"));
+                messageBuilder.setCommandSender(sender).setIDMessage("player-not-found").sendMessage();
                 return;
             }
 
             //Teleport Target
             teleportModule.getBackLocations().put(sender, sender.getLocation());
             PaperLib.teleportAsync(sender, target.getLocation());
-            sender.sendMessage(teleportModule.getMessage("teleport-player").replace("%playername%", sender.getName()));
+            messageBuilder.setCommandSender(sender).setIDMessage("teleport-player").sendMessage(new TextReplacer().match("%playername%").replaceWith(sender.getName()));
             return;
         }
 
@@ -59,13 +64,13 @@ public class TpCommand extends AbstractCommand {
 
         //Check if targets are online
         if (firstTarget == null || secondTarget == null) {
-            sender.sendMessage(teleportModule.getMessage("player-not-found"));
+            messageBuilder.setCommandSender(sender).setIDMessage("player-not-found").sendMessage();
             return;
         }
 
         //Teleport Targets
         teleportModule.getBackLocations().put(sender, sender.getLocation());
         PaperLib.teleportAsync(firstTarget, secondTarget.getLocation());
-        sender.sendMessage(teleportModule.getMessage("teleport-player").replace("%playername%", sender.getName()));
+        messageBuilder.setCommandSender(sender).setIDMessage("teleport-player").sendMessage(new TextReplacer().match("%playername%").replaceWith(sender.getName()));
     }
 }

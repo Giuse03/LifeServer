@@ -1,5 +1,6 @@
 package net.giuse.teleportmodule.commands.home;
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -12,14 +13,15 @@ import javax.inject.Inject;
 
 public class DelHomeCommand extends AbstractCommand {
     private final HomeLoaderService homeLoaderService;
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public DelHomeCommand(MainModule mainModule) {
         super("delhome", "lifeserver.delhome", true);
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -33,7 +35,7 @@ public class DelHomeCommand extends AbstractCommand {
 
         //Check if player has home
         if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == 0) {
-            sender.sendMessage(teleportModule.getMessage("no_home_found"));
+            messageBuilder.setCommandSender(sender).setIDMessage("no_home_found").sendMessage();
         }
 
         //Check if player has multiple home
@@ -43,27 +45,26 @@ public class DelHomeCommand extends AbstractCommand {
                 //Check if player has one home
                 if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == 1) {
                     homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().forEach(home -> homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(home));
-                    sender.sendMessage(teleportModule.getMessage("deleted_home"));
+                    messageBuilder.setCommandSender(sender).setIDMessage("deleted_home").sendMessage();
                     return;
                 }
-
-                sender.sendMessage(teleportModule.getMessage("select-home"));
+                messageBuilder.setCommandSender(sender).setIDMessage("select-home").sendMessage();
             }
 
             //Check if home exists
             if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0]) == null) {
-                sender.sendMessage(teleportModule.getMessage("no_home_found"));
+                messageBuilder.setCommandSender(sender).setIDMessage("no_home_found").sendMessage();
                 return;
             }
 
             //Delete home
             homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(args[0].toLowerCase());
-            sender.sendMessage(teleportModule.getMessage("deleted_home"));
+            messageBuilder.setCommandSender(sender).setIDMessage("deleted_home").sendMessage();
             return;
         }
 
         //Delete Home
         homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().forEach(home -> homeLoaderService.getHome(sender.getUniqueId()).getLocations().remove(home));
-        sender.sendMessage(teleportModule.getMessage("deleted_home"));
+        messageBuilder.setCommandSender(sender).setIDMessage("deleted_home").sendMessage();
     }
 }

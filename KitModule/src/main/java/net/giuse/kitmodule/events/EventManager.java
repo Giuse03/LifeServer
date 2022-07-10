@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import javax.inject.Inject;
+import java.util.concurrent.ConcurrentMap;
 
 
 /**
@@ -35,13 +36,10 @@ public class EventManager implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (kitModule.getPlayerTime(e.getPlayer().getUniqueId()) == null) {
-            PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem(e.getPlayer().getUniqueId());
-            for (KitBuilder kitBuilder : kitModule.getKitElements()) {
-                playerTimerSystem.getKitsCooldown().add(new KitCooldown(kitBuilder));
-            }
-
+            PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem();
+            kitModule.getKitElements().asMap().forEach(((name, kitBuilder) -> playerTimerSystem.getKitsCooldown().add(new KitCooldown(name.toLowerCase(),kitBuilder))));
             playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
-            kitModule.getPlayerTimerSystems().add(playerTimerSystem);
+            kitModule.getCachePlayerKit().put(e.getPlayer().getUniqueId(), playerTimerSystem);
         }
     }
 }

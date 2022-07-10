@@ -1,9 +1,10 @@
 package net.giuse.simplycommandmodule.commands;
 
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.simplycommandmodule.SimplyCommandService;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -13,29 +14,31 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class SpeedCommand extends AbstractCommand {
-    private final SimplyCommandService simplyCommandService;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public SpeedCommand(MainModule mainModule) {
         super("speed", "lifeserver.speed", false);
-        simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-        setNoPerm(simplyCommandService.getMex("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof ConsoleCommandSender) {
-            commandSender.sendMessage(simplyCommandService.getMex("not-player"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("not-player").sendMessage();
             return;
         }
         Player player = (Player) commandSender;
         if (args.length == 0) {
-            player.sendMessage(simplyCommandService.getMex("speed-usage"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("speed-usage").sendMessage();
+
             return;
         }
         if (args.length == 1) {
             if (!NumberUtils.isNumber(args[0])) {
-                player.sendMessage(simplyCommandService.getMex("speed-invalid-number-time").replace("%invalid_number%", args[0]));
+                messageBuilder.setCommandSender(commandSender).setIDMessage("speed-invalid-number-time").sendMessage(new TextReplacer().match("%invalid_number%").replaceWith(args[0]));
                 return;
             }
 
@@ -44,35 +47,35 @@ public class SpeedCommand extends AbstractCommand {
                 return;
             }
 
-            player.sendMessage(simplyCommandService.getMex("speed-invalid-number-time").replace("%invalid_number%", args[0]));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("speed-invalid-number-time").sendMessage(new TextReplacer().match("%invalid_number%").replaceWith(args[0]));
             return;
         }
 
         if (!player.hasPermission("lifeserver.speed.other")) {
-            player.sendMessage(simplyCommandService.getMex("no-perms"));
+            player.sendMessage("No Perms");
             return;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            player.sendMessage(simplyCommandService.getMex("player-not-online"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("player-not-online").sendMessage();
             return;
         }
 
         if (!NumberUtils.isNumber(args[1])) {
-            player.sendMessage(simplyCommandService.getMex("speed-invalid-number-time").replace("%invalid_number%", args[0]));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("speed-invalid-number-time").sendMessage(new TextReplacer().match("%invalid_number%").replaceWith(args[0]));
             return;
         }
 
-        if (Integer.parseInt(args[1]) >= 0 && (Integer.parseInt(args[1]) <= 10)) {
+        if (Float.parseFloat(args[1]) >= 0 && (Float.parseFloat(args[1]) <= 10)) {
             if (setSpeed(target, Float.valueOf(args[1]))) {
-                player.sendMessage(simplyCommandService.getMex("speed-set-other").replace("%player_name%", target.getName()).replace("%number%", args[1]));
+                messageBuilder.setCommandSender(commandSender).setIDMessage("speed-set-other").sendMessage(new TextReplacer().match("%number%").replaceWith(args[1]), new TextReplacer().match("%player_name%").replaceWith(target.getName()));
                 return;
             }
-            player.sendMessage(simplyCommandService.getMex("walk-set-other").replace("%player_name%", target.getName()).replace("%number%", args[1]));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("walker-set-other").sendMessage(new TextReplacer().match("%number%").replaceWith(args[1]), new TextReplacer().match("%player_name%").replaceWith(target.getName()));
         }
-        player.sendMessage(simplyCommandService.getMex("speed-invalid-number-time").replace("%invalid_number%", args[0]));
+        messageBuilder.setCommandSender(commandSender).setIDMessage("speed-invalid-number-time").sendMessage(new TextReplacer().match("%invalid_number%").replaceWith(args[0]));
 
 
     }
@@ -81,11 +84,11 @@ public class SpeedCommand extends AbstractCommand {
     private boolean setSpeed(Player player, Float speed) {
         if (player.isFlying()) {
             player.setFlySpeed(speed / 10);
-            player.sendMessage(simplyCommandService.getMex("speed-set").replace("%number%", String.valueOf(speed)));
+            messageBuilder.setCommandSender(player).setIDMessage("speed-set").sendMessage(new TextReplacer().match("%number%").replaceWith(String.valueOf(speed)));
             return true;
         }
         player.setWalkSpeed(speed / 10);
-        player.sendMessage(simplyCommandService.getMex("walk-set").replace("%number%", String.valueOf(speed)));
+        messageBuilder.setCommandSender(player).setIDMessage("walk-set").sendMessage(new TextReplacer().match("%number%").replaceWith(String.valueOf(speed)));
         return false;
     }
 

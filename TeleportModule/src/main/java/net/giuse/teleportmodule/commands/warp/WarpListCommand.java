@@ -1,5 +1,7 @@
 package net.giuse.teleportmodule.commands.warp;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -12,14 +14,15 @@ import javax.inject.Inject;
 
 public class WarpListCommand extends AbstractCommand {
     private final WarpLoaderService warpLoaderService;
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public WarpListCommand(MainModule mainModule) {
         super("warplist", "lifeserver.warp.list", false);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
+        messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -33,13 +36,13 @@ public class WarpListCommand extends AbstractCommand {
 
         //Check if there are warp
         if (warpLoaderService.getWarpBuilders().isEmpty()) {
-            p.sendMessage(teleportModule.getMessage("no-warp-available"));
+            messageBuilder.setCommandSender(p).setIDMessage("no-warp-available").sendMessage();
             return;
         }
 
         //Send player warp Message
         StringBuilder sb = new StringBuilder();
         warpLoaderService.getWarpBuilders().forEach(warpBuilder -> sb.append(warpBuilder.getName()).append(","));
-        p.sendMessage(teleportModule.getMessage("warp-list").replace("%list%", sb.deleteCharAt(sb.length() - 1).toString()));
+        messageBuilder.setCommandSender(p).setIDMessage("warp-list").sendMessage(new TextReplacer().match("%list%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
     }
 }

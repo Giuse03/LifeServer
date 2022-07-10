@@ -1,5 +1,7 @@
 package net.giuse.teleportmodule.commands.teleport;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -14,16 +16,16 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class TpaCommand extends AbstractCommand {
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
     private final TeleportRequestService teleportRequestService;
 
     @Inject
     public TpaCommand(MainModule mainModule) {
         super("tpa", "lifeserver.tpa", true);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
+        messageBuilder = mainModule.getMessageBuilder();
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
-
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -37,7 +39,7 @@ public class TpaCommand extends AbstractCommand {
 
         //Check if player isn't selected
         if (args.length == 0) {
-            sender.sendMessage(teleportModule.getMessage("select-player"));
+            messageBuilder.setCommandSender(sender).setIDMessage("select-player").sendMessage();
             return;
         }
 
@@ -45,13 +47,14 @@ public class TpaCommand extends AbstractCommand {
 
         //Check if target is online
         if (target == null) {
-            sender.sendMessage(teleportModule.getMessage("player-not-found"));
+            messageBuilder.setCommandSender(sender).setIDMessage("player-not-found").sendMessage();
             return;
         }
 
         //Send request to the target
-        sender.sendMessage(teleportModule.getMessage("tpa-request-sender").replace("%playername%", target.getName()));
-        target.sendMessage(teleportModule.getMessage("tpa-request-receiver").replace("%playername%", sender.getName()));
+
+        messageBuilder.setCommandSender(sender).setIDMessage("tpa-request-sender").sendMessage(new TextReplacer().match("%playername%").replaceWith(target.getName()));
+        messageBuilder.setCommandSender(target).setIDMessage("tpa-request-receiver").sendMessage(new TextReplacer().match("%playername%").replaceWith(sender.getName()));
         teleportRequestService.getPendingRequests().add(new PendingRequest(sender, target, TpType.TPA));
     }
 }

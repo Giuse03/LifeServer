@@ -1,5 +1,7 @@
 package net.giuse.secretmessagemodule.commands;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.secretmessagemodule.SecretMessageModule;
@@ -11,12 +13,15 @@ import javax.inject.Inject;
 
 public class SocialSpyCommand extends AbstractCommand {
     private final SecretMessageModule secretMessageModule;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public SocialSpyCommand(MainModule mainModule) {
         super("socialspy", "lifeserver.socialspy", true);
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
-        setNoPerm(secretMessageModule.getMessages("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No Perms");
+        
     }
 
     @Override
@@ -30,11 +35,12 @@ public class SocialSpyCommand extends AbstractCommand {
 
         //Enable or disable SocialSpy
         if (secretMessageModule.getPlayerSocialSpy().contains(player)) {
-            player.sendMessage(secretMessageModule.getMessages("socialspy").replace("%status%", "§cOFF"));
+            messageBuilder.setCommandSender(player).setIDMessage("socialspy").sendMessage(new TextReplacer().match("%status%").replaceWith("§cOFF"));
             secretMessageModule.getPlayerSocialSpy().remove(player);
-        } else {
-            player.sendMessage(secretMessageModule.getMessages("socialspy").replace("%status%", "§aON"));
-            secretMessageModule.getPlayerSocialSpy().add(player);
+            return;
         }
+        messageBuilder.setCommandSender(player).setIDMessage("socialspy").sendMessage(new TextReplacer().match("%status%").replaceWith("§aON"));
+        secretMessageModule.getPlayerSocialSpy().add(player);
+
     }
 }

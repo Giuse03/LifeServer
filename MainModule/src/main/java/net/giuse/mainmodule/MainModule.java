@@ -5,6 +5,9 @@ import ch.jalu.injector.InjectorBuilder;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.engine.ProcessEngine;
+import net.giuse.engine.Worker;
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.MessageLoader;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.mainmodule.databases.ConnectorSQLite;
 import net.giuse.mainmodule.files.SQLFile;
@@ -12,7 +15,7 @@ import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.gui.GuiInitializer;
 import net.giuse.mainmodule.services.Services;
 import net.giuse.mainmodule.utils.Utils;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.lib.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,16 +24,21 @@ import org.reflections.Reflections;
 import java.util.HashMap;
 
 public class MainModule extends JavaPlugin {
-
-    public static String version = Bukkit.getBukkitVersion();
     @Getter
     private final Injector injector = new InjectorBuilder().addDefaultHandlers("net.giuse").create();
     private final Reflections reflections = new Reflections("net.giuse");
     @Getter
     private final ConnectorSQLite connectorSQLite = new ConnectorSQLite();
     private HashMap<Services, Integer> servicesByPriority = new HashMap<>();
+    @Getter
+    private MessageBuilder messageBuilder;
+    @Getter
+    private MessageLoader messageLoader;
+    @Getter
+    private ProcessEngine engine;
+    @Getter
+    private Worker worker;
 
-    @Getter private BukkitAudiences adventure;
     /*
      * Enable MainModule
      */
@@ -40,19 +48,34 @@ public class MainModule extends JavaPlugin {
         //Get current millis for check startup time
         long millis = System.currentTimeMillis();
 
+        //Enable workloads
+        engine = new ProcessEngine(this);
+        worker = new Worker(engine);
         //Set MainModule injectable
         injector.register(MainModule.class, this);
+        injector.register(Worker.class, worker);
 
+        //Loading Message
+        messageLoader = new MessageLoader(BukkitAudiences.create(this),engine);
+        messageBuilder = new MessageBuilder(messageLoader);
         getLogger().info("§aLifeserver starting...");
 
-        //Enable workloads
-        new ProcessEngine(this);
 
         //Save default configs
         saveResource("config.yml", false);
+        //Load Guis
         saveResource("kit_gui_config.yml", false);
         saveResource("warp_gui_config.yml", false);
+
+        //Load Messages
         saveResource("messages/messages_kit.yml", false);
+        saveResource("messages/messages_simple_command.yml", false);
+        saveResource("messages/messages_warp.yml", false);
+        saveResource("messages/messages_spawn.yml", false);
+        saveResource("messages/messages_home.yml", false);
+        saveResource("messages/messages_economy.yml", false);
+        saveResource("messages/messages_teleport.yml", false);
+        saveResource("messages/messages_secret_chat.yml", false);
 
         //Load SQL
         ReflectionsFiles.loadFiles(new SQLFile());
@@ -80,7 +103,8 @@ public class MainModule extends JavaPlugin {
 
         getLogger().info("§aLifeserver started in " + (System.currentTimeMillis() - millis) + "ms...");
         connectorSQLite.closeConnection();
-        this.adventure = BukkitAudiences.create(this);
+
+
     }
 
     /*

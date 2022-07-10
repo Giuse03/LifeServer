@@ -1,0 +1,677 @@
+messages:
+  #1
+  fly-enable:
+    title:
+      send-title: true
+      main-title: '&2[&a Fly &2]'
+      subtitle: '&7 Fly enabled'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aFly &2»&7 Fly enabled'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 Fly enabled'
+  #2
+  fly-disabled:
+    title:
+      send-title: true
+      main-title: '&2[&a Fly &2]'
+      subtitle: '&7 Fly disabled'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aFly &2»&7 Fly disabled'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 Fly disabled'
+  #3
+  fly-enable-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Fly &2]'
+      subtitle: '&7Fly enabled for %player_name%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aFly &2»&7 Fly enabled for %player_name%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Fly enabled for %player_name%'
+  #4
+  fly-disabled-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Fly &2]'
+      subtitle: '&7Fly disabled for %player_name%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aFly &2»&7 Fly disabled for %player_name%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 Fly disabled for %player_name%'
+  #5
+  repair-usage:
+    title:
+      send-title: true
+      main-title: '&2[&a Repair &2]'
+      subtitle: '&7 Usage: /repair <all|hand>'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aRepair &2»&7 Usage: /repair <all|hand>'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 Usage: /repair <all|hand>'
+  #6
+  repair-hand:
+    title:
+      send-title: true
+      main-title: '&2[&a Repair &2]'
+      subtitle: '&7 Repaired item in hand'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aRepair &2»&7 Repaired item in hand'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 Repaired item in hand'
+  #7
+  repair-all:
+    title:
+      send-title: true
+      main-title: '&2[&a Repair &2]'
+      subtitle: '&7 Repaired item in inventory'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aRepair &2»&7 Repaired item in inventory'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 Repaired item in inventory'
+  #8
+  repair-nothing:
+    title:
+      send-title: true
+      main-title: '&2[&a Repair &2]'
+      subtitle: '&7 You don''t have any items in your hand'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aRepair &2»&7 You don''t have any items in your hand'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7 You don''t have any items in your hand'
+  #9
+  heal:
+    title:
+      send-title: true
+      main-title: '&2[&a Heal &2]'
+      subtitle: '&7You healed yourself'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aHeal &2» &7You healed yourself'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You healed yourself'
+  #10
+  heal-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Heal &2]'
+      subtitle: '&7You healed %player_name%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aHeal &2» &7You healed %player_name%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You healed %player_name%'
+  #11
+  food:
+    title:
+      send-title: true
+      main-title: '&2[&a Food &2]'
+      subtitle: '&7Gnam Gnam'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aFood &2» &7Gnam Gnam'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Gnam Gnam'
+  #12
+  food-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Food &2]'
+      subtitle: '&7Gnam Gnam for %player_name%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aFood &2» &7Gnam Gnam for %player_name%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Gnam Gnam for %player_name%'
+  #12+1
+  cleaninv:
+    title:
+      send-title: true
+      main-title: '&2[&a ClearInv &2]'
+      subtitle: '&7Your inventory was cleaned'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aClenInv &2» &7Your inventory was cleaned'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Your inventory was cleaned'
+  #14
+  cleaninv-other:
+    title:
+      send-title: true
+      main-title: '&2[&a ClearInv &2]'
+      subtitle: '&7The inventory of %player_name% was cleaned'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aClenInv &2» &7The inventory of %player_name% was cleaned'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7The inventory of %player_name% was cleaned'
+  #15
+  gamemode:
+    title:
+      send-title: true
+      main-title: '&2[&a Gamemode &2]'
+      subtitle: '&7Your gamemode now is %gamemode%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aGamemode &2» &7Your gamemode now is %gamemode%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Your gamemode now is %gamemode%'
+  #16
+  gamemode-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Gamemode &2]'
+      subtitle: '&7The gamemode of %player_name% now is %gamemode%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aGamemode &2» &7The gamemode of %player_name% now is %gamemode%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7The gamemode of %player_name% now is %gamemode%'
+  #17
+  gamemode-available:
+    title:
+      send-title: true
+      main-title: '&2[&a Gamemode &2]'
+      subtitle: '&7Available gamemode: <creative> <survival> <spectator> <adventure>'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aGamemode &2» &7Available gamemode: <creative> <survival> <spectator> <adventure>'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Available gamemode: <creative> <survival> <spectator> <adventure>'
+  #18
+  time-usage:
+    title:
+      send-title: true
+      main-title: '&2[&a Time &2]'
+      subtitle: '&7Usage /time <tick>'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTime &2» &7Usage /time <tick>'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Usage /time <tick>'
+  #19
+  time:
+    title:
+      send-title: true
+      main-title: '&2[&a Time &2]'
+      subtitle: '&7The time changed'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTime &2» &7The time changed'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7The time changed'
+  #20
+  near-nobody:
+    title:
+      send-title: true
+      main-title: '&2[&a Near &2]'
+      subtitle: '&7Nobody in 10 blocks distance'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aNear &2» &7Nobody in 10 blocks distance'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Nobody in 10 blocks distance'
+  #21
+  near:
+    title:
+      send-title: true
+      main-title: '&2[&a Near &2]'
+      subtitle: '&7Players: %player_list%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aNear &2» &7Players: %player_list%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Players: %player_list%'
+  #22
+  invsee-select-player:
+    title:
+      send-title: true
+      main-title: '&2[&a Invsee &2]'
+      subtitle: '&7Select a player'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aInvsee &2» &7Select a player'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Select a player'
+  #23
+  speed-usage:
+    title:
+      send-title: true
+      main-title: '&2[&a Speed &2]'
+      subtitle: '&7Usage: /speed <value> [player]'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aSpeed &2» &7Usage: /speed <value> [player]'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Usage: /speed <value> [player]'
+  #24
+  speed-set:
+    title:
+      send-title: true
+      main-title: '&2[&a Speed &2]'
+      subtitle: '&7Speed speed now is %number%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aSpeed &2» &7Speed speed now is %number%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Usage: &7Speed speed now is %number%'
+  #25
+  speed-set-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Speed &2]'
+      subtitle: '&7Flying speed for %player_name% now is %number%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aSpeed &2» &7Flying speed for %player_name% now is %number%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Usage: &7Flying speed for %player_name% now is %number%'
+  #26
+  walk-set:
+    title:
+      send-title: true
+      main-title: '&2[&a Walk &2]'
+      subtitle: '&7Walking speed now is %number%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aWalk &2» &7Walking speed now is %number%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Walking speed now is %number%'
+  #27
+  walk-set-other:
+    title:
+      send-title: true
+      main-title: '&2[&a Walk &2]'
+      subtitle: '&7Walking speed for %player_name% now is %number%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aWalk &2» &7Walking speed for %player_name% now is %number%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Walking speed for %player_name% now is %number%'
+  #28
+  speed-invalid-number-time:
+    title:
+      send-title: true
+      main-title: '&2[&a Speed &2]'
+      subtitle: '&7%invalid_number% is invalid number'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aSpeed &2» &7%invalid_number% is invalid number'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%invalid_number% is invalid number'
+  #29
+  burn-invalid-number-time:
+    title:
+      send-title: true
+      main-title: '&2[&a Burning &2]'
+      subtitle: '&7%invalid_number% is invalid number'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aBurn &2» &7%invalid_number% is invalid number'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%invalid_number% is invalid number'
+  #30
+  burning:
+    title:
+      send-title: true
+      main-title: '&2[&a Burning &2]'
+      subtitle: '&7%player_name% is burning for %seconds%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aBurn &2» &7%player_name% is burning for %seconds%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%player_name% is burning for %seconds%'
+  #31
+  sudo-usage:
+    title:
+      send-title: true
+      main-title: '&2[&a Sudo &2]'
+      subtitle: '&7Usage: /sudo <player> <command>'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aSudo &2» &7Usage: /sudo <player> <command>'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Usage: /sudo <player> <command>'
+  #32
+  sudo-forced:
+    title:
+      send-title: true
+      main-title: '&2[&a Sudo &2]'
+      subtitle: '&7Forced %player_name% to do %command%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aSudo &2» &7Forced %player_name% to do %command%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Forced %player_name% to do %command%'
+  #33
+  broadcast:
+    title:
+      send-title: true
+      main-title: '&2[&a Broadcast &2]'
+      subtitle: '&7%message%'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aBroadcast &2» &7%message%'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&aBroadcast &2» &7%message%'
+  #34
+  broadcast-usage:
+    title:
+      send-title: true
+      main-title: '&2[&a Broadcast &2]'
+      subtitle: '&7Usage: /broadcast <message>'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aBroadcast &2» &7Usage: /broadcast <message>'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&aBroadcast &2» &7Usage: /broadcast <message>'
+  #35
+  enchant-usage:
+    title:
+      send-title: false
+      main-title: '&2[&a Enchanting &2]'
+      subtitle: '&7/enchant <enchantment> <level> EnchantList: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html>'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aEnchant &2» &7/enchant <enchantment> <level> EnchantList: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html'
+    actionbar:
+      send-actionbar: false
+      actionbar-message: '&7/enchant <enchantment> <level> EnchantList: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html'
+  #36
+  enchant-added:
+    title:
+      send-title: true
+      main-title: '&2[&a Enchanting &2]'
+      subtitle: '&7Enchant added!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aEnchant &2» &7Enchant added!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Enchant added!'
+  #37
+  enchant-insert-level:
+    title:
+      send-title: true
+      main-title: '&2[&a Enchanting &2]'
+      subtitle: '&7Insert level for this enchant!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aEnchant &2» &7Insert level for this enchant!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Insert level for this enchant!'
+  #38
+  enchant-correct-insert-level:
+    title:
+      send-title: true
+      main-title: '&2[&a Enchanting &2]'
+      subtitle: '&7Insert valid number!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aEnchant &2» &7Insert valid number!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Insert valid number!'
+  #39
+  enchant-invalid:
+    title:
+      send-title: false
+      main-title: '&2[&a Enchanting &2]'
+      subtitle: '&7Enchant invalid!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aEnchant &2» &7%enchant% is invalid! Check list: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Enchant invalid!'
+  #40
+  god-enabled:
+    title:
+      send-title: true
+      main-title: '&2[&a God &2]'
+      subtitle: '&7You''re now God'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aGod &2» &7You''re now God'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: 'You''re now God'
+  #41
+  god-disabled:
+    title:
+      send-title: true
+      main-title: '&2[&a God &2]'
+      subtitle: '&7You aren''t now God'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aGod &2»  &7You aren''t now God'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7You aren''t now God'
+  #42
+  god-other-enabled:
+    title:
+      send-title: true
+      main-title: '&2[&a God &2]'
+      subtitle: '&7%player_name% is now a god'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aGod &2»  &7%player_name% is now a god'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%player_name% is now a god'
+  #43
+  god-other-disabled:
+    title:
+      send-title: true
+      main-title: '&2[&a God &2]'
+      subtitle: '&7%player_name% isn''t now a god!'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aGod &2» &7 %player_name% isn''t now a god!'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7%player_name% isn''t now a god!'
+  #44
+  player-not-online:
+    title:
+      send-title: true
+      main-title: '&c&7This player is offline'
+      subtitle: ''
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&c&7This player is offline'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&c&7This player is offline'
+  #45
+  not-player:
+    title:
+      send-title: false
+      main-title: '&cYou must be player!'
+      subtitle: ''
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&c&cYou must be player!'
+    actionbar:
+      send-actionbar: false
+      actionbar-message: '&c&cYou must be player!'
+

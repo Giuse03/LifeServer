@@ -7,6 +7,7 @@ import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.services.Services;
 import net.giuse.teleportmodule.events.EntityBackOnDeath;
 import net.giuse.teleportmodule.files.FileManager;
+import net.giuse.teleportmodule.messageloader.MessageLoaderTeleport;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,14 +17,14 @@ import javax.inject.Inject;
 import java.util.HashMap;
 
 public class TeleportModule extends Services {
-    @Getter
-    private final HashMap<String, String> message = new HashMap<>();
+
     @Getter
     private final HashMap<Player, Location> backLocations = new HashMap<>();
     @Inject
     private MainModule mainModule;
     @Getter
     private FileManager fileManager;
+
 
     /*
      * Load Service
@@ -35,9 +36,8 @@ public class TeleportModule extends Services {
         //Load Files
         ReflectionsFiles.loadFiles(fileManager = new FileManager());
 
-        //Set NoPerms message
-        message.put("no-perms", mainModule.getConfig().getString("no-perms"));
-
+        //Load Message
+        mainModule.getInjector().getSingleton(MessageLoaderTeleport.class).load();
         //Check if load back-on-death is active
         if (mainModule.getConfig().getBoolean("allow-back-on-death")) {
             Bukkit.getServer().getPluginManager().registerEvents(mainModule.getInjector().getSingleton(EntityBackOnDeath.class), mainModule);
@@ -59,13 +59,5 @@ public class TeleportModule extends Services {
     public int priority() {
         return 0;
     }
-
-    /*
-     * Get Message
-     */
-    public String getMessage(String key) {
-        return ChatColor.translateAlternateColorCodes('&', message.get(key));
-    }
-
 
 }

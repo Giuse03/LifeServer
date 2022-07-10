@@ -1,6 +1,8 @@
 package net.giuse.teleportmodule.commands.home;
 
 import io.papermc.lib.PaperLib;
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -14,16 +16,19 @@ import javax.inject.Inject;
 public class HomeCommand extends AbstractCommand {
 
     private final HomeLoaderService homeLoaderService;
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
 
+    private final TeleportModule teleportModule;
 
     @Inject
     public HomeCommand(MainModule mainModule) {
         super("home", "lifeserver.home", true);
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
+        messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
 
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -37,7 +42,8 @@ public class HomeCommand extends AbstractCommand {
 
         //Check if player has home
         if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().isEmpty()) {
-            sender.sendMessage(teleportModule.getMessage("no_home_found"));
+            messageBuilder.setCommandSender(sender).setIDMessage("no_home_found").sendMessage();
+
         }
 
         //Check if player has multiple home
@@ -60,7 +66,8 @@ public class HomeCommand extends AbstractCommand {
                         listHome.append(s).append(",");
                     }
 
-                    sender.sendMessage(teleportModule.getMessage("home_list").replace("%list%", listHome.toString()));
+                    messageBuilder.setCommandSender(sender).setIDMessage("home_list").sendMessage(new TextReplacer().match("%list%").replaceWith(listHome.toString()));
+
                     return;
                 }
 
@@ -68,14 +75,15 @@ public class HomeCommand extends AbstractCommand {
                 for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
                     teleportModule.getBackLocations().put(sender, sender.getLocation());
                     PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(s));
-                    sender.sendMessage(teleportModule.getMessage("teleported"));
+                    messageBuilder.setCommandSender(sender).setIDMessage("teleported").sendMessage();
+
                 }
                 return;
             }
 
             teleportModule.getBackLocations().put(sender, sender.getLocation());
             PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0].toLowerCase()));
-            sender.sendMessage(teleportModule.getMessage("teleported"));
+            messageBuilder.setCommandSender(sender).setIDMessage("teleported").sendMessage();
             return;
         }
 
@@ -83,7 +91,7 @@ public class HomeCommand extends AbstractCommand {
         for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
             teleportModule.getBackLocations().put(sender, sender.getLocation());
             PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(s));
-            sender.sendMessage(teleportModule.getMessage("teleported"));
+            messageBuilder.setCommandSender(sender).setIDMessage("teleported").sendMessage();
             break;
         }
     }

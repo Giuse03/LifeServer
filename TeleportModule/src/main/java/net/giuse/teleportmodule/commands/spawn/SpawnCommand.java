@@ -2,6 +2,7 @@ package net.giuse.teleportmodule.commands.spawn;
 
 
 import io.papermc.lib.PaperLib;
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -14,6 +15,8 @@ import javax.inject.Inject;
 
 public class SpawnCommand extends AbstractCommand {
     private final SpawnLoaderService spawnLoaderService;
+    private final MessageBuilder messageBuilder;
+
     private final TeleportModule teleportModule;
 
     @Inject
@@ -21,7 +24,9 @@ public class SpawnCommand extends AbstractCommand {
         super("spawn", "lifeserver.spawn", true);
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -35,13 +40,14 @@ public class SpawnCommand extends AbstractCommand {
 
         //Check if there is a spawn
         if (spawnLoaderService.getSpawnBuilder() == null) {
-            player.sendMessage(teleportModule.getMessage("no-spawn"));
+            messageBuilder.setCommandSender(commandSender).setIDMessage("no-spawn").sendMessage();
             return;
         }
 
         //Teleport to spawn
         teleportModule.getBackLocations().put(player, player.getLocation());
         PaperLib.teleportAsync(player, spawnLoaderService.getSpawnBuilder().getLocation());
-        player.sendMessage(teleportModule.getMessage("teleported-spawn"));
+        messageBuilder.setCommandSender(commandSender).setIDMessage("teleported-spawn").sendMessage();
+
     }
 }

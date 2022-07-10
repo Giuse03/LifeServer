@@ -1,6 +1,7 @@
 package net.giuse.secretmessagemodule.commands;
 
 
+import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.secretmessagemodule.SecretMessageModule;
@@ -16,15 +17,17 @@ import javax.inject.Inject;
 public class MSGCommand extends AbstractCommand {
     private final SecretMessageModule secretMessageModule;
     private final SecretChatProcess secretChatProcess;
+    private final MessageBuilder messageBuilder;
 
     @Inject
     public MSGCommand(MainModule mainModule) {
         super("msg", "lifeserver.msg", true);
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
         secretChatProcess = mainModule.getInjector().getSingleton(SecretChatProcess.class);
-        setNoPerm(secretMessageModule.getMessages("no-perms"));
+        messageBuilder = mainModule.getMessageBuilder();
 
-
+        setNoPerm("No Perms");
+        
     }
 
     @Override
@@ -38,19 +41,19 @@ public class MSGCommand extends AbstractCommand {
 
         //Send usage of command
         if (args.length == 0) {
-            sender.sendMessage(secretMessageModule.getMessages("usage"));
+            messageBuilder.setCommandSender(sender).setIDMessage("usage").sendMessage();
             return;
         }
 
         //Check if text-length 0
         if (args.length == 1) {
-            sender.sendMessage(secretMessageModule.getMessages("insert-text"));
+            messageBuilder.setCommandSender(sender).setIDMessage("insert-text").sendMessage();
             return;
         }
 
         //Check if player is offline
         if (Bukkit.getPlayer(args[0]) == null) {
-            sender.sendMessage(secretMessageModule.getMessages("player-offline"));
+            messageBuilder.setCommandSender(sender).setIDMessage("player-offline").sendMessage();
             return;
         }
 

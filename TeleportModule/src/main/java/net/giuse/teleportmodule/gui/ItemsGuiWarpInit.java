@@ -8,9 +8,7 @@ import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.builder.ItemstackBuilder;
 import net.giuse.mainmodule.gui.ItemInitializer;
 import net.giuse.teleportmodule.TeleportModule;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;

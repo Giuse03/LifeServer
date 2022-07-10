@@ -27,17 +27,7 @@ public class TeleportRequestService extends Services {
     @SneakyThrows
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Teleport Requests...");
-        TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
 
-        //Load File
-        if (Files.size(Paths.get("plugins/LifeServer/messages/messages_teleport.yml")) == 0) {
-            teleportModule.getFileManager().messagesTeleportLoader();
-        }
-
-        //Load Message
-        for (String messageConfig : teleportModule.getFileManager().getMessagesTeleportYaml().getConfigurationSection("messages.teleport").getKeys(true)) {
-            teleportModule.getMessage().put(messageConfig, teleportModule.getFileManager().getMessagesTeleportYaml().getString("messages.teleport." + messageConfig));
-        }
     }
 
     /*

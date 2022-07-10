@@ -1,5 +1,7 @@
 package net.giuse.teleportmodule.commands.teleport;
 
+import net.giuse.ezmessage.MessageBuilder;
+import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -12,16 +14,17 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 
 public class TpDenyCommand extends AbstractCommand {
-    private final TeleportModule teleportModule;
+    private final MessageBuilder messageBuilder;
     private final TeleportRequestService teleportRequestService;
 
     @Inject
     public TpDenyCommand(MainModule mainModule) {
         super("tpdeny", "lifeserver.tpdeny", true);
-        teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
+        messageBuilder = mainModule.getMessageBuilder();
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
-        setNoPerm(teleportModule.getMessage("no-perms"));
 
+        setNoPerm("No perms");
+        
     }
 
     @Override
@@ -35,13 +38,13 @@ public class TpDenyCommand extends AbstractCommand {
 
         //Check if are Pending Requests
         if (teleportRequestService.getPending(sender.getUniqueId()) == null) {
-            sender.sendMessage(teleportModule.getMessage("no-pending-request"));
+            messageBuilder.setCommandSender(sender).setIDMessage("no-pending-request").sendMessage();
             return;
         }
 
         //Deny Pending Requests
         PendingRequest pendingRequest = teleportRequestService.getPending(sender.getUniqueId());
-        pendingRequest.getSender().sendMessage(teleportModule.getMessage("request-refused").replace("%playername%", pendingRequest.getReceiver().getName()));
+        messageBuilder.setCommandSender(pendingRequest.getSender()).setIDMessage("request-refused").sendMessage(new TextReplacer().match("%playername%").replaceWith(pendingRequest.getReceiver().getName()));
         teleportRequestService.getPendingRequests().remove(pendingRequest);
 
     }
