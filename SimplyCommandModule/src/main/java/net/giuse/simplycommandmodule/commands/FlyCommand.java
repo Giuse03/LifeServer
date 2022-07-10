@@ -19,9 +19,6 @@ public class FlyCommand extends AbstractCommand {
     public FlyCommand(MainModule mainModule) {
         super("fly", "lifeserver.fly", false);
         messageBuilder = mainModule.getMessageBuilder();
-
-        setNoPerm("No perms");
-        
     }
 
 

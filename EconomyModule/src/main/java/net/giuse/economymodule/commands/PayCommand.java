@@ -15,14 +15,12 @@ import javax.inject.Inject;
 
 public class PayCommand extends AbstractCommand {
     private final EconomyService economyService;
-
     private final MessageBuilder messageBuilder;
     @Inject
     public PayCommand(final MainModule mainModule) {
         super("pay", "lifeserver.pay", true);
         this.economyService = (EconomyService) mainModule.getService(EconomyService.class);
         messageBuilder = mainModule.getMessageBuilder();
-        this.setNoPerm("No Perms");
     }
 
     @Override

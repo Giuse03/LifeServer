@@ -21,8 +21,6 @@ public class EnchantCommand extends AbstractCommand {
     public EnchantCommand(MainModule mainModule) {
         super("enchant", "lifeserver.enchant", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

@@ -61,8 +61,8 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.ow2.asm:asm-analysis:9.2" level="project" />
     <orderEntry type="library" name="Maven: io.papermc:paperlib:1.0.7" level="project" />
     <orderEntry type="library" name="Maven: net.giuse:Engine:1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: net.giuse:EzMessage:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.github.ben-manes.caffeine:caffeine:3.1.1" level="project" />
+    <orderEntry type="library" name="Maven: net.giuse:EzMessage:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: net.kyori:adventure-platform-bukkit:4.1.1" level="project" />
     <orderEntry type="library" name="Maven: net.kyori:adventure-platform-api:4.1.1" level="project" />
     <orderEntry type="library" name="Maven: net.kyori:adventure-text-serializer-bungeecord:4.1.1" level="project" />

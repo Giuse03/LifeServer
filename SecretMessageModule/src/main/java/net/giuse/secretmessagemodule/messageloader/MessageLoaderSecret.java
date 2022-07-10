@@ -28,8 +28,7 @@ public class MessageLoaderSecret implements Loadable {
 
     @Override
     public void load() {
-        MessageChat messageChat = new MessageChat(mainModule.getConfig().getString("no-perms"));
-        messageLoader.addMessageCache("perms", CompletableFuture.supplyAsync(() -> messageChat));
+        
         ConfigurationSection generalMessageSection = secretMessageModule.getFileManager().getMessagesSecretChatYaml().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);

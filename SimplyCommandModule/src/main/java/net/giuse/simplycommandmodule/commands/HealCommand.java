@@ -18,9 +18,6 @@ public class HealCommand extends AbstractCommand {
     public HealCommand(MainModule mainModule) {
         super("heal", "lifeserver.heal", false);
         messageBuilder = mainModule.getMessageBuilder();
-
-        setNoPerm("No perms");
-        
     }
 
     @Override

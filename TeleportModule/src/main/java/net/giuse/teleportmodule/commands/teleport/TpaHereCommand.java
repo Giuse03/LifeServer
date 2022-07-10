@@ -24,8 +24,6 @@ public class TpaHereCommand extends AbstractCommand {
         super("tpahere", "lifeserver.tpahere", true);
         messageBuilder = mainModule.getMessageBuilder();
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override

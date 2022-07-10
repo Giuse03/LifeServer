@@ -20,9 +20,6 @@ public class BurnCommand extends AbstractCommand {
     public BurnCommand(MainModule mainModule) {
         super("burn", "lifeserver.burn", false);
         messageBuilder = mainModule.getMessageBuilder();
-
-        setNoPerm("No perms");
-        
     }
 
 

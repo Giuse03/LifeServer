@@ -1,4 +1,3 @@
-no-perms: "You don't have this perms"
 # If this option is active then if you do / kit it will open the gui otherwise the list of kits will appear.
 # Attention / kitlist will always return the kit list
 use-kit-gui: true
@@ -9,3 +8,20 @@ no-hunger: true
 always-day: true
 allow-back-on-death: true
 money-first-time-join: 1000
+
+#General-Message
+messages:
+  no-perms:
+    title:
+      send-title: true
+      main-title: '&2[&c No-Perm &2]'
+      subtitle: '&7Permission Required'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&cNo-Perm.'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&cNo-Perm.'

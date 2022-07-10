@@ -16,7 +16,7 @@ public class TimeCommand extends AbstractCommand {
     @Inject
     public TimeCommand(MainModule mainModule) {
         super("time", "lifeserver.time", false);
-         setNoPerm("No perms");
+         
         
         messageBuilder = mainModule.getMessageBuilder();
 

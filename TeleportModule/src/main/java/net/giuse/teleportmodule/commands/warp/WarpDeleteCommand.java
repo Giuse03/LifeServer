@@ -22,8 +22,6 @@ public class WarpDeleteCommand extends AbstractCommand {
         super("warpdelete", "lifeserver.warpdelete", true);
         messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override

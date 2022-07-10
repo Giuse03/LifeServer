@@ -25,8 +25,6 @@ public class KitDeleteCommand extends AbstractCommand {
         super("kitdelete", "lifeserver.kitcreate", false);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

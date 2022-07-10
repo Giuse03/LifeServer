@@ -22,8 +22,6 @@ public class TpCommand extends AbstractCommand {
         super("tp", "lifeserver.tp", false);
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override

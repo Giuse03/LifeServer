@@ -21,8 +21,6 @@ public class SetHomeCommand extends AbstractCommand {
         super("sethome", "lifeserver.sethome", true);
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

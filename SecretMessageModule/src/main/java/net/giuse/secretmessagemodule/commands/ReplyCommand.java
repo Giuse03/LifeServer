@@ -28,8 +28,6 @@ public class ReplyCommand extends AbstractCommand {
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
         secretChatProcess = mainModule.getInjector().getSingleton(SecretChatProcess.class);
         messageBuilder = mainModule.getMessageBuilder();
-        
-
     }
 
     @Override

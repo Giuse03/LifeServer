@@ -20,10 +20,6 @@ public class MSGToggleCommand extends AbstractCommand {
         super("msgtoggle", "lifeserver.msgtoggle", true);
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
         messageBuilder = mainModule.getMessageBuilder();
-
-        setNoPerm("No Perms");
-        
-
     }
 
     @Override

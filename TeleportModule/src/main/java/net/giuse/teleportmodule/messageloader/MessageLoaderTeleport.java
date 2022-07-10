@@ -29,8 +29,6 @@ public class MessageLoaderTeleport implements Loadable {
 
     @Override
     public void load() {
-        MessageChat messageChat = new MessageChat(mainModule.getConfig().getString("no-perms"));
-        messageLoader.addMessageCache("perms", CompletableFuture.supplyAsync(() -> messageChat));
         ConfigurationSection[] generalMessageSectionArray = new ConfigurationSection[]{
                 kitModule.getFileManager().getMessagesTeleportYaml().getConfigurationSection("messages"),
                 kitModule.getFileManager().getMessagesWarpYaml().getConfigurationSection("messages"),

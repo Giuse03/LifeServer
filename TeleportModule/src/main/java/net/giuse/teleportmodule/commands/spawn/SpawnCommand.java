@@ -25,7 +25,7 @@ public class SpawnCommand extends AbstractCommand {
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
+        
         
     }
 

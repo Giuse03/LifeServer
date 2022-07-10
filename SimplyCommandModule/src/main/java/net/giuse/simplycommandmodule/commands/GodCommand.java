@@ -22,9 +22,6 @@ public class GodCommand extends AbstractCommand {
         super("god", "lifeserver.god", true);
         messageBuilder = mainModule.getMessageBuilder();
         simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
-
-        setNoPerm("No perms");
-        
     }
 
     @Override

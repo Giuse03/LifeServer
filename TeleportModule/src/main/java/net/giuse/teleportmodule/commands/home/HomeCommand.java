@@ -26,8 +26,6 @@ public class HomeCommand extends AbstractCommand {
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override

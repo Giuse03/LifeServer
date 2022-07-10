@@ -15,8 +15,6 @@ public class WorkBenchCommand extends AbstractCommand {
     public WorkBenchCommand(MainModule mainModule) {
         super("workbench", "lifeserver.workbench", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

@@ -19,9 +19,6 @@ public class InvseeCommand extends AbstractCommand {
     public InvseeCommand(MainModule mainModule) {
         super("invsee", "lifeserver.invsee", false);
         messageBuilder = mainModule.getMessageBuilder();
-
-        setNoPerm("No perms");
-        
     }
 
 

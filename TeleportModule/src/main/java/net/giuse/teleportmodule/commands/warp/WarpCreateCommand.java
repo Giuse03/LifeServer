@@ -20,8 +20,6 @@ public class WarpCreateCommand extends AbstractCommand {
         super("warpcreate", "lifeserver.warpcreate", true);
         messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override

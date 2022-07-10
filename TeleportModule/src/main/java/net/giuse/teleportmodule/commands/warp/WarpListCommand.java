@@ -21,8 +21,6 @@ public class WarpListCommand extends AbstractCommand {
         super("warplist", "lifeserver.warp.list", false);
         messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override

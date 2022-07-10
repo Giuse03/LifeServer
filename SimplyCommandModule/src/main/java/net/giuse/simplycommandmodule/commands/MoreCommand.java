@@ -18,8 +18,6 @@ public class MoreCommand extends AbstractCommand {
     public MoreCommand(MainModule mainModule) {
         super("more", "lifeserver.more", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

@@ -20,10 +20,10 @@ import java.util.concurrent.CompletableFuture;
 public abstract class AbstractCommand extends Command {
     private final String permission;
     private final boolean async;
-    @Setter
-    private String noPerm;
     @Inject
-    private Worker workone;
+    private Worker worker;
+    @Inject
+    private MainModule mainModule;
     public AbstractCommand(String name, String permission,boolean async) {
         super(name);
         this.permission = permission;
@@ -34,10 +34,10 @@ public abstract class AbstractCommand extends Command {
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 
         if (!sender.hasPermission(this.permission)) {
-            sender.sendMessage(noPerm);
+            mainModule.getMessageBuilder().setCommandSender(sender).setIDMessage("no-perms").sendMessage();
             return true;
         }
-        workone.executeProcess(CompletableFuture.supplyAsync(() -> () -> execute(sender, args)), async);
+        worker.executeProcess(CompletableFuture.supplyAsync(() -> () -> execute(sender, args)), async);
         return true;
     }
 

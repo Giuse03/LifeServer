@@ -27,8 +27,6 @@ public class KitListCommand extends AbstractCommand {
         super("kitlist", "lifeserver.kitcreate", false);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override
@@ -42,7 +40,7 @@ public class KitListCommand extends AbstractCommand {
         //Check if player has permission
         Player p = (Player) sender;
         if (!p.hasPermission("lifeserver.kit.list")) {
-            p.sendMessage("No Perms");
+            messageBuilder.setCommandSender(p).setIDMessage("no-perms").sendMessage();
             return;
         }
 

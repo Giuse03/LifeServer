@@ -1,27 +1,24 @@
-package net.giuse.kitmodule.messages;
+package net.giuse.mainmodule.message;
 
 import net.giuse.ezmessage.MessageLoader;
 import net.giuse.ezmessage.messages.MessageActionbar;
 import net.giuse.ezmessage.messages.MessageChat;
 import net.giuse.ezmessage.messages.MessageTitle;
-import net.giuse.kitmodule.KitModule;
 import net.giuse.mainmodule.MainModule;
-import net.giuse.mainmodule.message.Loadable;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 
-public class MessageLoaderKit implements Loadable {
-    private final KitModule kitModule;
+public class MessageLoaderMain implements Loadable {
     private final MainModule mainModule;
     private final MessageLoader messageLoader;
 
     @Inject
-    public MessageLoaderKit(MainModule mainModule) {
+    public MessageLoaderMain(MainModule mainModule) {
         this.mainModule = mainModule;
-        kitModule = (KitModule) mainModule.getService(KitModule.class);
+
         messageLoader = mainModule.getMessageLoader();
     }
 
@@ -29,8 +26,9 @@ public class MessageLoaderKit implements Loadable {
     @Override
     public void load() {
         
-        ConfigurationSection generalMessageSection = kitModule.getConfigManager().getMessagesYaml().getConfigurationSection("messages");
+        ConfigurationSection generalMessageSection = mainModule.getConfig().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
+            System.out.println(string);
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);
             //Insert Message Chat
             if (messageSection.getBoolean("message-chat.send-chat")) {

@@ -20,8 +20,6 @@ public class SocialSpyCommand extends AbstractCommand {
         super("socialspy", "lifeserver.socialspy", true);
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No Perms");
-        
     }
 
     @Override

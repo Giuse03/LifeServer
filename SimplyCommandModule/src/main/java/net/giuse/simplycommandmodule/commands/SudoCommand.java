@@ -17,8 +17,6 @@ public class SudoCommand extends AbstractCommand {
     public SudoCommand(MainModule mainModule) {
         super("sudo", "lifeserver.sudo", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

@@ -21,9 +21,6 @@ public class BackCommand extends AbstractCommand {
         super("back", "lifeserver.back", true);
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-
-        setNoPerm("No perms");
-        
     }
 
     @Override

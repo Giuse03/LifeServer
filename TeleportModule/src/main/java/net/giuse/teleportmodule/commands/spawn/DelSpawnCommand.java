@@ -19,10 +19,7 @@ public class DelSpawnCommand extends AbstractCommand {
         super("delspawn", "lifeserver.delspawn", true);
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
-
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         //Check if sender is Console

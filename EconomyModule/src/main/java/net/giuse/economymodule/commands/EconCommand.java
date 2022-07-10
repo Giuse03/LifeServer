@@ -22,8 +22,6 @@ public class EconCommand extends AbstractCommand {
         super("eco", "lifeserver.eco", true);
         this.economyService = (EconomyService) mainModule.getService(EconomyService.class);
         messageBuilder = mainModule.getMessageBuilder();
-
-        this.setNoPerm("No Perms");
     }
 
     @Override
@@ -36,7 +34,7 @@ public class EconCommand extends AbstractCommand {
         Player p = (Player) commandSender;
 
         if (!p.hasPermission("lifeserver.eco")) {
-            p.sendMessage("No Perms");
+            messageBuilder.setCommandSender(p).setIDMessage("no-perms").sendMessage();
             return;
         }
 
@@ -60,7 +58,7 @@ public class EconCommand extends AbstractCommand {
 
         if (args[0].equalsIgnoreCase("give")) {
             if (!p.hasPermission("lifeserver.eco.give")) {
-                p.sendMessage("No Perms");
+                messageBuilder.setCommandSender(p).setIDMessage("no-perms").sendMessage();
                 return;
             }
             this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(args[1]), Double.parseDouble(args[2]));
@@ -77,7 +75,7 @@ public class EconCommand extends AbstractCommand {
 
         if (args[0].equalsIgnoreCase("remove")) {
             if (!p.hasPermission("lifeserver.eco.remove")) {
-                p.sendMessage("No Perms");
+                messageBuilder.setCommandSender(p).setIDMessage("no-perms").sendMessage();
                 return;
             }
             this.economyService.getCustomEcoManager().withdrawPlayer(Bukkit.getOfflinePlayer(args[1]), Double.parseDouble(args[2]));
@@ -92,7 +90,7 @@ public class EconCommand extends AbstractCommand {
 
         if (args[0].equalsIgnoreCase("set")) {
             if (!p.hasPermission("lifeserver.eco.set")) {
-                p.sendMessage("No Perms");
+                messageBuilder.setCommandSender(p).setIDMessage("no-perms").sendMessage();
                 return;
             }
             this.economyService.getCustomEcoManager().withdrawPlayer(Bukkit.getOfflinePlayer(args[1]), this.economyService.getBalancePlayer(Bukkit.getOfflinePlayer(args[1]).getUniqueId()));

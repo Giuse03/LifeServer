@@ -20,8 +20,6 @@ public class SpeedCommand extends AbstractCommand {
     public SpeedCommand(MainModule mainModule) {
         super("speed", "lifeserver.speed", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override
@@ -52,7 +50,7 @@ public class SpeedCommand extends AbstractCommand {
         }
 
         if (!player.hasPermission("lifeserver.speed.other")) {
-            player.sendMessage("No Perms");
+            messageBuilder.setCommandSender(player).setIDMessage("no-perms").sendMessage();
             return;
         }
 

@@ -22,9 +22,6 @@ public class TpDenyCommand extends AbstractCommand {
         super("tpdeny", "lifeserver.tpdeny", true);
         messageBuilder = mainModule.getMessageBuilder();
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
-
-        setNoPerm("No perms");
-        
     }
 
     @Override

@@ -15,7 +15,7 @@ public class NightCommand extends AbstractCommand {
     @Inject
     public NightCommand(MainModule mainModule) {
         super("night", "lifeserver.night", false);
-         setNoPerm("No perms");
+         
          
          messageBuilder = mainModule.getMessageBuilder();
     }

@@ -27,8 +27,6 @@ public class WarpCommand extends AbstractCommand {
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override

@@ -18,8 +18,6 @@ public class FoodCommand extends AbstractCommand {
     public FoodCommand(MainModule mainModule) {
         super("food", "lifeserver.food", false);
         this.messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

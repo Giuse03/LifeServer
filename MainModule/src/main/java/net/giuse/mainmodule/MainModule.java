@@ -13,6 +13,7 @@ import net.giuse.mainmodule.databases.ConnectorSQLite;
 import net.giuse.mainmodule.files.SQLFile;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.gui.GuiInitializer;
+import net.giuse.mainmodule.message.MessageLoaderMain;
 import net.giuse.mainmodule.services.Services;
 import net.giuse.mainmodule.utils.Utils;
 import net.lib.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -34,10 +35,10 @@ public class MainModule extends JavaPlugin {
     private MessageBuilder messageBuilder;
     @Getter
     private MessageLoader messageLoader;
+
+    private MessageLoaderMain messageLoaderMain;
     @Getter
     private ProcessEngine engine;
-    @Getter
-    private Worker worker;
 
     /*
      * Enable MainModule
@@ -50,14 +51,16 @@ public class MainModule extends JavaPlugin {
 
         //Enable workloads
         engine = new ProcessEngine(this);
-        worker = new Worker(engine);
+
         //Set MainModule injectable
         injector.register(MainModule.class, this);
-        injector.register(Worker.class, worker);
+        injector.register(Worker.class, new Worker(engine));
 
         //Loading Message
         messageLoader = new MessageLoader(BukkitAudiences.create(this),engine);
         messageBuilder = new MessageBuilder(messageLoader);
+        injector.getSingleton(MessageLoaderMain.class).load();
+
         getLogger().info("§aLifeserver starting...");
 
 

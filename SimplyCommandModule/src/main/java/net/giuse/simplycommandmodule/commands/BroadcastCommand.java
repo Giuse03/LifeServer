@@ -17,8 +17,6 @@ public class BroadcastCommand extends AbstractCommand {
     public BroadcastCommand(MainModule mainModule) {
         super("broadcast", "lifeserver.broadcast", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

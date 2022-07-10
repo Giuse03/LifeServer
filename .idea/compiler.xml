@@ -18,7 +18,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="EconomyModule" target="1.8" />
+      <module name="EconomyModule" target="9" />
       <module name="JarCompileModule" target="1.8" />
       <module name="KitModule" target="1.8" />
       <module name="LifeServer" target="1.8" />

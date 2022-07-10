@@ -20,8 +20,6 @@ public class GamemodeCommand extends AbstractCommand {
     public GamemodeCommand(MainModule mainModule) {
         super("gamemode", "lifeserver.gamemode", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

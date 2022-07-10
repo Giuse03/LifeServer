@@ -25,9 +25,6 @@ public class MSGCommand extends AbstractCommand {
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
         secretChatProcess = mainModule.getInjector().getSingleton(SecretChatProcess.class);
         messageBuilder = mainModule.getMessageBuilder();
-
-        setNoPerm("No Perms");
-        
     }
 
     @Override

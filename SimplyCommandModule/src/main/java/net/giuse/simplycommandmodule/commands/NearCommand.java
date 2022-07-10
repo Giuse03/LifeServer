@@ -21,8 +21,6 @@ public class NearCommand extends AbstractCommand {
     public NearCommand(MainModule mainModule) {
         super("near", "lifeserver.near", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

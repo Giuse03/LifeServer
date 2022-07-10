@@ -15,7 +15,7 @@ public class SunCommand extends AbstractCommand {
     @Inject
     public SunCommand(MainModule mainModule) {
         super("sun", "lifeserver.sun", false);
-        setNoPerm("No perms");
+        
         
         messageBuilder = mainModule.getMessageBuilder();
 

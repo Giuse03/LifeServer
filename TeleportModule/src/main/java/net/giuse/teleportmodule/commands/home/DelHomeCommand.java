@@ -20,8 +20,6 @@ public class DelHomeCommand extends AbstractCommand {
         super("delhome", "lifeserver.delhome", true);
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

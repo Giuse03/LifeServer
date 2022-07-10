@@ -21,8 +21,6 @@ public class MoneyCommand extends AbstractCommand {
         super("money", "lifeserver.money", true);
         this.economyService = (EconomyService) mainModule.getService(EconomyService.class);
         messageBuilder = mainModule.getMessageBuilder();
-
-        this.setNoPerm("No Perms");
     }
 
     @Override
@@ -39,7 +37,7 @@ public class MoneyCommand extends AbstractCommand {
         }
 
         if (!p.hasPermission("lifeserver.balance.other")) {
-            p.sendMessage("No Perms");
+            messageBuilder.setCommandSender(p).setIDMessage("no-perms").sendMessage();
         }
 
         if (economyService.getEconPlayerIsPresent(Bukkit.getOfflinePlayer(args[0]).getUniqueId())) {

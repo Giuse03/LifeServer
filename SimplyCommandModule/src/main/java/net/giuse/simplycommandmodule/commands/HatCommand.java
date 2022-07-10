@@ -19,7 +19,7 @@ public class HatCommand extends AbstractCommand {
         super("hat", "lifeserver.hat", false);
         messageBuilder = mainModule.getMessageBuilder();
 
-        setNoPerm("No perms");
+        
         
     }
 

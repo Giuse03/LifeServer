@@ -21,8 +21,6 @@ public class SetSpawnCommand extends AbstractCommand {
         super("setspawn", "lifeserver.setspawn", true);
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

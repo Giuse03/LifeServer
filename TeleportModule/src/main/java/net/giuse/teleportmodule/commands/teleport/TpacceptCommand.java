@@ -26,8 +26,6 @@ public class TpacceptCommand extends AbstractCommand {
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override

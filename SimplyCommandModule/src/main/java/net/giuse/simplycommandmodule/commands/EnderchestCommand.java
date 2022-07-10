@@ -17,8 +17,6 @@ public class EnderchestCommand extends AbstractCommand {
     public EnderchestCommand(MainModule mainModule) {
         super("enderchest", "lifeserver.enderchest", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
     @Override

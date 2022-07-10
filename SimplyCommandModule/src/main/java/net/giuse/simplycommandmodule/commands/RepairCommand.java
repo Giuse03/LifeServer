@@ -20,8 +20,6 @@ public class RepairCommand extends AbstractCommand {
     public RepairCommand(MainModule mainModule) {
         super("repair", "lifeserver.repair", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
 

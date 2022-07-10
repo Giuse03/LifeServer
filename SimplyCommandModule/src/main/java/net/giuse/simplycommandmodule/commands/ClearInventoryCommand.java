@@ -18,8 +18,6 @@ public class ClearInventoryCommand extends AbstractCommand {
     public ClearInventoryCommand(MainModule mainModule) {
         super("clearinventory", "lifeserver.clearinventory", false);
         messageBuilder = mainModule.getMessageBuilder();
-        setNoPerm("No perms");
-        
     }
 
 

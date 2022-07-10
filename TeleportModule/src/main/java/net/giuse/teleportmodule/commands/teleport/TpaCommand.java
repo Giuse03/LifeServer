@@ -24,8 +24,6 @@ public class TpaCommand extends AbstractCommand {
         super("tpa", "lifeserver.tpa", true);
         messageBuilder = mainModule.getMessageBuilder();
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
-        setNoPerm("No perms");
-        
     }
 
     @Override
