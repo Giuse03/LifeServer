@@ -26,7 +26,6 @@ public class HomeCommand extends AbstractCommand {
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
-
         setNoPerm("No perms");
         
     }
@@ -41,9 +40,9 @@ public class HomeCommand extends AbstractCommand {
         Player sender = (Player) commandSender;
 
         //Check if player has home
-        if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().isEmpty()) {
+        if (homeLoaderService.getHome(sender.getUniqueId()).estimatedSize() == 0) {
             messageBuilder.setCommandSender(sender).setIDMessage("no_home_found").sendMessage();
-
+            return;
         }
 
         //Check if player has multiple home
@@ -53,13 +52,13 @@ public class HomeCommand extends AbstractCommand {
             if (args.length == 0) {
 
                 //Send Home List to Player
-                if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().size() > 1) {
+                if (homeLoaderService.getHome(sender.getUniqueId()).estimatedSize() > 1) {
                     StringBuilder listHome = new StringBuilder();
 
                     int i = 0;
-                    for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
+                    for (String s : homeLoaderService.getHome(sender.getUniqueId()).asMap().keySet()) {
                         i++;
-                        if (i == homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet().size()) {
+                        if (i == homeLoaderService.getHome(sender.getUniqueId()).estimatedSize()) {
                             listHome.append(s);
                             break;
                         }
@@ -72,26 +71,25 @@ public class HomeCommand extends AbstractCommand {
                 }
 
                 //Check if player has one home, and teleport him
-                for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
+                for (String s : homeLoaderService.getHome(sender.getUniqueId()).asMap().keySet()) {
                     teleportModule.getBackLocations().put(sender, sender.getLocation());
-                    PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(s));
-                    messageBuilder.setCommandSender(sender).setIDMessage("teleported").sendMessage();
-
+                    PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getIfPresent(s));
+                    messageBuilder.setCommandSender(sender).setIDMessage("teleport").sendMessage();
                 }
                 return;
             }
 
             teleportModule.getBackLocations().put(sender, sender.getLocation());
-            PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(args[0].toLowerCase()));
-            messageBuilder.setCommandSender(sender).setIDMessage("teleported").sendMessage();
+            PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getIfPresent(args[0].toLowerCase()));
+            messageBuilder.setCommandSender(sender).setIDMessage("teleport").sendMessage();
             return;
         }
 
         //Teleport player to the default home
-        for (String s : homeLoaderService.getHome(sender.getUniqueId()).getLocations().keySet()) {
+        for (String s : homeLoaderService.getHome(sender.getUniqueId()).asMap().keySet()) {
             teleportModule.getBackLocations().put(sender, sender.getLocation());
-            PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getLocations().get(s));
-            messageBuilder.setCommandSender(sender).setIDMessage("teleported").sendMessage();
+            PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).getIfPresent(s));
+            messageBuilder.setCommandSender(sender).setIDMessage("teleport").sendMessage();
             break;
         }
     }

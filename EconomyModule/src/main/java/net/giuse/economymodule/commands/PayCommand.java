@@ -46,21 +46,20 @@ public class PayCommand extends AbstractCommand {
             return;
         }
 
-        if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) == null) {
+        if (!this.economyService.getEconPlayerIsPresent(Bukkit.getPlayer(args[0]).getUniqueId())) {
             messageBuilder.setCommandSender(p).setIDMessage("economy-neverJoin").sendMessage();
             return;
         }
 
         if (this.economyService.getCustomEcoManager().getBalance(p) >= Double.parseDouble(args[1])) {
-            final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId());
-            this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(econPlayer.getPlayer()), Double.parseDouble(args[1]));
+            this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(args[0]), Double.parseDouble(args[1]));
             this.economyService.getCustomEcoManager().withdrawPlayer(p, Double.parseDouble(args[1]));
 
             messageBuilder.setCommandSender(p).setIDMessage("economy-pay-send").sendMessage(
-                    new TextReplacer().match("%player%").replaceWith(Bukkit.getPlayer(econPlayer.getPlayer()).getName()),
+                    new TextReplacer().match("%player%").replaceWith(args[0]),
                     new TextReplacer().match("%amount%").replaceWith(args[1]));
 
-            messageBuilder.setCommandSender(Bukkit.getPlayer(econPlayer.getPlayer())).setIDMessage("economy-pay-receive").sendMessage(
+            messageBuilder.setCommandSender(Bukkit.getOfflinePlayer(args[0]).getPlayer()).setIDMessage("economy-pay-receive").sendMessage(
                     new TextReplacer().match("%player%").replaceWith(p.getName()),
                     new TextReplacer().match("%amount%").replaceWith(args[1]));
 

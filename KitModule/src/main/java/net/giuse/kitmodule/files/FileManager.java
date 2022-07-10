@@ -28,28 +28,4 @@ public class FileManager extends AbstractConfig {
     @Getter
     private YamlConfiguration kitYaml;
 
-    /**
-     * Load Messages in messages_kit.yml
-     */
-    /*
-    public void messagesLoader() {
-        setFile(messagesFile);
-        setYamlConfiguration(messagesYaml);
-        messagesYaml.set("messages.kit-cooldown", "&2Kit &a» &7Insert cooldown of kit");
-        messagesYaml.set("messages.kit-cooldown-valid", "&2Kit &a» &7Insert valid cooldown of kit");
-        messagesYaml.set("messages.kit-cooldown-max", "&2Kit &a» &7Max cooldown is 2147483647");
-        messagesYaml.set("messages.kit-doesnt-exists", "&2Kit &a» &7This kit doesn't exists");
-        messagesYaml.set("messages.kit-insert-name-kit", "&2Kit &a» &7Insert name of kit");
-        messagesYaml.set("messages.kit-already-exists", "&2Kit &a» &7This kit already exists");
-        messagesYaml.set("messages.kit-created", "&2Kit &a» &7You created the kit %kit%");
-        messagesYaml.set("messages.kit-removed", "&2Kit &a» &7You removed the kit %kit%");
-        messagesYaml.set("messages.kit-list", "&2Kit &a» §7%listkit%");
-        messagesYaml.set("messages.kit-list-empty", "&2Kit &a» &7No kit available.");
-        messagesYaml.set("messages.kit-wait", "&2Kit &a» &7You must wait %time%.");
-        messagesYaml.set("messages.kit-receive", "&2Kit &a» &7You received the kit %kit%");
-        messagesYaml.set("messages.must-have-item", "&2Kit &a» &7Your inventory is empty");
-        saveConfig();
-    }
-     */
-
 }

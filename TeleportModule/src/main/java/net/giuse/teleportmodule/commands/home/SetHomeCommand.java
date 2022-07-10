@@ -48,7 +48,7 @@ public class SetHomeCommand extends AbstractCommand {
                     }
 
                     //Check if player has reached max home
-                    if (homeLoaderService.getHome(sender.getUniqueId()).getLocations().size() == maxHomes) {
+                    if (homeLoaderService.getHome(sender.getUniqueId()).estimatedSize() == maxHomes) {
                         messageBuilder.setCommandSender(sender).setIDMessage("max_home_reached").sendMessage();
 
                         return;
@@ -58,7 +58,7 @@ public class SetHomeCommand extends AbstractCommand {
                     if (args.length == 0) {
                         messageBuilder.setCommandSender(sender).setIDMessage("sethome").sendMessage();
                         //Set Home
-                        homeLoaderService.getHome(sender.getUniqueId()).getLocations().put("default", sender.getLocation());
+                        homeLoaderService.getHome(sender.getUniqueId()).put("default", sender.getLocation());
                         return;
                     }
 
@@ -70,7 +70,7 @@ public class SetHomeCommand extends AbstractCommand {
 
                     //Set Home
                     messageBuilder.setCommandSender(sender).setIDMessage("sethome").sendMessage();
-                    homeLoaderService.getHome(sender.getUniqueId()).getLocations().put(args[0].toLowerCase(), sender.getLocation());
+                    homeLoaderService.getHome(sender.getUniqueId()).put(args[0].toLowerCase(), sender.getLocation());
                 }
             }
             return;
@@ -78,6 +78,6 @@ public class SetHomeCommand extends AbstractCommand {
 
         //Set Home
         messageBuilder.setCommandSender(sender).setIDMessage("sethome").sendMessage();
-        homeLoaderService.getHome(sender.getUniqueId()).getLocations().put("default", sender.getLocation());
+        homeLoaderService.getHome(sender.getUniqueId()).put("default", sender.getLocation());
     }
 }

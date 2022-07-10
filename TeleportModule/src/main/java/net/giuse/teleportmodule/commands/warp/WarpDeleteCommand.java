@@ -48,7 +48,7 @@ public class WarpDeleteCommand extends AbstractCommand {
         }
 
         //Delete Warp
-        warpLoaderService.getWarpBuilders().remove(warpLoaderService.getWarp(args[0]));
+        warpLoaderService.getWarps().invalidate(args[0]);
         messageBuilder.setCommandSender(p).setIDMessage("warp-removed").sendMessage(new TextReplacer().match("%name%").replaceWith(args[0]));
     }
 

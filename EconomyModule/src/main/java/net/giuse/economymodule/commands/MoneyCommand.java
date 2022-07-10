@@ -34,7 +34,7 @@ public class MoneyCommand extends AbstractCommand {
         final Player p = (Player) commandSender;
         if (args.length == 0) {
             messageBuilder.setCommandSender(p).setIDMessage("economy-balance").sendMessage(
-                    new TextReplacer().match("%money%").replaceWith(String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())));
+                    new TextReplacer().match("%money%").replaceWith(String.valueOf(economyService.getBalancePlayer(p.getUniqueId()))));
             return;
         }
 
@@ -42,9 +42,9 @@ public class MoneyCommand extends AbstractCommand {
             p.sendMessage("No Perms");
         }
 
-        if (this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) != null) {
+        if (economyService.getEconPlayerIsPresent(Bukkit.getOfflinePlayer(args[0]).getUniqueId())) {
             messageBuilder.setCommandSender(p).setIDMessage("economy-balance-other").sendMessage(
-                    new TextReplacer().match("%money%").replaceWith(String.valueOf(this.economyService.getEconPlayer(p.getUniqueId()).getBalance())),
+                    new TextReplacer().match("%money%").replaceWith(String.valueOf(economyService.getBalancePlayer(p.getUniqueId()))),
                     new TextReplacer().match("%player%").replaceWith(args[0]));
             return;
         }

@@ -4,8 +4,6 @@ import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.teleportmodule.TeleportModule;
-import net.giuse.teleportmodule.builder.WarpBuilder;
 import net.giuse.teleportmodule.subservice.WarpLoaderService;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -53,7 +51,7 @@ public class WarpCreateCommand extends AbstractCommand {
             return;
         }
         //Create warp
-        warpLoaderService.getWarpBuilders().add(new WarpBuilder(args[0], p.getLocation()));
+        warpLoaderService.getWarps().put(args[0], p.getLocation());
         messageBuilder.setCommandSender(p).setIDMessage("warp-created").sendMessage(new TextReplacer().match("%name%").replaceWith(args[0]));
     }
 }

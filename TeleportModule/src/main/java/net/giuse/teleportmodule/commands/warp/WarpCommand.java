@@ -52,7 +52,7 @@ public class WarpCommand extends AbstractCommand {
             }
 
             //Check if warp list is empty
-            if (warpLoaderService.getWarpBuilders().isEmpty()) {
+            if (warpLoaderService.getWarps().estimatedSize() == 0) {
                 messageBuilder.setCommandSender(p).setIDMessage("no-warp-available").sendMessage();
 
                 return;
@@ -60,7 +60,7 @@ public class WarpCommand extends AbstractCommand {
 
             //Send Warp List
             StringBuilder sb = new StringBuilder();
-            warpLoaderService.getWarpBuilders().forEach(warpBuilder -> sb.append(warpBuilder.getName()).append(","));
+            warpLoaderService.getWarps().asMap().forEach((warpName,location) -> sb.append(warpName).append(","));
             messageBuilder.setCommandSender(p).setIDMessage("warp-list").sendMessage(new TextReplacer().match("%list%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
             return;
         }
@@ -78,7 +78,7 @@ public class WarpCommand extends AbstractCommand {
 
         //Teleport to a Warp
         teleportModule.getBackLocations().put(p, p.getLocation());
-        PaperLib.teleportAsync(p, warpLoaderService.getWarp(args[0]).getLocation());
+        PaperLib.teleportAsync(p, warpLoaderService.getWarp(args[0]));
         messageBuilder.setCommandSender(p).setIDMessage("warp-teleport").sendMessage(new TextReplacer().match("%name%").replaceWith(args[0]));
 
 

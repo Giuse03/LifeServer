@@ -47,23 +47,23 @@ public class EconomyManager implements Economy {
     }
 
     public boolean hasAccount(final String playerName) {
-        return this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId()) != null;
+        return this.economyService.getEconPlayerIsPresent(Bukkit.getPlayer(playerName).getUniqueId());
     }
 
     public boolean hasAccount(final OfflinePlayer player) {
-        return this.economyService.getEconPlayer(player.getUniqueId()) != null;
+        return this.economyService.getEconPlayerIsPresent(player.getUniqueId());
     }
 
     public boolean hasAccount(final String playerName, final String worldName) {
-        return this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId()) != null;
+        return this.economyService.getEconPlayerIsPresent(Bukkit.getPlayer(playerName).getUniqueId());
     }
 
     public boolean hasAccount(final OfflinePlayer player, final String worldName) {
-        return this.economyService.getEconPlayer(player.getUniqueId()) != null;
+        return this.economyService.getEconPlayerIsPresent(player.getUniqueId());
     }
 
     public double getBalance(final String playerName) {
-        return this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId()).getBalance();
+        return this.economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId());
     }
 
     public double getBalance(final OfflinePlayer player) {
@@ -79,8 +79,7 @@ public class EconomyManager implements Economy {
     }
 
     public boolean has(final String playerName, final double amount) {
-        final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId());
-        return econPlayer.getBalance() >= amount;
+        return economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()) >= amount;
     }
 
     public boolean has(final OfflinePlayer player, final double amount) {
@@ -96,9 +95,8 @@ public class EconomyManager implements Economy {
     }
 
     public EconomyResponse withdrawPlayer(final String playerName, final double amount) {
-        final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getPlayer(playerName).getUniqueId());
-        econPlayer.setBalance(econPlayer.getBalance() - amount);
-        return new EconomyResponse(amount, econPlayer.getBalance(), EconomyResponse.ResponseType.SUCCESS, "not yet Supported");
+        economyService.setBalance(Bukkit.getPlayer(playerName).getUniqueId(), economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId())-amount);
+        return new EconomyResponse(amount, economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()), EconomyResponse.ResponseType.SUCCESS, "not yet Supported");
     }
 
     public EconomyResponse withdrawPlayer(final OfflinePlayer player, final double amount) {
@@ -114,9 +112,8 @@ public class EconomyManager implements Economy {
     }
 
     public EconomyResponse depositPlayer(final String playerName, final double amount) {
-        final EconPlayer econPlayer = this.economyService.getEconPlayer(Bukkit.getOfflinePlayer(playerName).getUniqueId());
-        econPlayer.setBalance(econPlayer.getBalance() + amount);
-        return new EconomyResponse(amount, econPlayer.getBalance(), EconomyResponse.ResponseType.SUCCESS, "not yet Supported");
+        economyService.setBalance(Bukkit.getPlayer(playerName).getUniqueId(),economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()) + amount);
+        return new EconomyResponse(amount, economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()), EconomyResponse.ResponseType.SUCCESS, "not yet Supported");
     }
 
     public EconomyResponse depositPlayer(final OfflinePlayer player, final double amount) {
@@ -180,7 +177,7 @@ public class EconomyManager implements Economy {
     }
 
     public boolean createPlayerAccount(final String playerName) {
-        this.economyService.getEconPlayers().add(new EconPlayer(Bukkit.getPlayer(playerName).getUniqueId(), 0.0));
+        this.economyService.setBalance(Bukkit.getPlayer(playerName).getUniqueId(), 0.0);
         return false;
     }
 
