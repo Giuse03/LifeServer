@@ -1,5 +1,6 @@
 package net.giuse.economymodule.serializer;
 
+import net.giuse.economymodule.EconPlayerSerialized;
 import net.giuse.mainmodule.serializer.Serializer;
 
 import java.util.UUID;
