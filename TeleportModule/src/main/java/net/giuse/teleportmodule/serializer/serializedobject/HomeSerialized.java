@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter @RequiredArgsConstructor
 public class HomeSerialized {
-
+    
     private final UUID owner;
     private final Cache<String, Location> locations;
 

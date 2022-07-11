@@ -4,7 +4,8 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.giuse.economymodule.database.EconomyOperations;
+import net.giuse.economymodule.databases.EconQuery;
+import net.giuse.economymodule.databases.SaveQueryEcon;
 import net.giuse.economymodule.economymanager.EconomyManager;
 import net.giuse.economymodule.files.FileManager;
 import net.giuse.economymodule.messageloader.MessageLoaderEconomy;
@@ -21,15 +22,15 @@ import javax.inject.Inject;
 import java.util.UUID;
 
 
-public class EconomyService extends Services implements Savable {
+public class EconomyService extends Services  {
     @Getter
     private Cache<UUID, Double> econPlayersCache;
+    @Getter
     private final Serializer<EconPlayerSerialized> econPlayerSerializer = new EconPlayerSerializer();
     @Inject
     private MainModule mainModule;
     @Getter
     private EconomyManager customEcoManager;
-    private EconomyOperations economyOperations;
     @Getter
     private FileManager configManager;
 
@@ -39,13 +40,8 @@ public class EconomyService extends Services implements Savable {
         Bukkit.getLogger().info("§8[§2Life§aServer §7>> §eEconomy §9] §7Loading economy...");
         econPlayersCache = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
         customEcoManager = mainModule.getInjector().getSingleton(EconomyManager.class);
-        economyOperations = mainModule.getInjector().getSingleton(EconomyOperations.class);
         mainModule.getServer().getServicesManager().register(Economy.class, customEcoManager, mainModule, ServicePriority.Normal);
-        economyOperations.createTable();
-        for (String econPlayers : economyOperations.getAllString()) {
-            EconPlayerSerialized econPlayerSerialized = econPlayerSerializer.decoder(econPlayers);
-            econPlayersCache.put(econPlayerSerialized.getUuid(),econPlayerSerialized.getBalance());
-        }
+        mainModule.getInjector().getSingleton(EconQuery.class).query();
         ReflectionsFiles.loadFiles(configManager = new FileManager());
         MessageLoaderEconomy messageLoaderEconomy = mainModule.getInjector().getSingleton(MessageLoaderEconomy.class);
         messageLoaderEconomy.load();
@@ -54,7 +50,7 @@ public class EconomyService extends Services implements Savable {
     @Override
     public void unload() {
         Bukkit.getLogger().info("§8[§2Life§aServer §7>> §eEconomy §9] §7Unloading economy...");
-        save();
+        mainModule.getInjector().getSingleton(SaveQueryEcon.class).query();;
     }
 
     @Override
@@ -62,16 +58,7 @@ public class EconomyService extends Services implements Savable {
         return 0;
     }
 
-    @Override
-    public void save() {
-        econPlayersCache.asMap().forEach((uuid,balance) -> {
-            if (!economyOperations.isPresent(uuid.toString())) {
-                economyOperations.insert(econPlayerSerializer.encode(new EconPlayerSerialized(uuid,balance)));
-            } else {
-                economyOperations.update(econPlayerSerializer.encode(new EconPlayerSerialized(uuid,balance)));
-            }
-        });
-    }
+
 
     public double getBalancePlayer(UUID uuid) {
         return econPlayersCache.getIfPresent(uuid);

@@ -7,21 +7,22 @@ import lombok.SneakyThrows;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
-import net.giuse.teleportmodule.database.WarpOperations;
+import net.giuse.teleportmodule.database.warpquery.SaveQueryWarp;
+import net.giuse.teleportmodule.database.warpquery.WarpQuery;
 import net.giuse.teleportmodule.serializer.WarpBuilderSerializer;
 import net.giuse.teleportmodule.serializer.serializedobject.WarpSerialized;
 import org.bukkit.Location;
 
 import javax.inject.Inject;
 
-public class WarpLoaderService extends Services implements Savable {
+public class WarpLoaderService extends Services {
 
     @Getter
     private Cache<String, Location> warps;
+    @Getter
     private final Serializer<WarpSerialized> warpBuilderSerializer = new WarpBuilderSerializer();
     @Inject
     private MainModule mainModule;
-    private WarpOperations warpOperations;
 
     /*
      * Load Service
@@ -31,15 +32,12 @@ public class WarpLoaderService extends Services implements Savable {
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Warps...");
 
-        //Load Cachec
+        //Load Cache
         warps = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
 
-        warpOperations = mainModule.getInjector().getSingleton(WarpOperations.class);
         //Load Warps
-        warpOperations.getAllString().forEach(warpSerializedString -> {
-            WarpSerialized warpSerialized = warpBuilderSerializer.decoder(warpSerializedString);
-            warps.put(warpSerialized.getName(), warpSerialized.getLocation());
-        });
+        mainModule.getInjector().getSingleton(WarpQuery.class).query();
+
     }
 
 
@@ -49,7 +47,7 @@ public class WarpLoaderService extends Services implements Savable {
     @Override
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Unloading Warps...");
-        save();
+        mainModule.getInjector().getSingleton(SaveQueryWarp.class).query();
     }
 
 
@@ -59,16 +57,6 @@ public class WarpLoaderService extends Services implements Savable {
     @Override
     public int priority() {
         return 2;
-    }
-
-    /*
-     *  Save warp in a database
-     */
-    @Override
-    public void save() {
-        warpOperations.dropTable();
-        warpOperations.createTable();
-        warps.asMap().forEach((string,location) -> warpOperations.insert(warpBuilderSerializer.encode(new WarpSerialized(string,location))));
     }
 
     /*

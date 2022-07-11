@@ -1,5 +1,5 @@
 commands
-database
+src/main/java/net/giuse/economymodule/database
 economymanager
 events
 files

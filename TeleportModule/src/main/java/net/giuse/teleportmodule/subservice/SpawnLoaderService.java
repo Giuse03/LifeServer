@@ -8,19 +8,22 @@ import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
 import net.giuse.teleportmodule.builder.SpawnBuilder;
-import net.giuse.teleportmodule.database.SpawnOperations;
+import net.giuse.teleportmodule.database.spawnquery.SaveQuerySpawn;
+import net.giuse.teleportmodule.database.spawnquery.SpawnQuery;
+import net.giuse.teleportmodule.database.warpquery.SaveQueryWarp;
 import net.giuse.teleportmodule.serializer.SpawnBuilderSerializer;
 
 import javax.inject.Inject;
 
-public class SpawnLoaderService extends Services implements Savable {
+public class SpawnLoaderService extends Services  {
+
+    @Getter
     private final Serializer<SpawnBuilder> spawnBuilderSerializer = new SpawnBuilderSerializer();
     @Inject
     private MainModule mainModule;
     @Getter
     @Setter
     private SpawnBuilder spawnBuilder;
-    private SpawnOperations spawnOperations;
 
     /*
      * Load Service
@@ -29,10 +32,9 @@ public class SpawnLoaderService extends Services implements Savable {
     @SneakyThrows
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Spawn...");
-        spawnOperations = mainModule.getInjector().getSingleton(SpawnOperations.class);
 
         //Load from database
-        spawnOperations.getAllString().forEach(newSpawnBuilder -> spawnBuilder = spawnBuilderSerializer.decoder(newSpawnBuilder));
+        mainModule.getInjector().getSingleton(SpawnQuery.class).query();
     }
 
     /*
@@ -41,6 +43,7 @@ public class SpawnLoaderService extends Services implements Savable {
     @Override
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Unloading Spawn...");
+        mainModule.getInjector().getSingleton(SaveQuerySpawn.class).query();
     }
 
     /*
@@ -54,12 +57,4 @@ public class SpawnLoaderService extends Services implements Savable {
     /*
      * Save in database
      */
-    @Override
-    public void save() {
-        spawnOperations.dropTable();
-        spawnOperations.createTable();
-        if (spawnBuilder != null) {
-            spawnOperations.insert(spawnBuilderSerializer.encode(spawnBuilder));
-        }
-    }
 }
