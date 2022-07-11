@@ -30,20 +30,17 @@ public class LoadQueryPlayerKit implements Query {
 
     @Override
     public void query() {
-        executeQuery.execute(new Callback() {
-            @Override
-            public void setQuery(PreparedStatement preparedStatement) {
-                try(ResultSet rs = preparedStatement.executeQuery()) {
-                    while (rs.next()) {
-                        PlayerKitTimeSerialized playerTimerSystem = kitModule.getPlayerKitTimeSerializer().decoder(rs.getString(1) + ";" + rs.getString(2));
-                        playerTimerSystem.getPlayerTimerSystem().runTaskTimerAsynchronously(mainModule, 20L, 20L);
-                        kitModule.getCachePlayerKit().put(playerTimerSystem.getUuid(), playerTimerSystem.getPlayerTimerSystem());
-                    }
-                } catch (SQLException e) {
-                    Bukkit.getLogger().info("Empty Database");
+        executeQuery.execute(preparedStatement -> {
+            try(ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    PlayerKitTimeSerialized playerTimerSystem = kitModule.getPlayerKitTimeSerializer().decoder(rs.getString(1) + ";" + rs.getString(2));
+                    playerTimerSystem.getPlayerTimerSystem().runTaskTimerAsynchronously(mainModule, 20L, 20L);
+                    kitModule.getCachePlayerKit().put(playerTimerSystem.getUuid(), playerTimerSystem.getPlayerTimerSystem());
                 }
-
+            } catch (SQLException e) {
+                Bukkit.getLogger().info("Empty Database");
             }
+
         }, "SELECT * FROM PlayerKit");
     }
 }
