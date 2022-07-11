@@ -31,7 +31,6 @@ public class ExecuteQuery {
                 @Override
                 public void compute() {
                     callback.setQuery(preparedStatement);
-                    preparedStatement.execute();
                 }
             }, async);
         } catch (SQLException e) {
@@ -43,7 +42,6 @@ public class ExecuteQuery {
     public void execute(Callback callback, String query) {
         try (PreparedStatement preparedStatement = mainModule.getConnectorSQLite().getConnection().prepareStatement(query)) {
             callback.setQuery(preparedStatement);
-            preparedStatement.execute();
         } catch (SQLException e) {
             Bukkit.getLogger().info("Empty Database");
         }

@@ -28,7 +28,6 @@ public class MessageLoaderMain implements Loadable {
         
         ConfigurationSection generalMessageSection = mainModule.getConfig().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
-            System.out.println(string);
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);
             //Insert Message Chat
             if (messageSection.getBoolean("message-chat.send-chat")) {

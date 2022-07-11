@@ -31,14 +31,17 @@ public class SaveQueryPlayerKit implements Savable {
 
         executeQuery.execute("CREATE TABLE IF NOT EXISTS PlayerKit(PlayerUUID TEXT,KitCooldown TEXT);");
 
-        kitModule.getCachePlayerKit().asMap().forEach(((uuid, playerTimerSystem) -> executeQuery.execute(preparedStatement -> {
+        executeQuery.execute(preparedStatement -> kitModule.getCachePlayerKit().asMap().forEach(((uuid, playerTimerSystem) -> {
             String[] args = kitModule.getPlayerKitTimeSerializer().encode(new PlayerKitTimeSerialized(uuid, playerTimerSystem)).split(";");
             try {
                 preparedStatement.setString(1, args[0]);
                 preparedStatement.setString(2, args[1]);
+                preparedStatement.execute();
             } catch (SQLException e) {
                 Bukkit.getLogger().info("Empty Database");
             }
-        }, "INSERT INTO PlayerKit VALUES(?,?)")));
+        })), "INSERT INTO PlayerKit VALUES(?,?)");
+
+
     }
 }

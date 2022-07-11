@@ -39,7 +39,6 @@ public class LoadQueryPlayerKit implements Query {
                         playerTimerSystem.getPlayerTimerSystem().runTaskTimerAsynchronously(mainModule, 20L, 20L);
                         kitModule.getCachePlayerKit().put(playerTimerSystem.getUuid(), playerTimerSystem.getPlayerTimerSystem());
                     }
-
                 } catch (SQLException e) {
                     Bukkit.getLogger().info("Empty Database");
                 }
