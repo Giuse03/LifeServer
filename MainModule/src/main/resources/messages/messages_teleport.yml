@@ -4,16 +4,16 @@ messages:
     title:
       send-title: true
       main-title: '&2[&a Teleport &2]'
-      subtitle: '&7Select a Player'
+      subtitle: '&7Select a Player or Insert Number'
       fade-in: 500 #milliseconds
       stay: 1000 #milliseconds
       fade-out: 500 #milliseconds
     message-chat:
       send-chat: true
-      string-message: '&aTP &2»&7Select a Player'
+      string-message: '&aTP &2»&7Select a Player or Insert Number'
     actionbar:
       send-actionbar: true
-      actionbar-message: '&7Select a Player'
+      actionbar-message: '&7Select a Player or Insert Number'
   #2
   teleport-player:
     title:
@@ -134,7 +134,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7%playername% refused your teleport request'
-#10
+  #10
   request-accept-receiver:
     title:
       send-title: true
@@ -149,7 +149,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7%playername% is coming to you'
-#11
+  #11
   back:
     title:
       send-title: true
@@ -164,7 +164,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7Teleported on previous location'
-#12
+  #12
   back-no-location:
     title:
       send-title: true
@@ -179,5 +179,19 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7No previous location found!'
-
+  #13
+  select-number:
+    title:
+      send-title: true
+      main-title: '&2[&a Teleport &2]'
+      subtitle: '&7Usage: /tp <x> <y> <z>'
+      fade-in: 500 #milliseconds
+      stay: 1000 #milliseconds
+      fade-out: 500 #milliseconds
+    message-chat:
+      send-chat: true
+      string-message: '&aTP &2»  &7Usage /tp <x> <y> <z>'
+    actionbar:
+      send-actionbar: true
+      actionbar-message: '&7Usage /tp <x> <y> <z>'
 
