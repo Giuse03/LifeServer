@@ -22,6 +22,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
+import java.sql.Connection;
 import java.util.HashMap;
 
 public class MainModule extends JavaPlugin {
@@ -52,7 +53,7 @@ public class MainModule extends JavaPlugin {
         //Enable workloads
         engine = new ProcessEngine(this);
 
-        //Set MainModule injectable
+        //Set Injector
         injector.register(MainModule.class, this);
         injector.register(Worker.class, new Worker(engine));
 
@@ -116,6 +117,7 @@ public class MainModule extends JavaPlugin {
     @Override
     public void onDisable() {
         //Unload services
+        connectorSQLite.openConnect();
         servicesByPriority.keySet().forEach(Services::unload);
         connectorSQLite.closeConnection();
     }

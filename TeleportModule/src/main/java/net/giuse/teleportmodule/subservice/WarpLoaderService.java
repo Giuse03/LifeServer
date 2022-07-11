@@ -70,7 +70,6 @@ public class WarpLoaderService extends Services implements Savable {
         warpOperations.dropTable();
         warpOperations.createTable();
         warps.asMap().forEach((string,location) -> warpOperations.insert(warpBuilderSerializer.encode(new WarpSerialized(string,location))));
-        mainModule.getConnectorSQLite().closeConnection();
     }
 
     /*

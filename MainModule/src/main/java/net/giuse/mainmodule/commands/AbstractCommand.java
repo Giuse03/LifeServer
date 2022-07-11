@@ -37,7 +37,7 @@ public abstract class AbstractCommand extends Command {
             mainModule.getMessageBuilder().setCommandSender(sender).setIDMessage("no-perms").sendMessage();
             return true;
         }
-        worker.executeProcess(CompletableFuture.supplyAsync(() -> () -> execute(sender, args)), async);
+        worker.executeProcess(() -> execute(sender, args), async);
         return true;
     }
 

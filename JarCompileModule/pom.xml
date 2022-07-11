@@ -177,6 +177,7 @@
             <scope>compile</scope>
         </dependency>
 
+
         <dependency>
             <groupId>net.giuse</groupId>
             <artifactId>SecretMessageModule</artifactId>

@@ -4,11 +4,12 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.giuse.engine.ProcessEngine;
 import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
-import net.giuse.kitmodule.databases.kit.KitOperations;
-import net.giuse.kitmodule.databases.kit.PlayerKitOperations;
+import net.giuse.kitmodule.databases.kit.querykit.LoadQueryKit;
+import net.giuse.kitmodule.databases.kit.querykit.SaveQueryKit;
+import net.giuse.kitmodule.databases.kit.queryplayerkit.LoadQueryPlayerKit;
+import net.giuse.kitmodule.databases.kit.queryplayerkit.SaveQueryPlayerKit;
 import net.giuse.kitmodule.files.FileManager;
 import net.giuse.kitmodule.messages.MessageLoaderKit;
 import net.giuse.kitmodule.serializer.KitSerializer;
@@ -17,7 +18,6 @@ import net.giuse.kitmodule.serializer.serializedobject.KitSerialized;
 import net.giuse.kitmodule.serializer.serializedobject.PlayerKitTimeSerialized;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.databases.DBOperations;
-import net.giuse.mainmodule.databases.Savable;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * Module Kit
  */
-public class KitModule extends Services implements Savable {
+public class KitModule extends Services  {
     @Getter
     private Cache<UUID, PlayerTimerSystem> cachePlayerKit;
     @Getter
@@ -39,9 +39,9 @@ public class KitModule extends Services implements Savable {
     private final Serializer<KitSerialized> kitBuilderSerializer = new KitSerializer();
     @Inject
     private MainModule mainModule;
+
     @Getter
     private Serializer<PlayerKitTimeSerialized> playerKitTimeSerializer;
-    private DBOperations kitOperations, playerKitOperations;
 
 
     /**
@@ -53,34 +53,20 @@ public class KitModule extends Services implements Savable {
 
         //Initialize Serializer and Databases
         playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
-        kitOperations = mainModule.getInjector().getSingleton(KitOperations.class);
-        playerKitOperations = mainModule.getInjector().getSingleton(PlayerKitOperations.class);
-        MessageLoaderKit messageLoaderKit = mainModule.getInjector().getSingleton(MessageLoaderKit.class);
 
         //Initialize Files
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
         ReflectionsFiles.loadFiles(configManager);
-        messageLoaderKit.load();
+        mainModule.getInjector().getSingleton(MessageLoaderKit.class).load();
 
         //Load Kit
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading SQL...");
-        kitElements =  Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
+        kitElements = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
         cachePlayerKit = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
-        messageLoaderKit.load();
-        kitOperations.getAllString().forEach(kitElement -> {
-            KitSerialized kitSerialized = kitBuilderSerializer.decoder(kitElement);
-            kitSerialized.getKitBuilder().build();
-            kitElements.put(kitSerialized.getName(), kitSerialized.getKitBuilder());
-        });
+        mainModule.getInjector().getSingleton(LoadQueryKit.class).query();
 
         //Load PlayerTimeKit
-        for (String playerTimeString : playerKitOperations.getAllString()) {
-            System.out.println(playerTimeString);
-            PlayerKitTimeSerialized playerTimerSystem = playerKitTimeSerializer.decoder(playerTimeString);
-            playerTimerSystem.getPlayerTimerSystem().runTaskTimerAsynchronously(mainModule, 20L, 20L);
-            cachePlayerKit.put(playerTimerSystem.getUuid(), playerTimerSystem.getPlayerTimerSystem());
-        }
-
+        mainModule.getInjector().getSingleton(LoadQueryPlayerKit.class).query();
     }
 
     /**
@@ -89,8 +75,10 @@ public class KitModule extends Services implements Savable {
     @Override
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Unloading Kits...");
+
         //Saves Kits
-        save();
+        mainModule.getInjector().getSingleton(SaveQueryKit.class).save();
+        mainModule.getInjector().getSingleton(SaveQueryPlayerKit.class).save();
     }
 
     /**
@@ -99,22 +87,6 @@ public class KitModule extends Services implements Savable {
     @Override
     public int priority() {
         return -1;
-    }
-
-
-    /**
-     * Save Sets of PlayerTimerSystem and Kit in a Database
-     */
-    @Override
-    @SneakyThrows
-    public void save() {
-        mainModule.getConnectorSQLite().openConnect();
-        playerKitOperations.dropTable();
-        playerKitOperations.createTable();
-        cachePlayerKit.asMap().forEach(((uuid, playerTimerSystem) -> playerKitOperations.insert(playerKitTimeSerializer.encode(new PlayerKitTimeSerialized(uuid, playerTimerSystem)))));
-        kitOperations.dropTable();
-        kitOperations.createTable();
-        kitElements.asMap().forEach((name, kitBuilder) -> kitOperations.insert(kitBuilderSerializer.encode(new KitSerialized(name, kitBuilder))));
     }
 
 

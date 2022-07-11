@@ -27,6 +27,7 @@
       <module name="NewLifeServer" target="1.5" />
       <module name="SecretMessageModule" target="1.8" />
       <module name="SimplyCommandModule" target="1.8" />
+      <module name="StorageModule" target="1.8" />
       <module name="TeleportModule" target="1.8" />
       <module name="TeleportModulez" target="1.8" />
     </bytecodeTargetLevel>

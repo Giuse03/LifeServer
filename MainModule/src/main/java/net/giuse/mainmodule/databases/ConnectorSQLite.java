@@ -25,6 +25,10 @@ public class ConnectorSQLite implements Connector {
         }
     }
 
+    public boolean isOpen(){
+        return connection != null;
+    }
+
     public void closeConnection() {
         if (connection != null) {
             try {
