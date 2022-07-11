@@ -3,16 +3,14 @@ package net.giuse.kitmodule.databases.kit.queryplayerkit;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.serializer.serializedobject.PlayerKitTimeSerialized;
 import net.giuse.mainmodule.MainModule;
-import net.giuse.mainmodule.databases.Savable;
-import net.giuse.mainmodule.databases.execute.Callback;
 import net.giuse.mainmodule.databases.execute.ExecuteQuery;
+import net.giuse.mainmodule.databases.execute.Query;
 import org.bukkit.Bukkit;
 
 import javax.inject.Inject;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SaveQueryPlayerKit implements Savable {
+public class SaveQueryPlayerKit implements Query {
 
     private final ExecuteQuery executeQuery;
 
@@ -26,7 +24,7 @@ public class SaveQueryPlayerKit implements Savable {
 
 
     @Override
-    public void save() {
+    public void query() {
         executeQuery.execute("DROP TABLE PlayerKit;");
 
         executeQuery.execute("CREATE TABLE IF NOT EXISTS PlayerKit(PlayerUUID TEXT,KitCooldown TEXT);");

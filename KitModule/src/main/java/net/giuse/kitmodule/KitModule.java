@@ -39,7 +39,6 @@ public class KitModule extends Services  {
     private final Serializer<KitSerialized> kitBuilderSerializer = new KitSerializer();
     @Inject
     private MainModule mainModule;
-
     @Getter
     private Serializer<PlayerKitTimeSerialized> playerKitTimeSerializer;
 
@@ -50,12 +49,12 @@ public class KitModule extends Services  {
     @SneakyThrows
     @Override
     public void load() {
+        mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
 
         //Initialize Serializer and Databases
         playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
 
         //Initialize Files
-        mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
         ReflectionsFiles.loadFiles(configManager);
         mainModule.getInjector().getSingleton(MessageLoaderKit.class).load();
 
@@ -77,8 +76,8 @@ public class KitModule extends Services  {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Unloading Kits...");
 
         //Saves Kits
-        mainModule.getInjector().getSingleton(SaveQueryKit.class).save();
-        mainModule.getInjector().getSingleton(SaveQueryPlayerKit.class).save();
+        mainModule.getInjector().getSingleton(SaveQueryKit.class).query();
+        mainModule.getInjector().getSingleton(SaveQueryPlayerKit.class).query();
     }
 
     /**

@@ -1,21 +1,18 @@
 package net.giuse.kitmodule.databases.kit.querykit;
 
 import net.giuse.kitmodule.KitModule;
-import net.giuse.kitmodule.serializer.serializedobject.KitSerialized;
 import net.giuse.mainmodule.MainModule;
-import net.giuse.mainmodule.databases.Savable;
 import net.giuse.mainmodule.databases.execute.Callback;
 import net.giuse.mainmodule.databases.execute.ExecuteQuery;
+import net.giuse.mainmodule.databases.execute.Query;
 import org.bukkit.Bukkit;
 
 import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SaveQueryKit implements Savable {
-
+public class SaveQueryKit implements Query {
     private final ExecuteQuery executeQuery;
-
     private final KitModule kitModule;
 
     @Inject
@@ -26,28 +23,22 @@ public class SaveQueryKit implements Savable {
 
 
     @Override
-    public void save() {
+    public void query() {
         executeQuery.execute("DROP TABLE Kit;");
 
         executeQuery.execute("CREATE TABLE IF NOT EXISTS Kit (KitName TEXT, KitItems TEXT, coolDown INT);");
 
-        executeQuery.execute(new Callback() {
-            @Override
-
-            public void setQuery(PreparedStatement preparedStatement) {
-                kitModule.getKitElements().asMap().forEach((name, kitBuilder) -> {
-                    try {
-                        preparedStatement.setString(1, name);
-                        preparedStatement.setString(2, kitBuilder.getBase64());
-                        preparedStatement.setInt(3, kitBuilder.getCoolDown());
-                        preparedStatement.execute();
-                    } catch (SQLException e) {
-                        Bukkit.getLogger().info("Empty Database");
-                    }
-
-                });
+        executeQuery.execute(preparedStatement -> kitModule.getKitElements().asMap().forEach((name, kitBuilder) -> {
+            try {
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, kitBuilder.getBase64());
+                preparedStatement.setInt(3, kitBuilder.getCoolDown());
+                preparedStatement.execute();
+            } catch (SQLException e) {
+                Bukkit.getLogger().info("Empty Database");
             }
-        },"INSERT INTO Kit VALUES(?,?,?)");
+
+        }),"INSERT INTO Kit VALUES(?,?,?)");
 
 
     }
