@@ -4,12 +4,9 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.services.Services;
-import net.giuse.teleportmodule.TeleportModule;
 import net.giuse.teleportmodule.teleporrequest.PendingRequest;
 
 import javax.inject.Inject;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;

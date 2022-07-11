@@ -33,8 +33,8 @@ public class PlayerTimerSystem extends BukkitRunnable {
     /*
      * Add kit from timer task
      */
-    public void addKit(String name,KitBuilder kitBuilder) {
-        KitCooldown kitCooldown = new KitCooldown(name,kitBuilder);
+    public void addKit(String name, KitBuilder kitBuilder) {
+        KitCooldown kitCooldown = new KitCooldown(name, kitBuilder);
         kitsCooldown.add(kitCooldown);
     }
 

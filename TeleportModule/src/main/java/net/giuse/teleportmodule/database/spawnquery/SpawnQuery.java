@@ -3,9 +3,6 @@ package net.giuse.teleportmodule.database.spawnquery;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.databases.execute.ExecuteQuery;
 import net.giuse.mainmodule.databases.execute.Query;
-import net.giuse.teleportmodule.builder.SpawnBuilder;
-import net.giuse.teleportmodule.serializer.serializedobject.HomeSerialized;
-import net.giuse.teleportmodule.subservice.HomeLoaderService;
 import net.giuse.teleportmodule.subservice.SpawnLoaderService;
 import org.bukkit.Bukkit;
 
@@ -29,7 +26,7 @@ public class SpawnQuery implements Query {
     public void query() {
         executeQuery.execute(preparedStatement -> {
             try (ResultSet rs = preparedStatement.executeQuery()) {
-                    spawnModule.setSpawnBuilder(spawnModule.getSpawnBuilderSerializer().decoder(rs.getString(1)));
+                spawnModule.setSpawnBuilder(spawnModule.getSpawnBuilderSerializer().decoder(rs.getString(1)));
             } catch (SQLException e) {
                 Bukkit.getLogger().info("Empty Database");
             }

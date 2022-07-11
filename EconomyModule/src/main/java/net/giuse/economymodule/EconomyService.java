@@ -22,11 +22,11 @@ import javax.inject.Inject;
 import java.util.UUID;
 
 
-public class EconomyService extends Services  {
-    @Getter
-    private Cache<UUID, Double> econPlayersCache;
+public class EconomyService extends Services {
     @Getter
     private final Serializer<EconPlayerSerialized> econPlayerSerializer = new EconPlayerSerializer();
+    @Getter
+    private Cache<UUID, Double> econPlayersCache;
     @Inject
     private MainModule mainModule;
     @Getter
@@ -50,7 +50,8 @@ public class EconomyService extends Services  {
     @Override
     public void unload() {
         Bukkit.getLogger().info("§8[§2Life§aServer §7>> §eEconomy §9] §7Unloading economy...");
-        mainModule.getInjector().getSingleton(SaveQueryEcon.class).query();;
+        mainModule.getInjector().getSingleton(SaveQueryEcon.class).query();
+        ;
     }
 
     @Override
@@ -59,14 +60,14 @@ public class EconomyService extends Services  {
     }
 
 
-
     public double getBalancePlayer(UUID uuid) {
         return econPlayersCache.getIfPresent(uuid);
     }
 
-    public void setBalance(UUID uuid , double balance){
-        econPlayersCache.put(uuid,balance);
+    public void setBalance(UUID uuid, double balance) {
+        econPlayersCache.put(uuid, balance);
     }
+
     public boolean getEconPlayerIsPresent(UUID uuid) {
         return econPlayersCache.asMap().containsKey(uuid);
     }

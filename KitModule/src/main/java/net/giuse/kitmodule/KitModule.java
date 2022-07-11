@@ -17,7 +17,6 @@ import net.giuse.kitmodule.serializer.PlayerKitTimeSerializer;
 import net.giuse.kitmodule.serializer.serializedobject.KitSerialized;
 import net.giuse.kitmodule.serializer.serializedobject.PlayerKitTimeSerialized;
 import net.giuse.mainmodule.MainModule;
-import net.giuse.mainmodule.databases.DBOperations;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
@@ -28,15 +27,15 @@ import java.util.UUID;
 /**
  * Module Kit
  */
-public class KitModule extends Services  {
-    @Getter
-    private Cache<UUID, PlayerTimerSystem> cachePlayerKit;
-    @Getter
-    private Cache<String, KitBuilder> kitElements;
+public class KitModule extends Services {
     @Getter
     private final FileManager configManager = new FileManager();
     @Getter
     private final Serializer<KitSerialized> kitBuilderSerializer = new KitSerializer();
+    @Getter
+    private Cache<UUID, PlayerTimerSystem> cachePlayerKit;
+    @Getter
+    private Cache<String, KitBuilder> kitElements;
     @Inject
     private MainModule mainModule;
     @Getter

@@ -28,7 +28,7 @@ public class MessageLoaderSimplyCommand implements Loadable {
 
     @Override
     public void load() {
-        
+
         ConfigurationSection generalMessageSection = simplyCommandService.getFileManager().getMessageSimpleFileYml().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);

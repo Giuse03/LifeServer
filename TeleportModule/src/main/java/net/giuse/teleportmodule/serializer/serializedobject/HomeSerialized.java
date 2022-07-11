@@ -7,9 +7,10 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-@Getter @RequiredArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class HomeSerialized {
-    
+
     private final UUID owner;
     private final Cache<String, Location> locations;
 

@@ -16,7 +16,7 @@ import org.bukkit.Location;
 import javax.inject.Inject;
 import java.util.UUID;
 
-public class HomeLoaderService extends Services  {
+public class HomeLoaderService extends Services {
     @Getter
     private Cache<UUID, Cache<String, Location>> cacheHome;
 

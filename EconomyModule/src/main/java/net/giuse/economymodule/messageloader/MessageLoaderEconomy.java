@@ -11,7 +11,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.inject.Inject;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class MessageLoaderEconomy implements Loadable {
@@ -29,7 +28,7 @@ public class MessageLoaderEconomy implements Loadable {
 
     @Override
     public void load() {
-        
+
         ConfigurationSection generalMessageSection = economyService.getConfigManager().getMessagesYaml().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);

@@ -54,7 +54,7 @@ public class TpacceptCommand extends AbstractCommand {
             PaperLib.teleportAsync(pendingRequest.getReceiver(), pendingRequest.getSender().getLocation());
         }
         //Accept Pending Request
-        messageBuilder.setCommandSender(pendingRequest.getSender()).setIDMessage("teleport-player").sendMessage(new TextReplacer().match("%playername%").replaceWith( pendingRequest.getReceiver().getName()));
+        messageBuilder.setCommandSender(pendingRequest.getSender()).setIDMessage("teleport-player").sendMessage(new TextReplacer().match("%playername%").replaceWith(pendingRequest.getReceiver().getName()));
         messageBuilder.setCommandSender(player).setIDMessage("request-accept-receiver").sendMessage(new TextReplacer().match("%playername%").replaceWith(player.getName()));
 
         teleportRequestService.getPendingRequests().remove(pendingRequest);

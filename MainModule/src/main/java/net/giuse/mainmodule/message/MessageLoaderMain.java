@@ -25,7 +25,7 @@ public class MessageLoaderMain implements Loadable {
 
     @Override
     public void load() {
-        
+
         ConfigurationSection generalMessageSection = mainModule.getConfig().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);

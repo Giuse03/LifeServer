@@ -24,6 +24,7 @@ public class ItemsGuiInit implements ItemInitializer {
     private MainModule mainModule;
     @Inject
     private Worker worker;
+
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
         KitModule kitModule = (KitModule) mainModule.getService(KitModule.class);
@@ -54,7 +55,7 @@ public class ItemsGuiInit implements ItemInitializer {
                         itemsConfig.getInt("position"),
                         itemsConfig.getInt("page"),
                         itemstackBuilder.toItem(),
-                        false, false, true,worker);
+                        false, false, true, worker);
 
                 //Set Event of the button
                 button.setEvent(inventoryClickEvent -> {

@@ -9,7 +9,6 @@ import net.giuse.teleportmodule.events.EntityBackOnDeath;
 import net.giuse.teleportmodule.files.FileManager;
 import net.giuse.teleportmodule.messageloader.MessageLoaderTeleport;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

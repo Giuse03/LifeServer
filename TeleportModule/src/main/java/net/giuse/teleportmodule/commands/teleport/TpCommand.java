@@ -17,6 +17,7 @@ public class TpCommand extends AbstractCommand {
     private final MessageBuilder messageBuilder;
 
     private final TeleportModule teleportModule;
+
     @Inject
     public TpCommand(MainModule mainModule) {
         super("tp", "lifeserver.tp", false);

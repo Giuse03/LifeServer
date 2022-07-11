@@ -13,7 +13,9 @@ import java.util.UUID;
 
 public class HomeBuilderSerializer implements Serializer<HomeSerialized> {
 
-    @Inject private MainModule mainModule;
+    @Inject
+    private MainModule mainModule;
+
     /*
      * Convert String to HomeBuilder
      */

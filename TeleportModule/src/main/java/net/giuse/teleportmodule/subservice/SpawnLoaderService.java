@@ -10,12 +10,11 @@ import net.giuse.mainmodule.services.Services;
 import net.giuse.teleportmodule.builder.SpawnBuilder;
 import net.giuse.teleportmodule.database.spawnquery.SaveQuerySpawn;
 import net.giuse.teleportmodule.database.spawnquery.SpawnQuery;
-import net.giuse.teleportmodule.database.warpquery.SaveQueryWarp;
 import net.giuse.teleportmodule.serializer.SpawnBuilderSerializer;
 
 import javax.inject.Inject;
 
-public class SpawnLoaderService extends Services  {
+public class SpawnLoaderService extends Services {
 
     @Getter
     private final Serializer<SpawnBuilder> spawnBuilderSerializer = new SpawnBuilderSerializer();

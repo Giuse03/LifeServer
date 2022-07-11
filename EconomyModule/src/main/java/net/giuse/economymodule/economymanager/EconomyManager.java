@@ -95,7 +95,7 @@ public class EconomyManager implements Economy {
     }
 
     public EconomyResponse withdrawPlayer(final String playerName, final double amount) {
-        economyService.setBalance(Bukkit.getPlayer(playerName).getUniqueId(), economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId())-amount);
+        economyService.setBalance(Bukkit.getPlayer(playerName).getUniqueId(), economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()) - amount);
         return new EconomyResponse(amount, economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()), EconomyResponse.ResponseType.SUCCESS, "not yet Supported");
     }
 
@@ -112,7 +112,7 @@ public class EconomyManager implements Economy {
     }
 
     public EconomyResponse depositPlayer(final String playerName, final double amount) {
-        economyService.setBalance(Bukkit.getPlayer(playerName).getUniqueId(),economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()) + amount);
+        economyService.setBalance(Bukkit.getPlayer(playerName).getUniqueId(), economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()) + amount);
         return new EconomyResponse(amount, economyService.getBalancePlayer(Bukkit.getPlayer(playerName).getUniqueId()), EconomyResponse.ResponseType.SUCCESS, "not yet Supported");
     }
 

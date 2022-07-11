@@ -49,7 +49,7 @@ public class ItemsGuiWarpInit implements ItemInitializer {
                         itemsConfig.getInt("position"),
                         itemsConfig.getInt("page"),
                         itemstackBuilder.toItem(),
-                        false, false, true,worker);
+                        false, false, true, worker);
 
                 //Set Event of the button
                 button.setEvent(inventoryClickEvent -> {

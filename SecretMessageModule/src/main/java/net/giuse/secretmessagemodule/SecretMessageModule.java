@@ -7,13 +7,13 @@ import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.services.Services;
 import net.giuse.secretmessagemodule.files.FileManager;
 import net.giuse.secretmessagemodule.messageloader.MessageLoaderSecret;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public final class SecretMessageModule extends Services {
     @Getter

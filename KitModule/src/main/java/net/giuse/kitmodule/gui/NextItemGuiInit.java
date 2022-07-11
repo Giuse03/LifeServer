@@ -47,7 +47,7 @@ public class NextItemGuiInit implements ItemInitializer {
                     inventoryBuilder.addButton(new ButtonBuilder(
                             inventoryBuilder, itemsConfig.getInt("position"),
                             i, itemstackBuilder.toItem()
-                            , true, false, true,worker)
+                            , true, false, true, worker)
                     );
                 }
             }

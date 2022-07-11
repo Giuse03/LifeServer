@@ -34,7 +34,7 @@ public class MSGToggleCommand extends AbstractCommand {
 
         //Enable or disable MSG-Toggle
         if (secretMessageModule.getPlayerMsgToggle().contains(player)) {
-            messageBuilder.setCommandSender(player).setIDMessage("msgtoggle").sendMessage(new TextReplacer().match("%status%").replaceWith( "§cOFF"));
+            messageBuilder.setCommandSender(player).setIDMessage("msgtoggle").sendMessage(new TextReplacer().match("%status%").replaceWith("§cOFF"));
             secretMessageModule.getPlayerMsgToggle().remove(player);
         } else {
             messageBuilder.setCommandSender(player).setIDMessage("msgtoggle").sendMessage(new TextReplacer().match("%status%").replaceWith("§aON"));

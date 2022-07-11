@@ -7,7 +7,6 @@ import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.secretmessagemodule.SecretChatBuilder;
 import net.giuse.secretmessagemodule.SecretMessageModule;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
@@ -55,10 +54,10 @@ public class SecretChatProcess {
         secretChatBuilder.setText(text);
         secretMessageModule.getSecretsChats().add(secretChatBuilder);
         secretMessageModule.getPlayerSocialSpy().forEach(player ->
-        messageBuilder.setCommandSender(player).setIDMessage("socialspy-message").sendMessage(
-                new TextReplacer().match("%receiver%").replaceWith(receiver.getName()),
-                new TextReplacer().match("%sender%").replaceWith(sender.getName()),
-                new TextReplacer().match("%text%").replaceWith(text)));
+                messageBuilder.setCommandSender(player).setIDMessage("socialspy-message").sendMessage(
+                        new TextReplacer().match("%receiver%").replaceWith(receiver.getName()),
+                        new TextReplacer().match("%sender%").replaceWith(sender.getName()),
+                        new TextReplacer().match("%text%").replaceWith(text)));
     }
 
 

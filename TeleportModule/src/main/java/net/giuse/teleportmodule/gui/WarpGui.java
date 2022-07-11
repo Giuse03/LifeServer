@@ -23,13 +23,12 @@ public class WarpGui implements GuiInitializer {
     private InventoryBuilder inventoryBuilder;
 
 
-
     /*
      * Initialize Inventory
      */
     @Override
     public void initInv() {
-    TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
+        TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
 
         //Create Inventory Builder
         InventoryBuilder inventoryBuilder = new InventoryBuilder(

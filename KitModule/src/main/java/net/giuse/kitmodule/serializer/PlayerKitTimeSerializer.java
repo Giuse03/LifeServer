@@ -59,7 +59,7 @@ public class PlayerKitTimeSerializer implements Serializer<PlayerKitTimeSerializ
             String[] kitCooldownStr = kitCooldownArg.split("_");
 
             //Create kitCooldown with the args
-            KitCooldown kitCooldown = new KitCooldown(kitCooldownStr[0],kitModule.getKit(kitCooldownStr[0]));
+            KitCooldown kitCooldown = new KitCooldown(kitCooldownStr[0], kitModule.getKit(kitCooldownStr[0]));
             kitCooldown.setVariableCoolDown(Integer.parseInt(kitCooldownStr[1]));
 
             //add kitCooldown to PlayerTimerSystem

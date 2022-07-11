@@ -2,7 +2,6 @@ package net.giuse.kitmodule.events;
 
 
 import net.giuse.kitmodule.KitModule;
-import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.kitmodule.cooldownsystem.KitCooldown;
 import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
 import net.giuse.mainmodule.MainModule;
@@ -11,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import javax.inject.Inject;
-import java.util.concurrent.ConcurrentMap;
 
 
 /**
@@ -37,7 +35,7 @@ public class EventManager implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         if (kitModule.getPlayerTime(e.getPlayer().getUniqueId()) == null) {
             PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem();
-            kitModule.getKitElements().asMap().forEach(((name, kitBuilder) -> playerTimerSystem.getKitsCooldown().add(new KitCooldown(name.toLowerCase(),kitBuilder))));
+            kitModule.getKitElements().asMap().forEach(((name, kitBuilder) -> playerTimerSystem.getKitsCooldown().add(new KitCooldown(name.toLowerCase(), kitBuilder))));
             playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
             kitModule.getCachePlayerKit().put(e.getPlayer().getUniqueId(), playerTimerSystem);
         }

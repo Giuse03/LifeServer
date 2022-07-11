@@ -19,7 +19,7 @@ public class ReplyCommand extends AbstractCommand {
     private final SecretMessageModule secretMessageModule;
 
     private final SecretChatProcess secretChatProcess;
-    
+
     private final MessageBuilder messageBuilder;
 
     @Inject

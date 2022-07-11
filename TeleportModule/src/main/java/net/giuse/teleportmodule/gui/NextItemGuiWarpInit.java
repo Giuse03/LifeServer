@@ -18,6 +18,7 @@ public class NextItemGuiWarpInit implements ItemInitializer {
     private MainModule mainModule;
     @Inject
     private Worker worker;
+
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
         TeleportModule teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
@@ -43,7 +44,7 @@ public class NextItemGuiWarpInit implements ItemInitializer {
                     inventoryBuilder.addButton(new ButtonBuilder(
                             inventoryBuilder, itemsConfig.getInt("position"),
                             i, itemstackBuilder.toItem()
-                            , true, false, true,worker)
+                            , true, false, true, worker)
                     );
                 }
             }

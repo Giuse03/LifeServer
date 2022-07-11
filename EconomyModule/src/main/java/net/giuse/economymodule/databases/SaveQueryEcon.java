@@ -16,9 +16,9 @@ public class SaveQueryEcon implements Query {
     private final EconomyService economyService;
 
     @Inject
-    public SaveQueryEcon(MainModule mainModule){
+    public SaveQueryEcon(MainModule mainModule) {
         executeQuery = mainModule.getInjector().getSingleton(ExecuteQuery.class);
-        economyService= (EconomyService) mainModule.getService(EconomyService.class);
+        economyService = (EconomyService) mainModule.getService(EconomyService.class);
     }
 
 
@@ -31,7 +31,7 @@ public class SaveQueryEcon implements Query {
 
         executeQuery.execute(preparedStatement -> economyService.getEconPlayersCache().asMap().forEach((uuid, balance) -> {
             try {
-                String[] args = economyService.getEconPlayerSerializer().encode(new EconPlayerSerialized(uuid,balance)).split(",");
+                String[] args = economyService.getEconPlayerSerializer().encode(new EconPlayerSerialized(uuid, balance)).split(",");
                 preparedStatement.setString(1, args[0]);
                 preparedStatement.setString(2, args[1]);
                 preparedStatement.execute();
@@ -39,7 +39,7 @@ public class SaveQueryEcon implements Query {
                 Bukkit.getLogger().info("Empty Database");
             }
 
-        }),"INSERT INTO Economy VALUES(?,?);");
+        }), "INSERT INTO Economy VALUES(?,?);");
 
 
     }

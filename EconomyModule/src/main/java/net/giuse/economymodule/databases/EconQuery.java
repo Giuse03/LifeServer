@@ -5,7 +5,6 @@ import net.giuse.economymodule.EconomyService;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.databases.execute.ExecuteQuery;
 import net.giuse.mainmodule.databases.execute.Query;
-
 import org.bukkit.Bukkit;
 
 import javax.inject.Inject;

@@ -3,13 +3,11 @@ package net.giuse.kitmodule.databases.kit.querykit;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.serializer.serializedobject.KitSerialized;
 import net.giuse.mainmodule.MainModule;
-import net.giuse.mainmodule.databases.execute.Callback;
 import net.giuse.mainmodule.databases.execute.ExecuteQuery;
 import net.giuse.mainmodule.databases.execute.Query;
 import org.bukkit.Bukkit;
 
 import javax.inject.Inject;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

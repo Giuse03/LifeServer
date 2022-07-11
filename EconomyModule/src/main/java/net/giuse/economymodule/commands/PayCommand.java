@@ -16,6 +16,7 @@ import javax.inject.Inject;
 public class PayCommand extends AbstractCommand {
     private final EconomyService economyService;
     private final MessageBuilder messageBuilder;
+
     @Inject
     public PayCommand(final MainModule mainModule) {
         super("pay", "lifeserver.pay", true);

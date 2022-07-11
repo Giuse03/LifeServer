@@ -9,7 +9,6 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
 import javax.inject.Inject;
 
@@ -52,7 +51,7 @@ public class KitListCommand extends AbstractCommand {
 
         //Show a list of kit to player
         StringBuilder sb = new StringBuilder();
-        kitModule.getKitElements().asMap().forEach((name,kitBuilder) -> sb.append(StringUtils.capitalize(name)).append(","));
+        kitModule.getKitElements().asMap().forEach((name, kitBuilder) -> sb.append(StringUtils.capitalize(name)).append(","));
         messageBuilder.setCommandSender(p).setIDMessage("kit-list").sendMessage(new TextReplacer().match("%listkit%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
     }
 }

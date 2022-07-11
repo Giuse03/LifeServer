@@ -4,7 +4,6 @@ import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.teleportmodule.TeleportModule;
 import net.giuse.teleportmodule.enums.TpType;
 import net.giuse.teleportmodule.subservice.TeleportRequestService;
 import net.giuse.teleportmodule.teleporrequest.PendingRequest;

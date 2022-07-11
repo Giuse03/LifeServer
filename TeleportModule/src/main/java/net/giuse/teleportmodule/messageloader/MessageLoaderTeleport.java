@@ -9,7 +9,6 @@ import net.giuse.mainmodule.message.Loadable;
 import net.giuse.teleportmodule.TeleportModule;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
-import sun.security.krb5.Config;
 
 import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
@@ -35,7 +34,7 @@ public class MessageLoaderTeleport implements Loadable {
                 kitModule.getFileManager().getMessagesHomeYaml().getConfigurationSection("messages"),
                 kitModule.getFileManager().getMessagesSpawnYaml().getConfigurationSection("messages")};
 
-        for(ConfigurationSection generalMessageSection : generalMessageSectionArray) {
+        for (ConfigurationSection generalMessageSection : generalMessageSectionArray) {
             for (String string : generalMessageSection.getKeys(false)) {
                 ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);
                 //Insert Message Chat

@@ -20,6 +20,7 @@ public class WarpCommand extends AbstractCommand {
     private final MainModule mainModule;
 
     private final TeleportModule teleportModule;
+
     @Inject
     public WarpCommand(MainModule mainModule) {
         super("warp", "lifeserver.warp.list", false);
@@ -58,7 +59,7 @@ public class WarpCommand extends AbstractCommand {
 
             //Send Warp List
             StringBuilder sb = new StringBuilder();
-            warpLoaderService.getWarps().asMap().forEach((warpName,location) -> sb.append(warpName).append(","));
+            warpLoaderService.getWarps().asMap().forEach((warpName, location) -> sb.append(warpName).append(","));
             messageBuilder.setCommandSender(p).setIDMessage("warp-list").sendMessage(new TextReplacer().match("%list%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
             return;
         }

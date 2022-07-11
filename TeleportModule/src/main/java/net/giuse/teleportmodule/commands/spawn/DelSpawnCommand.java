@@ -3,7 +3,6 @@ package net.giuse.teleportmodule.commands.spawn;
 import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.teleportmodule.TeleportModule;
 import net.giuse.teleportmodule.subservice.SpawnLoaderService;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -20,6 +19,7 @@ public class DelSpawnCommand extends AbstractCommand {
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
     }
+
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         //Check if sender is Console

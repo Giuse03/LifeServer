@@ -28,7 +28,7 @@ public class MessageLoaderKit implements Loadable {
 
     @Override
     public void load() {
-        
+
         ConfigurationSection generalMessageSection = kitModule.getConfigManager().getMessagesYaml().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);

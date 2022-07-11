@@ -4,7 +4,6 @@ import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.teleportmodule.TeleportModule;
 import net.giuse.teleportmodule.subservice.WarpLoaderService;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -40,7 +39,7 @@ public class WarpListCommand extends AbstractCommand {
 
         //Send player warp Message
         StringBuilder sb = new StringBuilder();
-        warpLoaderService.getWarps().asMap().forEach((name,location) -> sb.append(name).append(","));
+        warpLoaderService.getWarps().asMap().forEach((name, location) -> sb.append(name).append(","));
         messageBuilder.setCommandSender(p).setIDMessage("warp-list").sendMessage(new TextReplacer().match("%list%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
     }
 }

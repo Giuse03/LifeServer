@@ -28,7 +28,7 @@ public class MessageLoaderSecret implements Loadable {
 
     @Override
     public void load() {
-        
+
         ConfigurationSection generalMessageSection = secretMessageModule.getFileManager().getMessagesSecretChatYaml().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);

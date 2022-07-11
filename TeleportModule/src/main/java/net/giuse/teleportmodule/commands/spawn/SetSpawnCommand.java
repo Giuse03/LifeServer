@@ -3,7 +3,6 @@ package net.giuse.teleportmodule.commands.spawn;
 import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
-import net.giuse.teleportmodule.TeleportModule;
 import net.giuse.teleportmodule.builder.SpawnBuilder;
 import net.giuse.teleportmodule.subservice.SpawnLoaderService;
 import org.bukkit.command.CommandSender;

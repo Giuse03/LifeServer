@@ -16,9 +16,9 @@ public class SaveQueryHome implements Query {
     private final HomeLoaderService homeModule;
 
     @Inject
-    public SaveQueryHome(MainModule mainModule){
+    public SaveQueryHome(MainModule mainModule) {
         executeQuery = mainModule.getInjector().getSingleton(ExecuteQuery.class);
-        homeModule= (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
+        homeModule = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
     }
 
 
@@ -31,7 +31,7 @@ public class SaveQueryHome implements Query {
 
         executeQuery.execute(preparedStatement -> homeModule.getCacheHome().asMap().forEach((uuid, hashMap) -> {
             try {
-                String[] args = homeModule.getHomeBuilderSerializer().encode(new HomeSerialized(uuid,hashMap)).split(":");
+                String[] args = homeModule.getHomeBuilderSerializer().encode(new HomeSerialized(uuid, hashMap)).split(":");
                 preparedStatement.setString(1, args[0]);
                 preparedStatement.setString(2, args[1]);
                 preparedStatement.execute();
@@ -39,7 +39,7 @@ public class SaveQueryHome implements Query {
                 Bukkit.getLogger().info("Empty Database");
             }
 
-        }),"INSERT INTO Home VALUES(?,?)");
+        }), "INSERT INTO Home VALUES(?,?)");
 
 
     }

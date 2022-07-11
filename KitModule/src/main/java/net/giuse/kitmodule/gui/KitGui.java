@@ -22,6 +22,7 @@ public class KitGui implements GuiInitializer {
     private MainModule mainModule;
     @Inject
     private Worker worker;
+
     /*
      * Initialize Inventory
      */

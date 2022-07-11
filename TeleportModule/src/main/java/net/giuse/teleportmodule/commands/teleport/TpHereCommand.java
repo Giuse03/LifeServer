@@ -18,6 +18,7 @@ public class TpHereCommand extends AbstractCommand {
     private final MessageBuilder messageBuilder;
 
     private final TeleportModule teleportModule;
+
     @Inject
     public TpHereCommand(MainModule mainModule) {
         super("tphere", "lifeserver.tphere", false);

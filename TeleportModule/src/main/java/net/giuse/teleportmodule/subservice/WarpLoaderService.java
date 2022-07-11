@@ -18,9 +18,9 @@ import javax.inject.Inject;
 public class WarpLoaderService extends Services {
 
     @Getter
-    private Cache<String, Location> warps;
-    @Getter
     private final Serializer<WarpSerialized> warpBuilderSerializer = new WarpBuilderSerializer();
+    @Getter
+    private Cache<String, Location> warps;
     @Inject
     private MainModule mainModule;
 

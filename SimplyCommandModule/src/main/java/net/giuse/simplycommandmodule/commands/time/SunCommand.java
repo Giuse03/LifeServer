@@ -15,8 +15,8 @@ public class SunCommand extends AbstractCommand {
     @Inject
     public SunCommand(MainModule mainModule) {
         super("sun", "lifeserver.sun", false);
-        
-        
+
+
         messageBuilder = mainModule.getMessageBuilder();
 
     }
