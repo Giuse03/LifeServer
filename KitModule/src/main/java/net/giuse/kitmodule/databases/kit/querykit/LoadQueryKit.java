@@ -27,23 +27,20 @@ public class LoadQueryKit implements Query {
 
     @Override
     public void query() {
-        executeQuery.execute(new Callback() {
-            @Override
-            public void setQuery(PreparedStatement preparedStatement) {
-                try (ResultSet rs = preparedStatement.executeQuery()) {
-                    while (rs.next()) {
-                        KitSerialized kitSerialized = kitModule.getKitBuilderSerializer().decoder(
-                                rs.getString(1) + ":" +
-                                        rs.getInt(3) + ":" +
-                                        rs.getString(2));
-                        kitSerialized.getKitBuilder().build();
-                        kitModule.getKitElements().put(kitSerialized.getName(), kitSerialized.getKitBuilder());
-                    }
-                } catch (SQLException e) {
-                    Bukkit.getLogger().info("Empty Database");
+        executeQuery.execute(preparedStatement -> {
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    KitSerialized kitSerialized = kitModule.getKitBuilderSerializer().decoder(
+                            rs.getString(1) + ":" +
+                                    rs.getInt(3) + ":" +
+                                    rs.getString(2));
+                    kitSerialized.getKitBuilder().build();
+                    kitModule.getKitElements().put(kitSerialized.getName(), kitSerialized.getKitBuilder());
                 }
-
+            } catch (SQLException e) {
+                Bukkit.getLogger().info("Empty Database");
             }
+
         }, "SELECT * FROM Kit");
     }
 }
