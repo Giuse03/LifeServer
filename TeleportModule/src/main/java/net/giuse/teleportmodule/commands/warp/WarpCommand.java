@@ -51,7 +51,7 @@ public class WarpCommand extends AbstractCommand {
             }
 
             //Check if warp list is empty
-            if (warpLoaderService.getWarps().estimatedSize() == 0) {
+            if (warpLoaderService.getWarps().size() == 0) {
                 messageBuilder.setCommandSender(p).setIDMessage("no-warp-available").sendMessage();
 
                 return;
@@ -59,7 +59,7 @@ public class WarpCommand extends AbstractCommand {
 
             //Send Warp List
             StringBuilder sb = new StringBuilder();
-            warpLoaderService.getWarps().asMap().forEach((warpName, location) -> sb.append(warpName).append(","));
+            warpLoaderService.getWarps().forEach((warpName, location) -> sb.append(warpName).append(","));
             messageBuilder.setCommandSender(p).setIDMessage("warp-list").sendMessage(new TextReplacer().match("%list%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
             return;
         }

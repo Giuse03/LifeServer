@@ -1,6 +1,7 @@
 package net.giuse.teleportmodule.events;
 
-import com.github.benmanes.caffeine.cache.Caffeine;
+
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.teleportmodule.subservice.HomeLoaderService;
 import org.bukkit.event.EventHandler;
@@ -26,7 +27,7 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (homeLoaderService.getHome(e.getPlayer().getUniqueId()) == null) {
-            homeLoaderService.getCacheHome().put(e.getPlayer().getUniqueId(), Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build());
+            homeLoaderService.getCacheHome().put(e.getPlayer().getUniqueId(),new Object2ObjectArrayMap<>());
         }
     }
 

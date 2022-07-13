@@ -1,7 +1,8 @@
 package net.giuse.economymodule;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+
+import it.unimi.dsi.fastutil.objects.Object2DoubleArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.economymodule.databases.EconQuery;
@@ -26,7 +27,7 @@ public class EconomyService extends Services {
     @Getter
     private final Serializer<EconPlayerSerialized> econPlayerSerializer = new EconPlayerSerializer();
     @Getter
-    private Cache<UUID, Double> econPlayersCache;
+    private Object2DoubleMap<UUID> econPlayersCache;
     @Inject
     private MainModule mainModule;
     @Getter
@@ -38,7 +39,7 @@ public class EconomyService extends Services {
     @SneakyThrows
     public void load() {
         Bukkit.getLogger().info("§8[§2Life§aServer §7>> §eEconomy §9] §7Loading economy...");
-        econPlayersCache = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
+        econPlayersCache = new Object2DoubleArrayMap<>();
         customEcoManager = mainModule.getInjector().getSingleton(EconomyManager.class);
         mainModule.getServer().getServicesManager().register(Economy.class, customEcoManager, mainModule, ServicePriority.Normal);
         mainModule.getInjector().getSingleton(EconQuery.class).query();
@@ -61,7 +62,7 @@ public class EconomyService extends Services {
 
 
     public double getBalancePlayer(UUID uuid) {
-        return econPlayersCache.getIfPresent(uuid);
+        return econPlayersCache.getDouble(uuid);
     }
 
     public void setBalance(UUID uuid, double balance) {
@@ -69,7 +70,7 @@ public class EconomyService extends Services {
     }
 
     public boolean getEconPlayerIsPresent(UUID uuid) {
-        return econPlayersCache.asMap().containsKey(uuid);
+        return econPlayersCache.containsKey(uuid);
     }
 
 }

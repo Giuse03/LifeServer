@@ -95,7 +95,7 @@ public class KitCreateCommand extends AbstractCommand {
 
         kitModule.getKitElements().put(args[0].toLowerCase(), kitBuilder);
 
-        kitModule.getCachePlayerKit().asMap().forEach((uuid, playerTimerSystem) -> playerTimerSystem.addKit(args[0], kitBuilder));
+        kitModule.getCachePlayerKit().forEach((uuid, playerTimerSystem) -> playerTimerSystem.addKit(args[0], kitBuilder));
 
         messageBuilder.setCommandSender(p).setIDMessage("kit-created").sendMessage(new TextReplacer().match("%kit%").replaceWith(args[0]));
 

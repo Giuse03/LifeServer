@@ -22,11 +22,12 @@ public class SaveQueryKit implements Query {
 
     @Override
     public void query() {
+        if( kitModule.getKitElements().isEmpty()) return;
         executeQuery.execute("DROP TABLE Kit;");
 
         executeQuery.execute("CREATE TABLE IF NOT EXISTS Kit (KitName TEXT, KitItems TEXT, coolDown INT);");
 
-        executeQuery.execute(preparedStatement -> kitModule.getKitElements().asMap().forEach((name, kitBuilder) -> {
+        executeQuery.execute(preparedStatement -> kitModule.getKitElements().forEach((name, kitBuilder) -> {
             try {
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, kitBuilder.getBase64());

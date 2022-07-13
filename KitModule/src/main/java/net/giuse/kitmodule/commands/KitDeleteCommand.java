@@ -49,9 +49,9 @@ public class KitDeleteCommand extends AbstractCommand {
         }
 
         //Delete kit
-        kitModule.getCachePlayerKit().asMap().forEach((uuid, playerTimerSystem) -> {
+        kitModule.getCachePlayerKit().forEach((uuid, playerTimerSystem) -> {
             playerTimerSystem.removeKit(args[0].toLowerCase());
-            kitModule.getKitElements().invalidate(args[0].toLowerCase());
+            kitModule.getKitElements().remove(args[0].toLowerCase());
             messageBuilder.setCommandSender(p).setIDMessage("kit-removed").sendMessage(new TextReplacer().match("%kit").replaceWith(args[0]));
         });
 

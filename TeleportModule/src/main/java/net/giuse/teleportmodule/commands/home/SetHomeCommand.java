@@ -45,7 +45,7 @@ public class SetHomeCommand extends AbstractCommand {
                     }
 
                     //Check if player has reached max home
-                    if (homeLoaderService.getHome(sender.getUniqueId()).estimatedSize() == maxHomes) {
+                    if (homeLoaderService.getHome(sender.getUniqueId()).size() == maxHomes) {
                         messageBuilder.setCommandSender(sender).setIDMessage("max_home_reached").sendMessage();
 
                         return;

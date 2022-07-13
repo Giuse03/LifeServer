@@ -57,7 +57,7 @@ public class MainModule extends JavaPlugin {
         injector.register(Worker.class, new Worker(engine));
 
         //Loading Message
-        messageLoader = new MessageLoader(BukkitAudiences.create(this), engine);
+        messageLoader = new MessageLoader(this, engine);
         messageBuilder = new MessageBuilder(messageLoader);
         injector.getSingleton(MessageLoaderMain.class).load();
 

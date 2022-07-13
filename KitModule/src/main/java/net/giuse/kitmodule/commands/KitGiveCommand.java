@@ -59,12 +59,12 @@ public class KitGiveCommand extends AbstractCommand {
             }
 
             //Check if there are kits
-            if (kitModule.getKitElements().estimatedSize() == 0) {
+            if (kitModule.getKitElements().size() == 0) {
                 messageBuilder.setCommandSender(p).setIDMessage("kit-list-empty").sendMessage();
                 return;
             }
             StringBuilder sb = new StringBuilder();
-            kitModule.getKitElements().asMap().forEach((name, kitBuilder) -> sb.append(StringUtils.capitalize(name)).append(","));
+            kitModule.getKitElements().forEach((name, kitBuilder) -> sb.append(StringUtils.capitalize(name)).append(","));
             messageBuilder.setCommandSender(p).setIDMessage("kit-list").sendMessage(new TextReplacer().match("%listkit%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
             return;
         }

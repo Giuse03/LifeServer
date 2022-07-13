@@ -25,12 +25,15 @@ public class SaveQueryPlayerKit implements Query {
 
     @Override
     public void query() {
+        if(kitModule.getCachePlayerKit().isEmpty()) return;
+
         executeQuery.execute("DROP TABLE PlayerKit;");
 
         executeQuery.execute("CREATE TABLE IF NOT EXISTS PlayerKit(PlayerUUID TEXT,KitCooldown TEXT);");
 
-        executeQuery.execute(preparedStatement -> kitModule.getCachePlayerKit().asMap().forEach(((uuid, playerTimerSystem) -> {
+        executeQuery.execute(preparedStatement -> kitModule.getCachePlayerKit().forEach(((uuid, playerTimerSystem) -> {
             String[] args = kitModule.getPlayerKitTimeSerializer().encode(new PlayerKitTimeSerialized(uuid, playerTimerSystem)).split(";");
+            if(args.length == 1) return;
             try {
                 preparedStatement.setString(1, args[0]);
                 preparedStatement.setString(2, args[1]);

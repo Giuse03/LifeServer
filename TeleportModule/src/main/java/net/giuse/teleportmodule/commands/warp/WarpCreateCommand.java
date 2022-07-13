@@ -49,7 +49,7 @@ public class WarpCreateCommand extends AbstractCommand {
             return;
         }
         //Create warp
-        warpLoaderService.getWarps().put(args[0], p.getLocation());
+        warpLoaderService.getWarps().put(args[0].toLowerCase(), p.getLocation());
         messageBuilder.setCommandSender(p).setIDMessage("warp-created").sendMessage(new TextReplacer().match("%name%").replaceWith(args[0]));
     }
 }

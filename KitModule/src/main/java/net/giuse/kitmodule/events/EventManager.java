@@ -35,7 +35,7 @@ public class EventManager implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         if (kitModule.getPlayerTime(e.getPlayer().getUniqueId()) == null) {
             PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem();
-            kitModule.getKitElements().asMap().forEach(((name, kitBuilder) -> playerTimerSystem.getKitsCooldown().add(new KitCooldown(name.toLowerCase(), kitBuilder))));
+            kitModule.getKitElements().forEach(((name, kitBuilder) -> playerTimerSystem.getKitsCooldown().add(new KitCooldown(name.toLowerCase(), kitBuilder))));
             playerTimerSystem.runTaskTimerAsynchronously(mainModule, 20L, 20L);
             kitModule.getCachePlayerKit().put(e.getPlayer().getUniqueId(), playerTimerSystem);
         }

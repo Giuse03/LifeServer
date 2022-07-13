@@ -1,7 +1,7 @@
 package net.giuse.teleportmodule.subservice;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.mainmodule.MainModule;
@@ -20,7 +20,7 @@ public class WarpLoaderService extends Services {
     @Getter
     private final Serializer<WarpSerialized> warpBuilderSerializer = new WarpBuilderSerializer();
     @Getter
-    private Cache<String, Location> warps;
+    private Object2ObjectMap<String, Location> warps;
     @Inject
     private MainModule mainModule;
 
@@ -33,7 +33,7 @@ public class WarpLoaderService extends Services {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Warps...");
 
         //Load Cache
-        warps = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
+        warps = new Object2ObjectArrayMap<>();
 
         //Load Warps
         mainModule.getInjector().getSingleton(WarpQuery.class).query();
@@ -63,6 +63,6 @@ public class WarpLoaderService extends Services {
      * Get Warp From Name
      */
     public Location getWarp(String name) {
-        return warps.getIfPresent(name.toLowerCase());
+        return warps.get(name.toLowerCase());
     }
 }

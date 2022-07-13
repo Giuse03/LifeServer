@@ -24,12 +24,13 @@ public class SaveQueryEcon implements Query {
 
     @Override
     public void query() {
+        if(economyService.getEconPlayersCache().isEmpty()) return;
 
         executeQuery.execute("DROP TABLE Economy;");
 
         executeQuery.execute("CREATE TABLE IF NOT EXISTS Economy (name TEXT, balance DOUBLE);");
 
-        executeQuery.execute(preparedStatement -> economyService.getEconPlayersCache().asMap().forEach((uuid, balance) -> {
+        executeQuery.execute(preparedStatement -> economyService.getEconPlayersCache().forEach((uuid, balance) -> {
             try {
                 String[] args = economyService.getEconPlayerSerializer().encode(new EconPlayerSerialized(uuid, balance)).split(",");
                 preparedStatement.setString(1, args[0]);

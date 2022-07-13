@@ -24,12 +24,13 @@ public class SaveQueryWarp implements Query {
 
     @Override
     public void query() {
+        if(warpModule.getWarps().isEmpty()) return;
 
         executeQuery.execute("DROP TABLE Warp;");
 
         executeQuery.execute("CREATE TABLE IF NOT EXISTS Warp (Name TEXT,Location TEXT)");
 
-        executeQuery.execute(preparedStatement -> warpModule.getWarps().asMap().forEach((uuid, hashMap) -> {
+        executeQuery.execute(preparedStatement -> warpModule.getWarps().forEach((uuid, hashMap) -> {
             try {
                 String[] args = warpModule.getWarpBuilderSerializer().encode(new WarpSerialized(uuid, hashMap)).split(":");
                 preparedStatement.setString(1, args[0]);

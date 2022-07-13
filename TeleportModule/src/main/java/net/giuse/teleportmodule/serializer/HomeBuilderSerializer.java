@@ -1,7 +1,7 @@
 package net.giuse.teleportmodule.serializer;
 
 
-import com.github.benmanes.caffeine.cache.Caffeine;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.teleportmodule.serializer.serializedobject.HomeSerialized;
@@ -24,14 +24,15 @@ public class HomeBuilderSerializer implements Serializer<HomeSerialized> {
         StringBuilder homeSerialized = new StringBuilder();
         int i = 0;
         homeSerialized.append(homeSerializedObject.getOwner().toString()).append(":");
-        for (String s : homeSerializedObject.getLocations().asMap().keySet()) {
+        for (String s : homeSerializedObject.getLocations().keySet()) {
             i++;
-            homeSerialized.append(s).append(",").append(homeSerializedObject.getLocations().getIfPresent(s).getWorld().getName()).append(",").append(homeSerializedObject.getLocations().getIfPresent(s).getX())
-                    .append(",").append(homeSerializedObject.getLocations().getIfPresent(s).getY()).append(",")
-                    .append(homeSerializedObject.getLocations().getIfPresent(s).getZ()).append(",")
-                    .append(homeSerializedObject.getLocations().getIfPresent(s).getYaw())
-                    .append(",").append(homeSerializedObject.getLocations().getIfPresent(s).getPitch());
-            if (i != homeSerializedObject.getLocations().estimatedSize()) {
+            homeSerialized.append(s).append(",").append(homeSerializedObject.getLocations().get(s).getWorld().getName())
+                    .append(",").append(homeSerializedObject.getLocations().get(s).getX())
+                    .append(",").append(homeSerializedObject.getLocations().get(s).getY()).append(",")
+                    .append(homeSerializedObject.getLocations().get(s).getZ()).append(",")
+                    .append(homeSerializedObject.getLocations().get(s).getYaw())
+                    .append(",").append(homeSerializedObject.getLocations().get(s).getPitch());
+            if (i != homeSerializedObject.getLocations().size()) {
                 homeSerialized.append(";");
             }
         }
@@ -47,7 +48,7 @@ public class HomeBuilderSerializer implements Serializer<HomeSerialized> {
         String[] homes = str.split(":");
 
         //Insert args for builder a HomeSerialized and check if player has home
-        HomeSerialized homeSerialized = new HomeSerialized(UUID.fromString(homes[0]), Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build());
+        HomeSerialized homeSerialized = new HomeSerialized(UUID.fromString(homes[0]), new Object2ObjectArrayMap<>());
         if (homes.length == 1) return homeSerialized;
 
         //Deserialize home and insert it in HomeBuilder

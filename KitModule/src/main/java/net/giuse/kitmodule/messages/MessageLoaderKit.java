@@ -36,7 +36,7 @@ public class MessageLoaderKit implements Loadable {
             if (messageSection.getBoolean("message-chat.send-chat")) {
                 String messageComponent = ChatColor.translateAlternateColorCodes('&', messageSection.getString("message-chat.string-message"));
                 MessageChat message = new MessageChat(messageComponent);
-                messageLoader.addMessageCache(string + "_chat", CompletableFuture.supplyAsync(() -> message));
+                messageLoader.addMessageCache(string + "_chat", message);
             }
 
             //Insert Title Message
@@ -48,14 +48,14 @@ public class MessageLoaderKit implements Loadable {
                         messageSection.getInt("title.fade-in"),
                         messageSection.getInt("title.fade-stay"),
                         messageSection.getInt("title.fade-out"));
-                messageLoader.addMessageCache(string + "_title", CompletableFuture.supplyAsync(() -> message));
+                messageLoader.addMessageCache(string + "_title", message);
             }
 
             //Insert ActionBar
             if (messageSection.getBoolean("actionbar.send-actionbar")) {
                 String messageComponent = ChatColor.translateAlternateColorCodes('&', messageSection.getString("actionbar.actionbar-message"));
                 MessageActionbar message = new MessageActionbar(messageComponent);
-                messageLoader.addMessageCache(string + "_bossbar", CompletableFuture.supplyAsync(() -> message));
+                messageLoader.addMessageCache(string + "_bossbar", message);
             }
         }
     }

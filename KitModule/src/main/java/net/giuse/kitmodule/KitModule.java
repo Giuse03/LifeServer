@@ -1,7 +1,8 @@
 package net.giuse.kitmodule;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.kitmodule.builder.KitBuilder;
@@ -33,9 +34,9 @@ public class KitModule extends Services {
     @Getter
     private final Serializer<KitSerialized> kitBuilderSerializer = new KitSerializer();
     @Getter
-    private Cache<UUID, PlayerTimerSystem> cachePlayerKit;
+    private Object2ObjectMap<UUID, PlayerTimerSystem> cachePlayerKit;
     @Getter
-    private Cache<String, KitBuilder> kitElements;
+    private Object2ObjectMap<String, KitBuilder> kitElements;
     @Inject
     private MainModule mainModule;
     @Getter
@@ -59,8 +60,8 @@ public class KitModule extends Services {
 
         //Load Kit
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading SQL...");
-        kitElements = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
-        cachePlayerKit = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
+        kitElements = new Object2ObjectArrayMap<>();
+        cachePlayerKit = new Object2ObjectArrayMap<>();
         mainModule.getInjector().getSingleton(LoadQueryKit.class).query();
 
         //Load PlayerTimeKit
@@ -92,14 +93,14 @@ public class KitModule extends Services {
      * Search PlayerTimerSystem from Set
      */
     public PlayerTimerSystem getPlayerTime(UUID playerUUID) {
-        return cachePlayerKit.getIfPresent(playerUUID);
+        return cachePlayerKit.get(playerUUID);
     }
 
     /**
      * Search Kit  from Name in a Set
      */
     public KitBuilder getKit(String searchKitBuilder) {
-        return kitElements.getIfPresent(searchKitBuilder.toLowerCase());
+        return kitElements.get(searchKitBuilder.toLowerCase());
     }
 
 }

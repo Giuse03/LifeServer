@@ -32,14 +32,14 @@ public class WarpListCommand extends AbstractCommand {
         Player p = (Player) commandSender;
 
         //Check if there are warp
-        if (warpLoaderService.getWarps().estimatedSize() == 0) {
+        if (warpLoaderService.getWarps().size() == 0) {
             messageBuilder.setCommandSender(p).setIDMessage("no-warp-available").sendMessage();
             return;
         }
 
         //Send player warp Message
         StringBuilder sb = new StringBuilder();
-        warpLoaderService.getWarps().asMap().forEach((name, location) -> sb.append(name).append(","));
+        warpLoaderService.getWarps().forEach((name, location) -> sb.append(name).append(","));
         messageBuilder.setCommandSender(p).setIDMessage("warp-list").sendMessage(new TextReplacer().match("%list%").replaceWith(sb.deleteCharAt(sb.length() - 1).toString()));
     }
 }

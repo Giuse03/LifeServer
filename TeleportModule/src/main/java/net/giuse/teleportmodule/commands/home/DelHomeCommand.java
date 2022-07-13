@@ -31,7 +31,7 @@ public class DelHomeCommand extends AbstractCommand {
         Player sender = (Player) commandSender;
 
         //Check if player has home
-        if (homeLoaderService.getCacheHome().estimatedSize() == 0) {
+        if (homeLoaderService.getCacheHome().size() == 0) {
             messageBuilder.setCommandSender(sender).setIDMessage("no_home_found").sendMessage();
             return;
         }
@@ -41,8 +41,8 @@ public class DelHomeCommand extends AbstractCommand {
             if (args.length == 0) {
 
                 //Check if player has one home
-                if (homeLoaderService.getHome(sender.getUniqueId()).estimatedSize() == 1) {
-                    homeLoaderService.getHome(sender.getUniqueId()).asMap().keySet().forEach(home -> homeLoaderService.getHome(sender.getUniqueId()).invalidate(home));
+                if (homeLoaderService.getHome(sender.getUniqueId()).size() == 1) {
+                    homeLoaderService.getHome(sender.getUniqueId()).keySet().forEach(home -> homeLoaderService.getHome(sender.getUniqueId()).remove(home));
                     messageBuilder.setCommandSender(sender).setIDMessage("deleted_home").sendMessage();
                     return;
                 }
@@ -50,19 +50,19 @@ public class DelHomeCommand extends AbstractCommand {
             }
 
             //Check if home exists
-            if (homeLoaderService.getHome(sender.getUniqueId()).getIfPresent(args[0]) == null) {
+            if (homeLoaderService.getHome(sender.getUniqueId()).get(args[0]) == null) {
                 messageBuilder.setCommandSender(sender).setIDMessage("no_home_found").sendMessage();
                 return;
             }
 
             //Delete home
-            homeLoaderService.getHome(sender.getUniqueId()).invalidate(args[0].toLowerCase());
+            homeLoaderService.getHome(sender.getUniqueId()).remove(args[0].toLowerCase());
             messageBuilder.setCommandSender(sender).setIDMessage("deleted_home").sendMessage();
             return;
         }
 
         //Delete Home
-        homeLoaderService.getHome(sender.getUniqueId()).asMap().keySet().forEach(home -> homeLoaderService.getHome(sender.getUniqueId()).invalidate(home));
+        homeLoaderService.getHome(sender.getUniqueId()).keySet().forEach(home -> homeLoaderService.getHome(sender.getUniqueId()).remove(home));
         messageBuilder.setCommandSender(sender).setIDMessage("deleted_home").sendMessage();
     }
 }

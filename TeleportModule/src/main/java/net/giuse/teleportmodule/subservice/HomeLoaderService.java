@@ -1,7 +1,7 @@
 package net.giuse.teleportmodule.subservice;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.mainmodule.MainModule;
@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class HomeLoaderService extends Services {
     @Getter
-    private Cache<UUID, Cache<String, Location>> cacheHome;
+    private Object2ObjectMap<UUID, Object2ObjectMap<String, Location>> cacheHome;
 
     @Getter
     private Serializer<HomeSerialized> homeBuilderSerializer;
@@ -33,7 +33,7 @@ public class HomeLoaderService extends Services {
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Home...");
         homeBuilderSerializer = mainModule.getInjector().getSingleton(HomeBuilderSerializer.class);
-        cacheHome = Caffeine.newBuilder().executor(mainModule.getEngine().getForkJoinPool()).build();
+        cacheHome = new Object2ObjectArrayMap<>();
 
         //Load Home
         mainModule.getInjector().getSingleton(HomeQuery.class).query();
@@ -60,7 +60,7 @@ public class HomeLoaderService extends Services {
     /*
      * Get Home from player's UUID
      */
-    public Cache<String, Location> getHome(UUID owner) {
-        return cacheHome.getIfPresent(owner);
+    public Object2ObjectMap<String, Location> getHome(UUID owner) {
+        return cacheHome.get(owner);
     }
 }
