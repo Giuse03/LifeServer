@@ -32,8 +32,9 @@ public class SaveQueryHome implements Query {
         executeQuery.execute("CREATE TABLE IF NOT EXISTS Home (UUID TEXT,Location TEXT);");
 
         executeQuery.execute(preparedStatement -> homeModule.getCacheHome().forEach((uuid, hashMap) -> {
+            String[] args = homeModule.getHomeBuilderSerializer().encode(new HomeSerialized(uuid, hashMap)).split(":");
+            if(args.length == 1) return;
             try {
-                String[] args = homeModule.getHomeBuilderSerializer().encode(new HomeSerialized(uuid, hashMap)).split(":");
                 preparedStatement.setString(1, args[0]);
                 preparedStatement.setString(2, args[1]);
                 preparedStatement.execute();

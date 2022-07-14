@@ -23,7 +23,7 @@ public class KitListCommand extends AbstractCommand {
 
     @Inject
     public KitListCommand(MainModule mainModule) {
-        super("kitlist", "lifeserver.kitcreate", false);
+        super("kitlist", "lifeserver.kitcreate", true);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();
     }

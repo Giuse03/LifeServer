@@ -22,7 +22,7 @@ public class TpacceptCommand extends AbstractCommand {
 
     @Inject
     public TpacceptCommand(MainModule mainModule) {
-        super("tpaccept", "lifeserver.tpaccept", false);
+        super("tpaccept", "lifeserver.tpaccept", true);
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);

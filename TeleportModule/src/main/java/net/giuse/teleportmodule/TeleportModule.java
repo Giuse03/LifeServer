@@ -2,6 +2,7 @@ package net.giuse.teleportmodule;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.giuse.engine.Worker;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.services.Services;

@@ -1,6 +1,7 @@
 package net.giuse.teleportmodule.commands.warp;
 
 import io.papermc.lib.PaperLib;
+import net.giuse.engine.Worker;
 import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
@@ -18,13 +19,14 @@ public class WarpCommand extends AbstractCommand {
     private final WarpLoaderService warpLoaderService;
     private final MessageBuilder messageBuilder;
     private final MainModule mainModule;
-
     private final TeleportModule teleportModule;
 
+    private final Worker worker;
     @Inject
-    public WarpCommand(MainModule mainModule) {
-        super("warp", "lifeserver.warp.list", false);
+    public WarpCommand(MainModule mainModule,Worker worker) {
+        super("warp", "lifeserver.warp.list", true);
         this.mainModule = mainModule;
+        this.worker = worker;
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
@@ -46,7 +48,7 @@ public class WarpCommand extends AbstractCommand {
             //Check if gui is active
             if (mainModule.getConfig().getBoolean("use-warp-gui")) {
                 WarpGui warpGui = mainModule.getInjector().getSingleton(WarpGui.class);
-                warpGui.openInv(p);
+                worker.executeProcess(() -> warpGui.openInv(p),false);
                 return;
             }
 

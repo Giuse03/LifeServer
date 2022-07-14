@@ -22,7 +22,7 @@ public class KitDeleteCommand extends AbstractCommand {
 
     @Inject
     public KitDeleteCommand(MainModule mainModule) {
-        super("kitdelete", "lifeserver.kitcreate", false);
+        super("kitdelete", "lifeserver.kitcreate", true);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();
     }

@@ -1,5 +1,6 @@
 package net.giuse.kitmodule.commands;
 
+import net.giuse.engine.Worker;
 import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.ezmessage.TextReplacer;
 import net.giuse.kitmodule.KitModule;
@@ -23,10 +24,11 @@ public class KitGiveCommand extends AbstractCommand {
     private final MainModule mainModule;
     private final MessageBuilder messageBuilder;
     private final KitModule kitModule;
-
+    private final Worker worker;
     @Inject
-    public KitGiveCommand(MainModule mainModule) {
-        super("kit", "lifeserver.kitcreate", false);
+    public KitGiveCommand(MainModule mainModule, Worker worker) {
+        super("kit", "lifeserver.kitcreate", true);
+        this.worker = worker;
         this.mainModule = mainModule;
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();
@@ -54,7 +56,7 @@ public class KitGiveCommand extends AbstractCommand {
             //check if show gui or list
             if (mainModule.getConfig().getBoolean("use-kit-gui")) {
                 KitGui guiManager = mainModule.getInjector().getSingleton(KitGui.class);
-                guiManager.openInv(p);
+                worker.executeProcess(() -> guiManager.openInv(p), false);
                 return;
             }
 

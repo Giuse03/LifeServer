@@ -13,7 +13,6 @@ import javax.inject.Inject;
  * AbstractCommand for create Concrete Commands
  */
 
-@Getter
 public abstract class AbstractCommand extends Command {
     private final String permission;
     private final boolean async;

@@ -17,7 +17,7 @@ public class WarpListCommand extends AbstractCommand {
 
     @Inject
     public WarpListCommand(MainModule mainModule) {
-        super("warplist", "lifeserver.warp.list", false);
+        super("warplist", "lifeserver.warp.list", true);
         messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
     }

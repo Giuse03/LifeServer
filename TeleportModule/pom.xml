@@ -22,7 +22,7 @@
             <groupId>net.giuse</groupId>
             <artifactId>MainModule</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
