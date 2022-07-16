@@ -14,12 +14,10 @@ import javax.inject.Inject;
 
 public class MessageLoaderKit implements Loadable {
     private final KitModule kitModule;
-    private final MainModule mainModule;
     private final MessageLoader messageLoader;
 
     @Inject
     public MessageLoaderKit(MainModule mainModule) {
-        this.mainModule = mainModule;
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageLoader = mainModule.getMessageLoader();
     }

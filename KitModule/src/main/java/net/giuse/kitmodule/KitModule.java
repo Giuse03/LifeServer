@@ -13,7 +13,7 @@ import net.giuse.kitmodule.databases.kit.queryplayerkit.LoadPlayerKit;
 import net.giuse.kitmodule.databases.kit.queryplayerkit.SavePlayerKit;
 import net.giuse.kitmodule.files.ConfigKits;
 import net.giuse.kitmodule.messages.MessageLoaderKit;
-import net.giuse.kitmodule.messages.serializer.PlayerKitTimeSerializer;
+import net.giuse.kitmodule.messages.serializer.PlayerKitCooldownSerializer;
 import net.giuse.kitmodule.messages.serializer.serializedobject.PlayerKitCooldownSerialized;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
@@ -29,15 +29,15 @@ import java.util.UUID;
 public class KitModule extends Services {
 
     @Getter
-    private final ConfigKits fileKits = new ConfigKits();
+    private ConfigKits fileKits;
     @Getter
-    private Object2ObjectMap<UUID, PlayerKitCooldown> cachePlayerKit;
+    private final Object2ObjectMap<UUID, PlayerKitCooldown> cachePlayerKit = new Object2ObjectArrayMap<>();
     @Getter
-    private Object2ObjectMap<String, KitBuilder> kitElements;
+    private final Object2ObjectMap<String, KitBuilder> kitElements = new Object2ObjectArrayMap<>();
     @Inject
     private MainModule mainModule;
     @Getter
-    private Serializer<PlayerKitCooldownSerialized> playerKitTimeSerializer;
+    private final Serializer<PlayerKitCooldownSerialized> playerCooldownSerializer = new PlayerKitCooldownSerializer();
 
 
     /**
@@ -48,17 +48,13 @@ public class KitModule extends Services {
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
 
-        //Initialize Serializer and Databases
-        playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
 
         //Initialize Files
-        ReflectionsFiles.loadFiles(fileKits);
+        ReflectionsFiles.loadFiles(fileKits = new ConfigKits());
         mainModule.getInjector().getSingleton(MessageLoaderKit.class).load();
 
         //Load Kit
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading SQL...");
-        kitElements = new Object2ObjectArrayMap<>();
-        cachePlayerKit = new Object2ObjectArrayMap<>();
         mainModule.getInjector().getSingleton(LoadQueryKit.class).query();
 
         //Load PlayerTimeKit

@@ -1,37 +1,28 @@
 package net.giuse.mainmodule.files.abstractfiles;
 
 import lombok.Setter;
-import org.bukkit.configuration.InvalidConfigurationException;
+import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Utility for Configs
  */
+@Setter
 public class AbstractConfig {
 
-    @Setter
     private FileConfiguration yamlConfiguration;
-    @Setter
     private File file;
 
+    @SneakyThrows
     public void saveConfig() {
-        try {
-            yamlConfiguration.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        yamlConfiguration.save(file);
     }
 
+    @SneakyThrows
     public void reload() {
-        try {
-            yamlConfiguration.load(file);
-        } catch (IOException | InvalidConfigurationException e) {
-
-            e.printStackTrace();
-        }
+        yamlConfiguration.load(file);
     }
 
 

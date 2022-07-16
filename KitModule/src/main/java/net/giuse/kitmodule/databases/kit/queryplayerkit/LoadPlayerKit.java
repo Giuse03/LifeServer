@@ -30,7 +30,7 @@ public class LoadPlayerKit implements Query {
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
                     String playerCooldownSerialized = rs.getString(1) + ";" + rs.getString(2);
-                    PlayerKitCooldownSerialized PlayerCooldownDecoded = kitModule.getPlayerKitTimeSerializer().decoder(playerCooldownSerialized);
+                    PlayerKitCooldownSerialized PlayerCooldownDecoded = kitModule.getPlayerCooldownSerializer().decoder(playerCooldownSerialized);
                     PlayerCooldownDecoded.getPlayerKitCooldown().runTaskTimerAsynchronously(mainModule, 20L, 20L);
                     kitModule.getCachePlayerKit().put(PlayerCooldownDecoded.getUuidPlayer(), PlayerCooldownDecoded.getPlayerKitCooldown());
                 }

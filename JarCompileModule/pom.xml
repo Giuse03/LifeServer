@@ -6,7 +6,7 @@
 
     <artifactId>LifeServer</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>JarCompileModule</name>
 

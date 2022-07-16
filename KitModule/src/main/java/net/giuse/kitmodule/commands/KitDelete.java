@@ -38,19 +38,13 @@ public class KitDelete extends AbstractCommand {
         Player player = (Player) commandSender;
         messageBuilder.setCommandSender(player);
         //Check if the name of kit is present
-        if (args.length == 0) {
-            messageBuilder.setIDMessage("kit-insert-name-kit").sendMessage();
-            return;
-        }
+        if (!hasEnoughArgs(args)) return;
+        String kitName = args[0].toLowerCase();
 
         //Check if kit exists
-        if (kitModule.getKit(args[0].toLowerCase()) == null) {
-            messageBuilder.setIDMessage("kit-doesnt-exists").sendMessage();
-            return;
-        }
+        if (!checkIfKitExists(kitName)) return;
 
         //Delete kit
-        String kitName = args[0].toLowerCase();
         deleteKit(kitName);
     }
 
@@ -60,5 +54,21 @@ public class KitDelete extends AbstractCommand {
             kitModule.getKitElements().remove(kitName);
             messageBuilder.setIDMessage("kit-removed").sendMessage(new TextReplacer().match("%kit").replaceWith(kitName));
         });
+    }
+
+    private boolean checkIfKitExists(String kitname) {
+        if (kitModule.getKit(kitname) == null) {
+            messageBuilder.setIDMessage("kit-doesnt-exists").sendMessage();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean hasEnoughArgs(String[] args) {
+        if (args.length == 0) {
+            messageBuilder.setIDMessage("kit-insert-name-kit").sendMessage();
+            return false;
+        }
+        return true;
     }
 }

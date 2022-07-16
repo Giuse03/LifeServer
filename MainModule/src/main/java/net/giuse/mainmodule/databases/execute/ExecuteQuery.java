@@ -27,7 +27,6 @@ public class ExecuteQuery {
     public void executeDistribuited(Callback callback, String query, boolean async) {
         try (PreparedStatement preparedStatement = mainModule.getConnectorSQLite().getConnection().prepareStatement(query)) {
             worker.executeProcess(() -> new Workload() {
-                @SneakyThrows
                 @Override
                 public void compute() {
                     callback.setQuery(preparedStatement);

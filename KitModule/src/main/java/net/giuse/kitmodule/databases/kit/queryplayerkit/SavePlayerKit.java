@@ -32,7 +32,7 @@ public class SavePlayerKit implements Query {
         executeQuery.execute("CREATE TABLE IF NOT EXISTS PlayerKit(PlayerUUID TEXT,KitCooldown TEXT);");
 
         executeQuery.execute(preparedStatement -> kitModule.getCachePlayerKit().forEach(((uuid, playerTimerSystem) -> {
-            String[] playerCooldownEncoded = kitModule.getPlayerKitTimeSerializer().encode(new PlayerKitCooldownSerialized(uuid, playerTimerSystem)).split(";");
+            String[] playerCooldownEncoded = kitModule.getPlayerCooldownSerializer().encode(new PlayerKitCooldownSerialized(uuid, playerTimerSystem)).split(";");
             boolean notEnoughArgument = playerCooldownEncoded.length == 1;
 
             if (notEnoughArgument) return;

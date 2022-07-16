@@ -15,13 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * PlayerKitSerializer for save in database
  */
 
-public class PlayerKitTimeSerializer implements Serializer<PlayerKitCooldownSerialized> {
-    private final KitModule kitModule;
-
-    @Inject
-    public PlayerKitTimeSerializer(MainModule mainModule) {
-        this.kitModule = (KitModule) mainModule.getService(KitModule.class);
-    }
+public class PlayerKitCooldownSerializer implements Serializer<PlayerKitCooldownSerialized> {
 
     /**
      * Convert String to PlayerTimerSystem
