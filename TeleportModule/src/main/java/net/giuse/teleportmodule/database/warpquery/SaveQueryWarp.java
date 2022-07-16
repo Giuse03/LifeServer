@@ -24,7 +24,7 @@ public class SaveQueryWarp implements Query {
 
     @Override
     public void query() {
-        if(warpModule.getWarps().isEmpty()) return;
+        if (warpModule.getWarps().isEmpty()) return;
 
         executeQuery.execute("DROP TABLE Warp;");
 

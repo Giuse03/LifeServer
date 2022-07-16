@@ -12,7 +12,7 @@ import java.io.File;
 /**
  * FileManager of KitModule
  */
-public class FileManager extends AbstractConfig {
+public class ConfigKits extends AbstractConfig {
     //Message File Config
     @FileAnnotation(name = "messages_kit.yml", path = "plugins/LifeServer/messages/messages_kit.yml")
     private File messagesFile;

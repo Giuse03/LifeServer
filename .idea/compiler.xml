@@ -13,7 +13,6 @@
         <module name="KitModule" />
         <module name="MainModule" />
         <module name="SecretMessageModule" />
-        <module name="LifeServer" />
         <module name="JarCompileModule" />
       </profile>
     </annotationProcessing>

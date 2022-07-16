@@ -27,7 +27,7 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (homeLoaderService.getHome(e.getPlayer().getUniqueId()) == null) {
-            homeLoaderService.getCacheHome().put(e.getPlayer().getUniqueId(),new Object2ObjectArrayMap<>());
+            homeLoaderService.getCacheHome().put(e.getPlayer().getUniqueId(), new Object2ObjectArrayMap<>());
         }
     }
 

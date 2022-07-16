@@ -1,7 +1,7 @@
 package net.giuse.kitmodule.databases.kit.queryplayerkit;
 
 import net.giuse.kitmodule.KitModule;
-import net.giuse.kitmodule.serializer.serializedobject.PlayerKitTimeSerialized;
+import net.giuse.kitmodule.messages.serializer.serializedobject.PlayerKitCooldownSerialized;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.databases.execute.ExecuteQuery;
 import net.giuse.mainmodule.databases.execute.Query;
@@ -10,14 +10,14 @@ import org.bukkit.Bukkit;
 import javax.inject.Inject;
 import java.sql.SQLException;
 
-public class SaveQueryPlayerKit implements Query {
+public class SavePlayerKit implements Query {
 
     private final ExecuteQuery executeQuery;
 
     private final KitModule kitModule;
 
     @Inject
-    public SaveQueryPlayerKit(MainModule mainModule) {
+    public SavePlayerKit(MainModule mainModule) {
         executeQuery = mainModule.getInjector().getSingleton(ExecuteQuery.class);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
     }
@@ -25,18 +25,20 @@ public class SaveQueryPlayerKit implements Query {
 
     @Override
     public void query() {
-        if(kitModule.getCachePlayerKit().isEmpty()) return;
+        if (kitModule.getCachePlayerKit().isEmpty()) return;
 
         executeQuery.execute("DROP TABLE PlayerKit;");
 
         executeQuery.execute("CREATE TABLE IF NOT EXISTS PlayerKit(PlayerUUID TEXT,KitCooldown TEXT);");
 
         executeQuery.execute(preparedStatement -> kitModule.getCachePlayerKit().forEach(((uuid, playerTimerSystem) -> {
-            String[] args = kitModule.getPlayerKitTimeSerializer().encode(new PlayerKitTimeSerialized(uuid, playerTimerSystem)).split(";");
-            if(args.length == 1) return;
+            String[] playerCooldownEncoded = kitModule.getPlayerKitTimeSerializer().encode(new PlayerKitCooldownSerialized(uuid, playerTimerSystem)).split(";");
+            boolean notEnoughArgument = playerCooldownEncoded.length == 1;
+
+            if (notEnoughArgument) return;
             try {
-                preparedStatement.setString(1, args[0]);
-                preparedStatement.setString(2, args[1]);
+                preparedStatement.setString(1, playerCooldownEncoded[0]);
+                preparedStatement.setString(2, playerCooldownEncoded[1]);
                 preparedStatement.execute();
             } catch (SQLException e) {
                 Bukkit.getLogger().info("Empty Database");

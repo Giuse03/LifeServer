@@ -6,7 +6,7 @@
 
     <artifactId>LifeServer</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>JarCompileModule</name>
 
@@ -111,7 +111,6 @@
                                     <pattern>net.kyori</pattern>
                                     <shadedPattern>net.lib.kyori</shadedPattern>
                                 </relocation>
-
 
 
                                 <relocation>

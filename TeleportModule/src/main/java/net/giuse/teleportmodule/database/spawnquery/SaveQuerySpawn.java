@@ -24,7 +24,7 @@ public class SaveQuerySpawn implements Query {
 
     @Override
     public void query() {
-        if(spawnModule.getSpawnBuilderSerializer() == null) return;
+        if (spawnModule.getSpawnBuilderSerializer() == null) return;
 
 
         executeQuery.execute("DROP TABLE Spawn;");

@@ -47,9 +47,9 @@ public class TpCommand extends AbstractCommand {
                 messageBuilder.setCommandSender(sender).setIDMessage("select-number").sendMessage();
                 return;
             }
-        messageBuilder.setCommandSender(sender).setIDMessage("teleport-player").sendMessage(new TextReplacer().match("%playername%").replaceWith(sender.getName()));
-        PaperLib.teleportAsync(sender, new Location(sender.getWorld(), Double.parseDouble(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2])));
-        return;
+            messageBuilder.setCommandSender(sender).setIDMessage("teleport-player").sendMessage(new TextReplacer().match("%playername%").replaceWith(sender.getName()));
+            PaperLib.teleportAsync(sender, new Location(sender.getWorld(), Double.parseDouble(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2])));
+            return;
         }
 
         //Teleport to the target

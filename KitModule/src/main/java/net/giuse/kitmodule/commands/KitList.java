@@ -17,12 +17,12 @@ import javax.inject.Inject;
  */
 
 
-public class KitListCommand extends AbstractCommand {
+public class KitList extends AbstractCommand {
     private final MessageBuilder messageBuilder;
     private final KitModule kitModule;
 
     @Inject
-    public KitListCommand(MainModule mainModule) {
+    public KitList(MainModule mainModule) {
         super("kitlist", "lifeserver.kitcreate", true);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();

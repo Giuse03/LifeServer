@@ -28,7 +28,7 @@ public class ItemsGuiInit implements ItemInitializer {
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
         KitModule kitModule = (KitModule) mainModule.getService(KitModule.class);
-        ConfigurationSection configurationSection = kitModule.getConfigManager().getKitYaml().getConfigurationSection("inventory.items");
+        ConfigurationSection configurationSection = kitModule.getFileKits().getKitYaml().getConfigurationSection("inventory.items");
         for (String string : configurationSection.getKeys(false)) {
             ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
             if (!string.equalsIgnoreCase("previouspage") && !string.equalsIgnoreCase("nextpage")) {

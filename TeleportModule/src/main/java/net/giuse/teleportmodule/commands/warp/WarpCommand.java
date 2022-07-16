@@ -22,8 +22,9 @@ public class WarpCommand extends AbstractCommand {
     private final TeleportModule teleportModule;
 
     private final Worker worker;
+
     @Inject
-    public WarpCommand(MainModule mainModule,Worker worker) {
+    public WarpCommand(MainModule mainModule, Worker worker) {
         super("warp", "lifeserver.warp.list", true);
         this.mainModule = mainModule;
         this.worker = worker;
@@ -48,7 +49,7 @@ public class WarpCommand extends AbstractCommand {
             //Check if gui is active
             if (mainModule.getConfig().getBoolean("use-warp-gui")) {
                 WarpGui warpGui = mainModule.getInjector().getSingleton(WarpGui.class);
-                worker.executeProcess(() -> warpGui.openInv(p),false);
+                worker.executeProcess(() -> warpGui.openInv(p), false);
                 return;
             }
 

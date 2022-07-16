@@ -1,6 +1,5 @@
 package net.giuse.mainmodule.commands;
 
-import lombok.Getter;
 import net.giuse.engine.Worker;
 import net.giuse.mainmodule.MainModule;
 import org.bukkit.command.Command;

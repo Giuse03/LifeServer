@@ -16,7 +16,6 @@ import net.giuse.mainmodule.gui.GuiInitializer;
 import net.giuse.mainmodule.message.MessageLoaderMain;
 import net.giuse.mainmodule.services.Services;
 import net.giuse.mainmodule.utils.Utils;
-import net.lib.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;

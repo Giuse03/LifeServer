@@ -24,7 +24,7 @@ public class SaveQueryEcon implements Query {
 
     @Override
     public void query() {
-        if(economyService.getEconPlayersCache().isEmpty()) return;
+        if (economyService.getEconPlayersCache().isEmpty()) return;
 
         executeQuery.execute("DROP TABLE Economy;");
 

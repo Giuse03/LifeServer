@@ -1,8 +1,9 @@
 package net.giuse.teleportmodule;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.giuse.engine.Worker;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.services.Services;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 public class TeleportModule extends Services {
 
     @Getter
-    private final HashMap<Player, Location> backLocations = new HashMap<>();
+    private final Object2ObjectMap<Player, Location> backLocations = new Object2ObjectArrayMap<>();
     @Inject
     private MainModule mainModule;
     @Getter

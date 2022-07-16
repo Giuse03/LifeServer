@@ -16,12 +16,12 @@ import javax.inject.Inject;
  */
 
 
-public class KitDeleteCommand extends AbstractCommand {
+public class KitDelete extends AbstractCommand {
     private final MessageBuilder messageBuilder;
     private final KitModule kitModule;
 
     @Inject
-    public KitDeleteCommand(MainModule mainModule) {
+    public KitDelete(MainModule mainModule) {
         super("kitdelete", "lifeserver.kitcreate", true);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();
@@ -35,26 +35,30 @@ public class KitDeleteCommand extends AbstractCommand {
             return;
         }
 
-        Player p = (Player) commandSender;
+        Player player = (Player) commandSender;
+        messageBuilder.setCommandSender(player);
         //Check if the name of kit is present
         if (args.length == 0) {
-            messageBuilder.setCommandSender(p).setIDMessage("kit-insert-name-kit").sendMessage();
+            messageBuilder.setIDMessage("kit-insert-name-kit").sendMessage();
             return;
         }
 
         //Check if kit exists
         if (kitModule.getKit(args[0].toLowerCase()) == null) {
-            messageBuilder.setCommandSender(p).setIDMessage("kit-doesnt-exists").sendMessage();
+            messageBuilder.setIDMessage("kit-doesnt-exists").sendMessage();
             return;
         }
 
         //Delete kit
+        String kitName = args[0].toLowerCase();
+        deleteKit(kitName);
+    }
+
+    private void deleteKit(String kitName) {
         kitModule.getCachePlayerKit().forEach((uuid, playerTimerSystem) -> {
-            playerTimerSystem.removeKit(args[0].toLowerCase());
-            kitModule.getKitElements().remove(args[0].toLowerCase());
-            messageBuilder.setCommandSender(p).setIDMessage("kit-removed").sendMessage(new TextReplacer().match("%kit").replaceWith(args[0]));
+            playerTimerSystem.removeKit(kitName);
+            kitModule.getKitElements().remove(kitName);
+            messageBuilder.setIDMessage("kit-removed").sendMessage(new TextReplacer().match("%kit").replaceWith(kitName));
         });
-
-
     }
 }

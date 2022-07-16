@@ -33,9 +33,9 @@ public class KitGui implements GuiInitializer {
         //Create Inventory Builder
         InventoryBuilder inventoryBuilder = new InventoryBuilder(
                 mainModule,
-                kitModule.getConfigManager().getKitYaml().getInt("inventory.rows"),
-                kitModule.getConfigManager().getKitYaml().getString("inventory.title"),
-                kitModule.getConfigManager().getKitYaml().getInt("inventory.page"),
+                kitModule.getFileKits().getKitYaml().getInt("inventory.rows"),
+                kitModule.getFileKits().getKitYaml().getString("inventory.title"),
+                kitModule.getFileKits().getKitYaml().getInt("inventory.page"),
                 worker).createInvs();
 
         //Initialize items

@@ -1,7 +1,7 @@
 package net.giuse.kitmodule.databases.kit.queryplayerkit;
 
 import net.giuse.kitmodule.KitModule;
-import net.giuse.kitmodule.serializer.serializedobject.PlayerKitTimeSerialized;
+import net.giuse.kitmodule.messages.serializer.serializedobject.PlayerKitCooldownSerialized;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.databases.execute.ExecuteQuery;
 import net.giuse.mainmodule.databases.execute.Query;
@@ -11,14 +11,14 @@ import javax.inject.Inject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoadQueryPlayerKit implements Query {
+public class LoadPlayerKit implements Query {
 
     private final ExecuteQuery executeQuery;
     private final MainModule mainModule;
     private final KitModule kitModule;
 
     @Inject
-    public LoadQueryPlayerKit(MainModule mainModule) {
+    public LoadPlayerKit(MainModule mainModule) {
         this.mainModule = mainModule;
         executeQuery = mainModule.getInjector().getSingleton(ExecuteQuery.class);
         kitModule = (KitModule) mainModule.getService(KitModule.class);
@@ -29,9 +29,10 @@ public class LoadQueryPlayerKit implements Query {
         executeQuery.execute(preparedStatement -> {
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
-                    PlayerKitTimeSerialized playerTimerSystem = kitModule.getPlayerKitTimeSerializer().decoder(rs.getString(1) + ";" + rs.getString(2));
-                    playerTimerSystem.getPlayerTimerSystem().runTaskTimerAsynchronously(mainModule, 20L, 20L);
-                    kitModule.getCachePlayerKit().put(playerTimerSystem.getUuid(), playerTimerSystem.getPlayerTimerSystem());
+                    String playerCooldownSerialized = rs.getString(1) + ";" + rs.getString(2);
+                    PlayerKitCooldownSerialized PlayerCooldownDecoded = kitModule.getPlayerKitTimeSerializer().decoder(playerCooldownSerialized);
+                    PlayerCooldownDecoded.getPlayerKitCooldown().runTaskTimerAsynchronously(mainModule, 20L, 20L);
+                    kitModule.getCachePlayerKit().put(PlayerCooldownDecoded.getUuidPlayer(), PlayerCooldownDecoded.getPlayerKitCooldown());
                 }
             } catch (SQLException e) {
                 Bukkit.getLogger().info("Empty Database");

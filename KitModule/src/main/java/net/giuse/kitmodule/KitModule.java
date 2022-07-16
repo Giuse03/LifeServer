@@ -6,17 +6,15 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.kitmodule.builder.KitBuilder;
-import net.giuse.kitmodule.cooldownsystem.PlayerTimerSystem;
+import net.giuse.kitmodule.cooldownsystem.PlayerKitCooldown;
 import net.giuse.kitmodule.databases.kit.querykit.LoadQueryKit;
-import net.giuse.kitmodule.databases.kit.querykit.SaveQueryKit;
-import net.giuse.kitmodule.databases.kit.queryplayerkit.LoadQueryPlayerKit;
-import net.giuse.kitmodule.databases.kit.queryplayerkit.SaveQueryPlayerKit;
-import net.giuse.kitmodule.files.FileManager;
+import net.giuse.kitmodule.databases.kit.querykit.SaveKit;
+import net.giuse.kitmodule.databases.kit.queryplayerkit.LoadPlayerKit;
+import net.giuse.kitmodule.databases.kit.queryplayerkit.SavePlayerKit;
+import net.giuse.kitmodule.files.ConfigKits;
 import net.giuse.kitmodule.messages.MessageLoaderKit;
-import net.giuse.kitmodule.serializer.KitSerializer;
-import net.giuse.kitmodule.serializer.PlayerKitTimeSerializer;
-import net.giuse.kitmodule.serializer.serializedobject.KitSerialized;
-import net.giuse.kitmodule.serializer.serializedobject.PlayerKitTimeSerialized;
+import net.giuse.kitmodule.messages.serializer.PlayerKitTimeSerializer;
+import net.giuse.kitmodule.messages.serializer.serializedobject.PlayerKitCooldownSerialized;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.serializer.Serializer;
@@ -29,18 +27,17 @@ import java.util.UUID;
  * Module Kit
  */
 public class KitModule extends Services {
+
     @Getter
-    private final FileManager configManager = new FileManager();
+    private final ConfigKits fileKits = new ConfigKits();
     @Getter
-    private final Serializer<KitSerialized> kitBuilderSerializer = new KitSerializer();
-    @Getter
-    private Object2ObjectMap<UUID, PlayerTimerSystem> cachePlayerKit;
+    private Object2ObjectMap<UUID, PlayerKitCooldown> cachePlayerKit;
     @Getter
     private Object2ObjectMap<String, KitBuilder> kitElements;
     @Inject
     private MainModule mainModule;
     @Getter
-    private Serializer<PlayerKitTimeSerialized> playerKitTimeSerializer;
+    private Serializer<PlayerKitCooldownSerialized> playerKitTimeSerializer;
 
 
     /**
@@ -55,7 +52,7 @@ public class KitModule extends Services {
         playerKitTimeSerializer = mainModule.getInjector().getSingleton(PlayerKitTimeSerializer.class);
 
         //Initialize Files
-        ReflectionsFiles.loadFiles(configManager);
+        ReflectionsFiles.loadFiles(fileKits);
         mainModule.getInjector().getSingleton(MessageLoaderKit.class).load();
 
         //Load Kit
@@ -65,7 +62,7 @@ public class KitModule extends Services {
         mainModule.getInjector().getSingleton(LoadQueryKit.class).query();
 
         //Load PlayerTimeKit
-        mainModule.getInjector().getSingleton(LoadQueryPlayerKit.class).query();
+        mainModule.getInjector().getSingleton(LoadPlayerKit.class).query();
     }
 
     /**
@@ -76,8 +73,8 @@ public class KitModule extends Services {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Unloading Kits...");
 
         //Saves Kits
-        mainModule.getInjector().getSingleton(SaveQueryKit.class).query();
-        mainModule.getInjector().getSingleton(SaveQueryPlayerKit.class).query();
+        mainModule.getInjector().getSingleton(SaveKit.class).query();
+        mainModule.getInjector().getSingleton(SavePlayerKit.class).query();
     }
 
     /**
@@ -92,7 +89,7 @@ public class KitModule extends Services {
     /**
      * Search PlayerTimerSystem from Set
      */
-    public PlayerTimerSystem getPlayerTime(UUID playerUUID) {
+    public PlayerKitCooldown getPlayerCooldown(UUID playerUUID) {
         return cachePlayerKit.get(playerUUID);
     }
 

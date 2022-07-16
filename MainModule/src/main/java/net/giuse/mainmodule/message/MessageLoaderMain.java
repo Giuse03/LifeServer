@@ -9,7 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.inject.Inject;
-import java.util.concurrent.CompletableFuture;
 
 public class MessageLoaderMain implements Loadable {
     private final MainModule mainModule;

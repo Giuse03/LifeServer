@@ -17,17 +17,16 @@ import org.bukkit.inventory.ItemStack;
 public class KitBuilder {
 
     private final int coolDown;
-    private String base64;
-
+    private String elementsKitBase64;
     private ItemStack[] itemStackList;
 
-    public KitBuilder setBase(String base64) {
-        this.base64 = base64;
+    public KitBuilder setBase(String elementsKitBase64) {
+        this.elementsKitBase64 = elementsKitBase64;
         return this;
     }
 
     public void build() {
-        itemStackList = Utils.itemStackArrayFromBase64(base64);
+        itemStackList = Utils.itemStackArrayFromBase64(elementsKitBase64);
     }
 
     @SneakyThrows

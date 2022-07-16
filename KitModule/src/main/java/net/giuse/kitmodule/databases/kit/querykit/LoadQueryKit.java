@@ -1,7 +1,7 @@
 package net.giuse.kitmodule.databases.kit.querykit;
 
 import net.giuse.kitmodule.KitModule;
-import net.giuse.kitmodule.serializer.serializedobject.KitSerialized;
+import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.databases.execute.ExecuteQuery;
 import net.giuse.mainmodule.databases.execute.Query;
@@ -28,12 +28,15 @@ public class LoadQueryKit implements Query {
         executeQuery.execute(preparedStatement -> {
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
-                    KitSerialized kitSerialized = kitModule.getKitBuilderSerializer().decoder(
-                            rs.getString(1) + ":" +
-                                    rs.getInt(3) + ":" +
-                                    rs.getString(2));
-                    kitSerialized.getKitBuilder().build();
-                    kitModule.getKitElements().put(kitSerialized.getName(), kitSerialized.getKitBuilder());
+                    String kitName = rs.getString(1);
+                    int kitCooldown = rs.getInt(3);
+                    String elementsKitBase64 = rs.getString(2);
+
+                    KitBuilder kitBuilderDecoded = new KitBuilder(kitCooldown);
+                    kitBuilderDecoded.setBase(elementsKitBase64);
+                    kitBuilderDecoded.build();
+
+                    kitModule.getKitElements().put(kitName, kitBuilderDecoded);
                 }
             } catch (SQLException e) {
                 Bukkit.getLogger().info("Empty Database");

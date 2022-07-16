@@ -179,7 +179,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7You paid %player% %amount% dollars'
- #13
+  #13
   economy-pay-receive:
     title:
       send-title: true

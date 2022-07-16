@@ -14,7 +14,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7No warp available'
-#2
+  #2
   warp-list:
     title:
       send-title: true
@@ -29,7 +29,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7%list%'
-#3
+  #3
   warp-teleport:
     title:
       send-title: true
@@ -44,7 +44,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7Warping to %name%...'
-#4
+  #4
   warp-insert-name:
     title:
       send-title: true
@@ -59,7 +59,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7Insert the name of this warp'
-#6
+  #6
   warp-created:
     title:
       send-title: true
@@ -74,7 +74,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7You created the warp %name%'
-#7
+  #7
   warp-removed:
     title:
       send-title: true
@@ -89,7 +89,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7You removed the warp %name%'
-#8
+  #8
   warp-already-exists:
     title:
       send-title: true
@@ -104,7 +104,7 @@ messages:
     actionbar:
       send-actionbar: true
       actionbar-message: '&7This warp already exists'
-#9
+  #9
   warp-no-exists:
     title:
       send-title: true

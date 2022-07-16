@@ -75,10 +75,10 @@ public class HomeCommand extends AbstractCommand {
                 }
                 return;
             }
-           if(homeLoaderService.getHome(sender.getUniqueId()).get(args[0].toLowerCase()) == null){
-               messageBuilder.setCommandSender(sender).setIDMessage("no_home_found").sendMessage();
-               return;
-           }
+            if (homeLoaderService.getHome(sender.getUniqueId()).get(args[0].toLowerCase()) == null) {
+                messageBuilder.setCommandSender(sender).setIDMessage("no_home_found").sendMessage();
+                return;
+            }
             teleportModule.getBackLocations().put(sender, sender.getLocation());
             PaperLib.teleportAsync(sender, homeLoaderService.getHome(sender.getUniqueId()).get(args[0].toLowerCase()));
             messageBuilder.setCommandSender(sender).setIDMessage("teleport").sendMessage();

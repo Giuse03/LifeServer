@@ -11,7 +11,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.inject.Inject;
-import java.util.concurrent.CompletableFuture;
 
 public class MessageLoaderSimplyCommand implements Loadable {
     private final SimplyCommandService simplyCommandService;

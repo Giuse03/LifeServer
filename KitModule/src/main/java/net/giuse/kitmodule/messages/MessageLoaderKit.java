@@ -11,7 +11,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.inject.Inject;
-import java.util.concurrent.CompletableFuture;
 
 public class MessageLoaderKit implements Loadable {
     private final KitModule kitModule;
@@ -29,7 +28,7 @@ public class MessageLoaderKit implements Loadable {
     @Override
     public void load() {
 
-        ConfigurationSection generalMessageSection = kitModule.getConfigManager().getMessagesYaml().getConfigurationSection("messages");
+        ConfigurationSection generalMessageSection = kitModule.getFileKits().getMessagesYaml().getConfigurationSection("messages");
         for (String string : generalMessageSection.getKeys(false)) {
             ConfigurationSection messageSection = generalMessageSection.getConfigurationSection(string);
             //Insert Message Chat

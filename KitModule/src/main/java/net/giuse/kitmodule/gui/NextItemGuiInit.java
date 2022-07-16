@@ -27,10 +27,10 @@ public class NextItemGuiInit implements ItemInitializer {
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
         KitModule kitModule = (KitModule) mainModule.getService(KitModule.class);
-        ConfigurationSection configurationSection = kitModule.getConfigManager().getKitYaml().getConfigurationSection("inventory.items");
+        ConfigurationSection configurationSection = kitModule.getFileKits().getKitYaml().getConfigurationSection("inventory.items");
         configurationSection.getKeys(false).forEach(string -> {
             ConfigurationSection itemsConfig = configurationSection.getConfigurationSection(string);
-            if (kitModule.getConfigManager().getKitYaml().getInt("inventory.page") != 1 && string.equalsIgnoreCase("nextpage")) {
+            if (kitModule.getFileKits().getKitYaml().getInt("inventory.page") != 1 && string.equalsIgnoreCase("nextpage")) {
                 for (int i = 1; i < inventoryBuilder.getInventoryHash().values().size() + 1; i++) {
 
                     //Create a ItemBuilderStack

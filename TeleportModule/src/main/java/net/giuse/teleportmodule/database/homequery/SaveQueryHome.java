@@ -24,7 +24,7 @@ public class SaveQueryHome implements Query {
 
     @Override
     public void query() {
-        if(homeModule.getCacheHome().isEmpty()) return;
+        if (homeModule.getCacheHome().isEmpty()) return;
 
 
         executeQuery.execute("DROP TABLE Home;");
@@ -33,7 +33,7 @@ public class SaveQueryHome implements Query {
 
         executeQuery.execute(preparedStatement -> homeModule.getCacheHome().forEach((uuid, hashMap) -> {
             String[] args = homeModule.getHomeBuilderSerializer().encode(new HomeSerialized(uuid, hashMap)).split(":");
-            if(args.length == 1) return;
+            if (args.length == 1) return;
             try {
                 preparedStatement.setString(1, args[0]);
                 preparedStatement.setString(2, args[1]);
