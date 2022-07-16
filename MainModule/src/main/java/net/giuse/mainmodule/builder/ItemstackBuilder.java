@@ -28,11 +28,6 @@ public class ItemstackBuilder {
         this.amount = amount;
     }
 
-    public ItemstackBuilder setLores(String... strings) {
-        this.lores = new ArrayList<>(Arrays.asList(strings));
-        return this;
-    }
-
     public ItemstackBuilder setLores(List<String> strings) {
         this.lores = strings;
         return this;

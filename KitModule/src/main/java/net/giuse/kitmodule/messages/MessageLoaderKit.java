@@ -22,7 +22,6 @@ public class MessageLoaderKit implements Loadable {
         messageLoader = mainModule.getMessageLoader();
     }
 
-
     @Override
     public void load() {
 

@@ -141,6 +141,10 @@ public class MainModule extends JavaPlugin {
                 .forEach(listener -> Bukkit.getPluginManager().registerEvents(injector.getSingleton(listener), this));
     }
 
+    /*
+     * Setup Guis
+     */
+
     private void setupGuis() {
         for (Class<? extends GuiInitializer> guiInitializer : reflections.getSubTypesOf(GuiInitializer.class)) {
             injector.getSingleton(guiInitializer).initInv();

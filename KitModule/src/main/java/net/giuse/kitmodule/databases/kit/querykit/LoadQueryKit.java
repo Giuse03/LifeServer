@@ -35,7 +35,6 @@ public class LoadQueryKit implements Query {
                     KitBuilder kitBuilderDecoded = new KitBuilder(kitCooldown);
                     kitBuilderDecoded.setBase(elementsKitBase64);
                     kitBuilderDecoded.build();
-
                     kitModule.getKitElements().put(kitName, kitBuilderDecoded);
                 }
             } catch (SQLException e) {

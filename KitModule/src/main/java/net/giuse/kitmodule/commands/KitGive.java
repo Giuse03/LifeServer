@@ -5,6 +5,8 @@ import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.ezmessage.TextReplacer;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.builder.KitBuilder;
+import net.giuse.kitmodule.cooldownsystem.PlayerKitCooldown;
+import net.giuse.kitmodule.exceptions.KitNotExists;
 import net.giuse.kitmodule.gui.KitGui;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
@@ -79,27 +81,33 @@ public class KitGive extends AbstractCommand {
             return;
         }
 
-        //Check if kit exists
-        if (kitModule.getKit(kitName.toLowerCase()) == null) {
-            messageBuilder.setIDMessage("kit-doesnt-exists").sendMessage();
-            return;
-        }
-
-
         //Check if player can get kit
-        KitBuilder kitBuilder = kitModule.getKit(kitName);
         int actualCooldown = kitModule.getPlayerCooldown(player.getUniqueId()).getActualCooldown(kitName);
 
-        if (actualCooldown != 0) {
+        if (checkCooldown(actualCooldown)) {
             messageBuilder.setIDMessage("kit-wait").sendMessage(new TextReplacer().match("%time%").replaceWith(Utils.formatTime(actualCooldown)));
             return;
         }
 
-        //Give kit to Player
-        kitModule.getPlayerCooldown(player.getUniqueId()).addKit(kitName.toLowerCase(), kitBuilder.getCoolDown());
-        kitBuilder.giveItems(player);
-        messageBuilder.setIDMessage("kit-receive").sendMessage(new TextReplacer().match("%kit%").replaceWith(kitName));
+        giveKit(player, kitName);
+    }
 
+    private void giveKit(Player player, String kitName) {
+
+        try {
+            //Give kit to Player
+            KitBuilder kitBuilder = kitModule.getKit(kitName);
+            PlayerKitCooldown playerKitCooldown = kitModule.getPlayerCooldown(player.getUniqueId());
+            playerKitCooldown.addKit(kitName.toLowerCase(), kitBuilder.getCoolDown());
+            kitBuilder.giveItems(player);
+            messageBuilder.setIDMessage("kit-receive").sendMessage(new TextReplacer().match("%kit%").replaceWith(kitName));
+        } catch (KitNotExists e) {
+            messageBuilder.setIDMessage(e.getMessage()).sendMessage();
+        }
+    }
+
+    private boolean checkCooldown(int cooldown) {
+        return cooldown != 0;
     }
 }
 

@@ -11,6 +11,7 @@ import net.giuse.kitmodule.databases.kit.querykit.LoadQueryKit;
 import net.giuse.kitmodule.databases.kit.querykit.SaveKit;
 import net.giuse.kitmodule.databases.kit.queryplayerkit.LoadPlayerKit;
 import net.giuse.kitmodule.databases.kit.queryplayerkit.SavePlayerKit;
+import net.giuse.kitmodule.exceptions.KitNotExists;
 import net.giuse.kitmodule.files.ConfigKits;
 import net.giuse.kitmodule.messages.MessageLoaderKit;
 import net.giuse.kitmodule.messages.serializer.PlayerKitCooldownSerializer;
@@ -19,6 +20,7 @@ import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.files.reflections.ReflectionsFiles;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.mainmodule.services.Services;
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 import java.util.UUID;
@@ -34,11 +36,10 @@ public class KitModule extends Services {
     private final Object2ObjectMap<UUID, PlayerKitCooldown> cachePlayerKit = new Object2ObjectArrayMap<>();
     @Getter
     private final Object2ObjectMap<String, KitBuilder> kitElements = new Object2ObjectArrayMap<>();
-    @Inject
-    private MainModule mainModule;
     @Getter
     private final Serializer<PlayerKitCooldownSerialized> playerCooldownSerializer = new PlayerKitCooldownSerializer();
-
+    @Inject
+    private MainModule mainModule;
 
     /**
      * Load Module Kit
@@ -47,18 +48,10 @@ public class KitModule extends Services {
     @Override
     public void load() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
-
-
-        //Initialize Files
         ReflectionsFiles.loadFiles(fileKits = new ConfigKits());
         mainModule.getInjector().getSingleton(MessageLoaderKit.class).load();
+        loadCache();
 
-        //Load Kit
-        mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading SQL...");
-        mainModule.getInjector().getSingleton(LoadQueryKit.class).query();
-
-        //Load PlayerTimeKit
-        mainModule.getInjector().getSingleton(LoadPlayerKit.class).query();
     }
 
     /**
@@ -67,10 +60,7 @@ public class KitModule extends Services {
     @Override
     public void unload() {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Unloading Kits...");
-
-        //Saves Kits
-        mainModule.getInjector().getSingleton(SaveKit.class).query();
-        mainModule.getInjector().getSingleton(SavePlayerKit.class).query();
+        saveCache();
     }
 
     /**
@@ -92,8 +82,22 @@ public class KitModule extends Services {
     /**
      * Search Kit  from Name in a Set
      */
-    public KitBuilder getKit(String searchKitBuilder) {
-        return kitElements.get(searchKitBuilder.toLowerCase());
+    public KitBuilder getKit(@NotNull String searchKitBuilder) {
+        if(kitElements.containsKey(searchKitBuilder)) {
+            return kitElements.get(searchKitBuilder.toLowerCase());
+        }
+        throw new KitNotExists();
+    }
+
+
+    private void saveCache(){
+        mainModule.getInjector().getSingleton(SaveKit.class).query();
+        mainModule.getInjector().getSingleton(SavePlayerKit.class).query();
+    }
+
+    private void loadCache(){
+        mainModule.getInjector().getSingleton(LoadQueryKit.class).query();
+        mainModule.getInjector().getSingleton(LoadPlayerKit.class).query();
     }
 
 }
