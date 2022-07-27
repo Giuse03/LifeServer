@@ -1,6 +1,6 @@
 package net.giuse.simplycommandmodule.commands.time;
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.command.CommandSender;
@@ -14,7 +14,7 @@ public class SunCommand extends AbstractCommand {
 
     @Inject
     public SunCommand(MainModule mainModule) {
-        super("sun", "lifeserver.sun", false);
+        super("sun", "lifeserver.sun");
 
 
         messageBuilder = mainModule.getMessageBuilder();

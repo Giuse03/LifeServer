@@ -1,7 +1,7 @@
 package net.giuse.teleportmodule.commands.teleport;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.subservice.TeleportRequestService;
@@ -18,7 +18,7 @@ public class TpDenyCommand extends AbstractCommand {
 
     @Inject
     public TpDenyCommand(MainModule mainModule) {
-        super("tpdeny", "lifeserver.tpdeny", true);
+        super("tpdeny", "lifeserver.tpdeny");
         messageBuilder = mainModule.getMessageBuilder();
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
     }

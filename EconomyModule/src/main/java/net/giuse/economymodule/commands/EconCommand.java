@@ -1,8 +1,8 @@
 package net.giuse.economymodule.commands;
 
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.economymodule.EconomyService;
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.apache.commons.lang.math.NumberUtils;
@@ -19,7 +19,7 @@ public class EconCommand extends AbstractCommand {
 
     @Inject
     public EconCommand(final MainModule mainModule) {
-        super("eco", "lifeserver.eco", true);
+        super("eco", "lifeserver.eco");
         this.economyService = (EconomyService) mainModule.getService(EconomyService.class);
         messageBuilder = mainModule.getMessageBuilder();
     }
@@ -93,8 +93,8 @@ public class EconCommand extends AbstractCommand {
                 messageBuilder.setCommandSender(p).setIDMessage("no-perms").sendMessage();
                 return;
             }
-            this.economyService.getCustomEcoManager().withdrawPlayer(Bukkit.getOfflinePlayer(args[1]), this.economyService.getBalancePlayer(Bukkit.getOfflinePlayer(args[1]).getUniqueId()));
-            this.economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(args[1]), Double.parseDouble(args[2]));
+            economyService.getCustomEcoManager().withdrawPlayer(Bukkit.getOfflinePlayer(args[1]), this.economyService.getBalancePlayer(Bukkit.getOfflinePlayer(args[1]).getUniqueId()));
+            economyService.getCustomEcoManager().depositPlayer(Bukkit.getOfflinePlayer(args[1]), Double.parseDouble(args[2]));
             messageBuilder.setCommandSender(Bukkit.getPlayer(args[1])).setIDMessage("economy-setMoney").sendMessage(
                     new TextReplacer().match("%money%").replaceWith(String.valueOf(this.economyService.getBalancePlayer(Bukkit.getOfflinePlayer(args[1]).getUniqueId()))));
 

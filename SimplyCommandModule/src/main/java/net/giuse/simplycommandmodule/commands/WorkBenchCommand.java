@@ -1,6 +1,6 @@
 package net.giuse.simplycommandmodule.commands;
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.command.CommandSender;
@@ -13,7 +13,7 @@ public class WorkBenchCommand extends AbstractCommand {
 
     @Inject
     public WorkBenchCommand(MainModule mainModule) {
-        super("workbench", "lifeserver.workbench", false);
+        super("workbench", "lifeserver.workbench");
         messageBuilder = mainModule.getMessageBuilder();
     }
 

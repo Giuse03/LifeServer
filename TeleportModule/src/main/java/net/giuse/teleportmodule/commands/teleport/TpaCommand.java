@@ -1,7 +1,7 @@
 package net.giuse.teleportmodule.commands.teleport;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.enums.TpType;
@@ -20,7 +20,7 @@ public class TpaCommand extends AbstractCommand {
 
     @Inject
     public TpaCommand(MainModule mainModule) {
-        super("tpa", "lifeserver.tpa", true);
+        super("tpa", "lifeserver.tpa");
         messageBuilder = mainModule.getMessageBuilder();
         teleportRequestService = (TeleportRequestService) mainModule.getService(TeleportRequestService.class);
     }

@@ -1,7 +1,7 @@
 package net.giuse.secretmessagemodule.commands;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.secretmessagemodule.SecretMessageModule;
@@ -17,7 +17,7 @@ public class MSGToggleCommand extends AbstractCommand {
 
     @Inject
     public MSGToggleCommand(MainModule mainModule) {
-        super("msgtoggle", "lifeserver.msgtoggle", true);
+        super("msgtoggle", "lifeserver.msgtoggle");
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
         messageBuilder = mainModule.getMessageBuilder();
     }

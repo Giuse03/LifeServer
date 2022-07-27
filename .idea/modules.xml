@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CommonAPI/CommonAPI.iml" filepath="$PROJECT_DIR$/CommonAPI/CommonAPI.iml" />
       <module fileurl="file://$PROJECT_DIR$/EconomyModule/EconomyModule.iml" filepath="$PROJECT_DIR$/EconomyModule/EconomyModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/JarCompileModule/JarCompileModule.iml" filepath="$PROJECT_DIR$/JarCompileModule/JarCompileModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/KitModule/KitModule.iml" filepath="$PROJECT_DIR$/KitModule/KitModule.iml" />

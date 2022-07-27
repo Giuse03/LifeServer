@@ -2,12 +2,10 @@ package net.giuse.mainmodule;
 
 import ch.jalu.injector.Injector;
 import ch.jalu.injector.InjectorBuilder;
+import ezmessage.MessageBuilder;
+import ezmessage.MessageLoader;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.giuse.engine.ProcessEngine;
-import net.giuse.engine.Worker;
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.MessageLoader;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.mainmodule.databases.ConnectorSQLite;
 import net.giuse.mainmodule.files.FilesList;
@@ -29,14 +27,12 @@ public class MainModule extends JavaPlugin {
     @Getter
     private final Injector injector = new InjectorBuilder().addDefaultHandlers("net.giuse").create();
     @Getter
-    private ProcessEngine engine;
+    private final ConnectorSQLite connectorSQLite = new ConnectorSQLite();
+    private final Reflections reflections = new Reflections("net.giuse");
     @Getter
     private MessageBuilder messageBuilder;
     @Getter
-    private final ConnectorSQLite connectorSQLite = new ConnectorSQLite();
-    @Getter
     private MessageLoader messageLoader;
-    private final Reflections reflections = new Reflections("net.giuse");
     private HashMap<Services, Integer> servicesByPriority = new HashMap<>();
 
 
@@ -48,9 +44,6 @@ public class MainModule extends JavaPlugin {
         //Get current millis for check startup time
         long millis = System.currentTimeMillis();
         getLogger().info("§aLifeserver starting...");
-
-        //declarations
-        engine = new ProcessEngine(this);
 
         //setup
         setupInjector();
@@ -99,14 +92,13 @@ public class MainModule extends JavaPlugin {
      */
     private void setupInjector() {
         injector.register(MainModule.class, this);
-        injector.register(Worker.class, new Worker(engine));
     }
 
     /*
      * Setup Messages
      */
     private void setupMessage() {
-        messageLoader = new MessageLoader(this, engine);
+        messageLoader = new MessageLoader(this);
         messageBuilder = new MessageBuilder(messageLoader);
         injector.getSingleton(MessageLoaderMain.class).load();
     }

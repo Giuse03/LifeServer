@@ -1,9 +1,9 @@
 package net.giuse.secretmessagemodule.process;
 
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import lombok.Getter;
 import lombok.Setter;
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.secretmessagemodule.SecretChatBuilder;
 import net.giuse.secretmessagemodule.SecretMessageModule;

@@ -1,6 +1,5 @@
 package net.giuse.mainmodule.commands;
 
-import net.giuse.engine.Worker;
 import net.giuse.mainmodule.MainModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,16 +13,12 @@ import javax.inject.Inject;
 
 public abstract class AbstractCommand extends Command {
     private final String permission;
-    private final boolean async;
-    @Inject
-    private Worker worker;
     @Inject
     private MainModule mainModule;
 
-    public AbstractCommand(String name, String permission, boolean async) {
+    public AbstractCommand(String name, String permission) {
         super(name);
         this.permission = permission;
-        this.async = async;
     }
 
     @Override
@@ -33,7 +28,7 @@ public abstract class AbstractCommand extends Command {
             mainModule.getMessageBuilder().setCommandSender(sender).setIDMessage("no-perms").sendMessage();
             return true;
         }
-        worker.executeProcess(() -> execute(sender, args), async);
+        execute(sender, args);
         return true;
     }
 

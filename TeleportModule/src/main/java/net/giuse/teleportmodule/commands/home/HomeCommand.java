@@ -1,8 +1,8 @@
 package net.giuse.teleportmodule.commands.home;
 
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import io.papermc.lib.PaperLib;
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -22,7 +22,7 @@ public class HomeCommand extends AbstractCommand {
 
     @Inject
     public HomeCommand(MainModule mainModule) {
-        super("home", "lifeserver.home", true);
+        super("home", "lifeserver.home");
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);

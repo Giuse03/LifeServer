@@ -1,7 +1,7 @@
 package net.giuse.simplycommandmodule.commands;
 
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.Material;
@@ -18,7 +18,7 @@ public class RepairCommand extends AbstractCommand {
 
     @Inject
     public RepairCommand(MainModule mainModule) {
-        super("repair", "lifeserver.repair", false);
+        super("repair", "lifeserver.repair");
         messageBuilder = mainModule.getMessageBuilder();
     }
 

@@ -1,7 +1,7 @@
 package net.giuse.teleportmodule.commands.warp;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.subservice.WarpLoaderService;
@@ -18,7 +18,7 @@ public class WarpDeleteCommand extends AbstractCommand {
 
     @Inject
     public WarpDeleteCommand(MainModule mainModule) {
-        super("warpdelete", "lifeserver.warpdelete", true);
+        super("warpdelete", "lifeserver.warpdelete");
         messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
     }

@@ -1,10 +1,10 @@
 package net.giuse.teleportmodule.serializer.serializedobject;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 @Getter
@@ -12,6 +12,6 @@ import java.util.UUID;
 public class HomeSerialized {
 
     private final UUID owner;
-    private final Object2ObjectMap<String, Location> locations;
+    private final HashMap<String, Location> locations;
 
 }

@@ -1,8 +1,8 @@
 package net.giuse.economymodule.commands;
 
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.economymodule.EconomyService;
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.apache.commons.lang.math.NumberUtils;
@@ -19,7 +19,7 @@ public class PayCommand extends AbstractCommand {
 
     @Inject
     public PayCommand(final MainModule mainModule) {
-        super("pay", "lifeserver.pay", true);
+        super("pay", "lifeserver.pay");
         this.economyService = (EconomyService) mainModule.getService(EconomyService.class);
         messageBuilder = mainModule.getMessageBuilder();
     }

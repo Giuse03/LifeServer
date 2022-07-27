@@ -1,7 +1,7 @@
 package net.giuse.simplycommandmodule.commands;
 
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.Bukkit;
@@ -17,7 +17,7 @@ public class InvseeCommand extends AbstractCommand {
 
     @Inject
     public InvseeCommand(MainModule mainModule) {
-        super("invsee", "lifeserver.invsee", false);
+        super("invsee", "lifeserver.invsee");
         messageBuilder = mainModule.getMessageBuilder();
     }
 

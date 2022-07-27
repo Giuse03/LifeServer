@@ -1,7 +1,7 @@
 package net.giuse.teleportmodule.commands.warp;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.subservice.WarpLoaderService;
@@ -17,7 +17,7 @@ public class WarpListCommand extends AbstractCommand {
 
     @Inject
     public WarpListCommand(MainModule mainModule) {
-        super("warplist", "lifeserver.warp.list", true);
+        super("warplist", "lifeserver.warp.list");
         messageBuilder = mainModule.getMessageBuilder();
         warpLoaderService = (WarpLoaderService) mainModule.getService(WarpLoaderService.class);
     }

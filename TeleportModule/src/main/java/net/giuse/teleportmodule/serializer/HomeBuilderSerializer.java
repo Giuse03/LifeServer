@@ -1,7 +1,6 @@
 package net.giuse.teleportmodule.serializer;
 
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.serializer.Serializer;
 import net.giuse.teleportmodule.serializer.serializedobject.HomeSerialized;
@@ -9,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class HomeBuilderSerializer implements Serializer<HomeSerialized> {
@@ -48,7 +48,7 @@ public class HomeBuilderSerializer implements Serializer<HomeSerialized> {
         String[] homes = str.split(":");
 
         //Insert args for builder a HomeSerialized and check if player has home
-        HomeSerialized homeSerialized = new HomeSerialized(UUID.fromString(homes[0]), new Object2ObjectArrayMap<>());
+        HomeSerialized homeSerialized = new HomeSerialized(UUID.fromString(homes[0]), new HashMap<>());
         if (homes.length == 1) return homeSerialized;
 
         //Deserialize home and insert it in HomeBuilder

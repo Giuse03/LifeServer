@@ -1,7 +1,7 @@
 package net.giuse.simplycommandmodule.commands;
 
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.command.CommandSender;
@@ -16,7 +16,7 @@ public class MoreCommand extends AbstractCommand {
 
     @Inject
     public MoreCommand(MainModule mainModule) {
-        super("more", "lifeserver.more", false);
+        super("more", "lifeserver.more");
         messageBuilder = mainModule.getMessageBuilder();
     }
 

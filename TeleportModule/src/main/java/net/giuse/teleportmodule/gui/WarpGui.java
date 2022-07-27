@@ -1,9 +1,8 @@
 package net.giuse.teleportmodule.gui;
 
 
-import eu.giuse.inventorylib.InventoryBuilder;
+import inventorylib.InventoryBuilder;
 import lombok.Getter;
-import net.giuse.engine.Worker;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.gui.GuiInitializer;
 import net.giuse.teleportmodule.TeleportModule;
@@ -17,8 +16,6 @@ import javax.inject.Inject;
 public class WarpGui implements GuiInitializer {
     @Inject
     private MainModule mainModule;
-    @Inject
-    private Worker worker;
     @Getter
     private InventoryBuilder inventoryBuilder;
 
@@ -35,8 +32,7 @@ public class WarpGui implements GuiInitializer {
                 mainModule,
                 teleportModule.getFileManager().getWarpYaml().getInt("inventory.rows"),
                 teleportModule.getFileManager().getWarpYaml().getString("inventory.title"),
-                teleportModule.getFileManager().getWarpYaml().getInt("inventory.page"),
-                worker).createInvs();
+                teleportModule.getFileManager().getWarpYaml().getInt("inventory.page")).createInvs();
 
         //Initialize items
         mainModule.getInjector().getSingleton(NextItemGuiWarpInit.class).initItems(inventoryBuilder);

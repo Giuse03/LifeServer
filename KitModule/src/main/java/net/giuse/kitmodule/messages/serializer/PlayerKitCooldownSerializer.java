@@ -1,12 +1,9 @@
 package net.giuse.kitmodule.messages.serializer;
 
-import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.cooldownsystem.PlayerKitCooldown;
 import net.giuse.kitmodule.messages.serializer.serializedobject.PlayerKitCooldownSerialized;
-import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.serializer.Serializer;
 
-import javax.inject.Inject;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -37,7 +34,7 @@ public class PlayerKitCooldownSerializer implements Serializer<PlayerKitCooldown
             loopCounter.getAndIncrement();
             boolean addComma = (loopCounter.get() != KitCooldownMapSize);
 
-            int actualCooldown = playerKitTimeSerialized.getPlayerKitCooldown().getCoolDownKits().getInt(kitName);
+            int actualCooldown = playerKitTimeSerialized.getPlayerKitCooldown().getCoolDownKits().get(kitName);
 
             if (addComma) {
                 stringBuilder.append(kitName).append("_").append(actualCooldown).append(",");

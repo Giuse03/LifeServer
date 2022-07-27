@@ -1,8 +1,6 @@
 package net.giuse.kitmodule;
 
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.kitmodule.builder.KitBuilder;
@@ -11,7 +9,6 @@ import net.giuse.kitmodule.databases.kit.querykit.LoadQueryKit;
 import net.giuse.kitmodule.databases.kit.querykit.SaveKit;
 import net.giuse.kitmodule.databases.kit.queryplayerkit.LoadPlayerKit;
 import net.giuse.kitmodule.databases.kit.queryplayerkit.SavePlayerKit;
-import net.giuse.kitmodule.exceptions.KitNotExists;
 import net.giuse.kitmodule.files.ConfigKits;
 import net.giuse.kitmodule.messages.MessageLoaderKit;
 import net.giuse.kitmodule.messages.serializer.PlayerKitCooldownSerializer;
@@ -23,6 +20,7 @@ import net.giuse.mainmodule.services.Services;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -31,13 +29,13 @@ import java.util.UUID;
 public class KitModule extends Services {
 
     @Getter
-    private ConfigKits fileKits;
+    private final HashMap<UUID, PlayerKitCooldown> cachePlayerKit = new HashMap<>();
     @Getter
-    private final Object2ObjectMap<UUID, PlayerKitCooldown> cachePlayerKit = new Object2ObjectArrayMap<>();
-    @Getter
-    private final Object2ObjectMap<String, KitBuilder> kitElements = new Object2ObjectArrayMap<>();
+    private final HashMap<String, KitBuilder> kitElements = new HashMap<>();
     @Getter
     private final Serializer<PlayerKitCooldownSerialized> playerCooldownSerializer = new PlayerKitCooldownSerializer();
+    @Getter
+    private ConfigKits fileKits;
     @Inject
     private MainModule mainModule;
 
@@ -47,6 +45,7 @@ public class KitModule extends Services {
     @SneakyThrows
     @Override
     public void load() {
+
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eKitModule§9] §7Loading Kits...");
         ReflectionsFiles.loadFiles(fileKits = new ConfigKits());
         mainModule.getInjector().getSingleton(MessageLoaderKit.class).load();
@@ -83,19 +82,19 @@ public class KitModule extends Services {
      * Search Kit  from Name in a Set
      */
     public KitBuilder getKit(@NotNull String searchKitBuilder) {
-        if(kitElements.containsKey(searchKitBuilder)) {
+        if (kitElements.containsKey(searchKitBuilder)) {
             return kitElements.get(searchKitBuilder.toLowerCase());
         }
-        throw new KitNotExists();
+        return null;
     }
 
 
-    private void saveCache(){
+    private void saveCache() {
         mainModule.getInjector().getSingleton(SaveKit.class).query();
         mainModule.getInjector().getSingleton(SavePlayerKit.class).query();
     }
 
-    private void loadCache(){
+    private void loadCache() {
         mainModule.getInjector().getSingleton(LoadQueryKit.class).query();
         mainModule.getInjector().getSingleton(LoadPlayerKit.class).query();
     }

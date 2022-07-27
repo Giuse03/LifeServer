@@ -1,7 +1,7 @@
 package net.giuse.simplycommandmodule.commands;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.apache.commons.lang.math.NumberUtils;
@@ -18,7 +18,7 @@ public class BurnCommand extends AbstractCommand {
 
     @Inject
     public BurnCommand(MainModule mainModule) {
-        super("burn", "lifeserver.burn", false);
+        super("burn", "lifeserver.burn");
         messageBuilder = mainModule.getMessageBuilder();
     }
 

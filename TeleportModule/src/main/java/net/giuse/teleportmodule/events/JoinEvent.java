@@ -1,7 +1,6 @@
 package net.giuse.teleportmodule.events;
 
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.teleportmodule.subservice.HomeLoaderService;
 import org.bukkit.event.EventHandler;
@@ -9,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 
 public class JoinEvent implements Listener {
     private final HomeLoaderService homeLoaderService;
@@ -27,7 +27,7 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (homeLoaderService.getHome(e.getPlayer().getUniqueId()) == null) {
-            homeLoaderService.getCacheHome().put(e.getPlayer().getUniqueId(), new Object2ObjectArrayMap<>());
+            homeLoaderService.getCacheHome().put(e.getPlayer().getUniqueId(), new HashMap<>());
         }
     }
 

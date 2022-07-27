@@ -2,9 +2,8 @@ package net.giuse.kitmodule.gui;
 
 import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
-import eu.giuse.inventorylib.ButtonBuilder;
-import eu.giuse.inventorylib.InventoryBuilder;
-import net.giuse.engine.Worker;
+import inventorylib.ButtonBuilder;
+import inventorylib.InventoryBuilder;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.builder.ItemstackBuilder;
@@ -22,8 +21,6 @@ import javax.inject.Inject;
 public class ItemsGuiInit implements ItemInitializer {
     @Inject
     private MainModule mainModule;
-    @Inject
-    private Worker worker;
 
     @Override
     public void initItems(InventoryBuilder inventoryBuilder) {
@@ -55,7 +52,7 @@ public class ItemsGuiInit implements ItemInitializer {
                         itemsConfig.getInt("position"),
                         itemsConfig.getInt("page"),
                         itemstackBuilder.toItem(),
-                        false, false, true, worker);
+                        false, false, true);
 
                 //Set Event of the button
                 button.setEvent(inventoryClickEvent -> {

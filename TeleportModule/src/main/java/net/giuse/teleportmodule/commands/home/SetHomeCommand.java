@@ -1,6 +1,6 @@
 package net.giuse.teleportmodule.commands.home;
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.subservice.HomeLoaderService;
@@ -17,7 +17,7 @@ public class SetHomeCommand extends AbstractCommand {
 
     @Inject
     public SetHomeCommand(MainModule mainModule) {
-        super("sethome", "lifeserver.sethome", true);
+        super("sethome", "lifeserver.sethome");
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
     }

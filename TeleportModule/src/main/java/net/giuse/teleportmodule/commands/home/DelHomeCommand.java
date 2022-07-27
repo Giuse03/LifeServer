@@ -1,6 +1,6 @@
 package net.giuse.teleportmodule.commands.home;
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.subservice.HomeLoaderService;
@@ -16,7 +16,7 @@ public class DelHomeCommand extends AbstractCommand {
 
     @Inject
     public DelHomeCommand(MainModule mainModule) {
-        super("delhome", "lifeserver.delhome", true);
+        super("delhome", "lifeserver.delhome");
         homeLoaderService = (HomeLoaderService) mainModule.getService(HomeLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
     }

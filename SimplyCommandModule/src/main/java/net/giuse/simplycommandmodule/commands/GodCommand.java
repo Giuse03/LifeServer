@@ -1,7 +1,7 @@
 package net.giuse.simplycommandmodule.commands;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.simplycommandmodule.SimplyCommandService;
@@ -19,7 +19,7 @@ public class GodCommand extends AbstractCommand {
 
     @Inject
     public GodCommand(MainModule mainModule) {
-        super("god", "lifeserver.god", true);
+        super("god", "lifeserver.god");
         messageBuilder = mainModule.getMessageBuilder();
         simplyCommandService = (SimplyCommandService) mainModule.getService(SimplyCommandService.class);
     }

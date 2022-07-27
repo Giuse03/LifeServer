@@ -1,7 +1,7 @@
 package net.giuse.simplycommandmodule.commands;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.Bukkit;
@@ -16,7 +16,7 @@ public class ClearInventoryCommand extends AbstractCommand {
 
     @Inject
     public ClearInventoryCommand(MainModule mainModule) {
-        super("clearinventory", "lifeserver.clearinventory", false);
+        super("clearinventory", "lifeserver.clearinventory");
         messageBuilder = mainModule.getMessageBuilder();
     }
 

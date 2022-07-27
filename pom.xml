@@ -18,6 +18,7 @@
         <module>EconomyModule</module>
         <module>SecretMessageModule</module>
         <module>SimplyCommandModule</module>
+        <module>CommonAPI</module>
         <module>JarCompileModule</module>
     </modules>
 
@@ -50,7 +51,19 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.destroystokyo.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bukkit</artifactId>
+            <version>4.1.1</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>ch.jalu</groupId>
@@ -74,38 +87,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.papermc.paper</groupId>
-            <artifactId>paper-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
 
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
             <version>1.0.7</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.giuse</groupId>
-            <artifactId>Engine</artifactId>
-            <version>1.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.giuse</groupId>
-            <artifactId>EzMessage</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>eu.giuse</groupId>
-            <artifactId>inventorylib</artifactId>
-            <version>1.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 

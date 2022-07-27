@@ -1,7 +1,7 @@
 package net.giuse.teleportmodule.commands;
 
+import ezmessage.MessageBuilder;
 import io.papermc.lib.PaperLib;
-import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -18,7 +18,7 @@ public class BackCommand extends AbstractCommand {
 
     @Inject
     public BackCommand(MainModule mainModule) {
-        super("back", "lifeserver.back", true);
+        super("back", "lifeserver.back");
         messageBuilder = mainModule.getMessageBuilder();
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
     }

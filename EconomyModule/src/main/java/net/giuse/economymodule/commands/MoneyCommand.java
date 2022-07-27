@@ -1,8 +1,8 @@
 package net.giuse.economymodule.commands;
 
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.economymodule.EconomyService;
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.Bukkit;
@@ -18,7 +18,7 @@ public class MoneyCommand extends AbstractCommand {
 
     @Inject
     public MoneyCommand(final MainModule mainModule) {
-        super("money", "lifeserver.money", true);
+        super("money", "lifeserver.money");
         this.economyService = (EconomyService) mainModule.getService(EconomyService.class);
         messageBuilder = mainModule.getMessageBuilder();
     }

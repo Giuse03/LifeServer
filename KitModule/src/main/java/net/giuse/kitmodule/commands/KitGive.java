@@ -1,12 +1,10 @@
 package net.giuse.kitmodule.commands;
 
-import net.giuse.engine.Worker;
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.kitmodule.cooldownsystem.PlayerKitCooldown;
-import net.giuse.kitmodule.exceptions.KitNotExists;
 import net.giuse.kitmodule.gui.KitGui;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
@@ -26,12 +24,10 @@ public class KitGive extends AbstractCommand {
     private final MainModule mainModule;
     private final MessageBuilder messageBuilder;
     private final KitModule kitModule;
-    private final Worker worker;
 
     @Inject
-    public KitGive(MainModule mainModule, Worker worker) {
-        super("kit", "lifeserver.kitcreate", true);
-        this.worker = worker;
+    public KitGive(MainModule mainModule) {
+        super("kit", "lifeserver.kitcreate");
         this.mainModule = mainModule;
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();
@@ -60,7 +56,7 @@ public class KitGive extends AbstractCommand {
             //check if show gui or list
             if (mainModule.getConfig().getBoolean("use-kit-gui")) {
                 KitGui kitInventory = mainModule.getInjector().getSingleton(KitGui.class);
-                worker.executeProcess(() -> kitInventory.openInv(player), false);
+                kitInventory.openInv(player);
                 return;
             }
 
@@ -94,16 +90,17 @@ public class KitGive extends AbstractCommand {
 
     private void giveKit(Player player, String kitName) {
 
-        try {
+        KitBuilder kitBuilder = kitModule.getKit(kitName);
+        if (kitBuilder == null) {
             //Give kit to Player
-            KitBuilder kitBuilder = kitModule.getKit(kitName);
             PlayerKitCooldown playerKitCooldown = kitModule.getPlayerCooldown(player.getUniqueId());
             playerKitCooldown.addKit(kitName.toLowerCase(), kitBuilder.getCoolDown());
             kitBuilder.giveItems(player);
             messageBuilder.setIDMessage("kit-receive").sendMessage(new TextReplacer().match("%kit%").replaceWith(kitName));
-        } catch (KitNotExists e) {
-            messageBuilder.setIDMessage(e.getMessage()).sendMessage();
+            return;
         }
+        messageBuilder.setIDMessage("kit-doesnt-exists").sendMessage();
+
     }
 
     private boolean checkCooldown(int cooldown) {

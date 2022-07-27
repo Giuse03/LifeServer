@@ -1,6 +1,6 @@
 package net.giuse.teleportmodule.commands.spawn;
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.subservice.SpawnLoaderService;
@@ -15,7 +15,7 @@ public class DelSpawnCommand extends AbstractCommand {
 
     @Inject
     public DelSpawnCommand(MainModule mainModule) {
-        super("delspawn", "lifeserver.delspawn", true);
+        super("delspawn", "lifeserver.delspawn");
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
         messageBuilder = mainModule.getMessageBuilder();
     }

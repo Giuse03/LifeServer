@@ -31,7 +31,6 @@ public class FileManager extends AbstractConfig {
     @YamlAnnotation(nameFile = "messages_spawn.yml")
     @Getter
     private YamlConfiguration messagesSpawnYaml;
-
     @FileAnnotation(name = "warp_gui_config.yml", path = "plugins/LifeServer/warp_gui_config.yml")
     private File warpFile;
     @YamlAnnotation(nameFile = "warp_gui_config.yml")

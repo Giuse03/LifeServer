@@ -1,7 +1,5 @@
 package net.giuse.teleportmodule.subservice;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.mainmodule.MainModule;
@@ -14,13 +12,14 @@ import net.giuse.teleportmodule.serializer.serializedobject.WarpSerialized;
 import org.bukkit.Location;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 
 public class WarpLoaderService extends Services {
 
     @Getter
     private final Serializer<WarpSerialized> warpBuilderSerializer = new WarpBuilderSerializer();
     @Getter
-    private Object2ObjectMap<String, Location> warps;
+    private HashMap<String, Location> warps;
     @Inject
     private MainModule mainModule;
 
@@ -33,7 +32,7 @@ public class WarpLoaderService extends Services {
         mainModule.getLogger().info("§8[§2Life§aServer §7>> §eTeleportModule§9] §7Loading Warps...");
 
         //Load Cache
-        warps = new Object2ObjectArrayMap<>();
+        warps = new HashMap<>();
 
         //Load Warps
         mainModule.getInjector().getSingleton(WarpQuery.class).query();

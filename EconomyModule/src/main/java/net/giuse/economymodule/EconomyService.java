@@ -1,8 +1,6 @@
 package net.giuse.economymodule;
 
 
-import it.unimi.dsi.fastutil.objects.Object2DoubleArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.giuse.economymodule.databases.EconQuery;
@@ -20,6 +18,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.UUID;
 
 
@@ -27,7 +26,7 @@ public class EconomyService extends Services {
     @Getter
     private final Serializer<EconPlayerSerialized> econPlayerSerializer = new EconPlayerSerializer();
     @Getter
-    private Object2DoubleMap<UUID> econPlayersCache;
+    private final HashMap<UUID, Double> econPlayersCache = new HashMap<>();
     @Inject
     private MainModule mainModule;
     @Getter
@@ -39,7 +38,6 @@ public class EconomyService extends Services {
     @SneakyThrows
     public void load() {
         Bukkit.getLogger().info("§8[§2Life§aServer §7>> §eEconomy §9] §7Loading economy...");
-        econPlayersCache = new Object2DoubleArrayMap<>();
         customEcoManager = mainModule.getInjector().getSingleton(EconomyManager.class);
         mainModule.getServer().getServicesManager().register(Economy.class, customEcoManager, mainModule, ServicePriority.Normal);
         mainModule.getInjector().getSingleton(EconQuery.class).query();
@@ -62,7 +60,7 @@ public class EconomyService extends Services {
 
 
     public double getBalancePlayer(UUID uuid) {
-        return econPlayersCache.getDouble(uuid);
+        return econPlayersCache.get(uuid);
     }
 
     public void setBalance(UUID uuid, double balance) {

@@ -1,8 +1,8 @@
 package net.giuse.teleportmodule.commands.spawn;
 
 
+import ezmessage.MessageBuilder;
 import io.papermc.lib.PaperLib;
-import net.giuse.ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.teleportmodule.TeleportModule;
@@ -21,7 +21,7 @@ public class SpawnCommand extends AbstractCommand {
 
     @Inject
     public SpawnCommand(MainModule mainModule) {
-        super("spawn", "lifeserver.spawn", true);
+        super("spawn", "lifeserver.spawn");
         spawnLoaderService = (SpawnLoaderService) mainModule.getService(SpawnLoaderService.class);
         teleportModule = (TeleportModule) mainModule.getService(TeleportModule.class);
         messageBuilder = mainModule.getMessageBuilder();

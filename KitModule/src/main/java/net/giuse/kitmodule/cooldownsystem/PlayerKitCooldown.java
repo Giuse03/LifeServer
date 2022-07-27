@@ -1,9 +1,10 @@
 package net.giuse.kitmodule.cooldownsystem;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
 
 /*
  * Timer System
@@ -11,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 @RequiredArgsConstructor
 @Getter
 public class PlayerKitCooldown extends BukkitRunnable {
-    private final Object2IntArrayMap<String> coolDownKits = new Object2IntArrayMap<>();
+    private final HashMap<String, Integer> coolDownKits = new HashMap<>();
 
 
     /*
@@ -20,9 +21,9 @@ public class PlayerKitCooldown extends BukkitRunnable {
     @Override
     public void run() {
         coolDownKits.keySet().forEach(coolDownKitsName -> {
-            boolean isInCoolDown = coolDownKits.getInt(coolDownKitsName) > 0;
+            boolean isInCoolDown = coolDownKits.get(coolDownKitsName) > 0;
             if (isInCoolDown) {
-                int newCoolDown = coolDownKits.getInt(coolDownKitsName) - 1;
+                int newCoolDown = coolDownKits.get(coolDownKitsName) - 1;
                 coolDownKits.put(coolDownKitsName, newCoolDown);
             }
         });
@@ -40,14 +41,15 @@ public class PlayerKitCooldown extends BukkitRunnable {
      * Remove kit from timer task
      */
     public void removeKit(String name) {
-        coolDownKits.removeInt(name);
+        coolDownKits.remove(name);
     }
 
     /*
      * Remove kit from timer task
      */
     public int getActualCooldown(String name) {
-        return coolDownKits.getInt(name);
+        if (!coolDownKits.containsKey(name)) return 0;
+        return coolDownKits.get(name);
     }
 
     public int getSizeKitCooldown() {

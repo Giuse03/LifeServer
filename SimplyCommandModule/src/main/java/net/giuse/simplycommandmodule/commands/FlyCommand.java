@@ -1,7 +1,7 @@
 package net.giuse.simplycommandmodule.commands;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import org.bukkit.Bukkit;
@@ -17,7 +17,7 @@ public class FlyCommand extends AbstractCommand {
 
     @Inject
     public FlyCommand(MainModule mainModule) {
-        super("fly", "lifeserver.fly", false);
+        super("fly", "lifeserver.fly");
         messageBuilder = mainModule.getMessageBuilder();
     }
 

@@ -1,7 +1,7 @@
 package net.giuse.secretmessagemodule.commands;
 
 
-import net.giuse.ezmessage.MessageBuilder;
+import ezmessage.MessageBuilder;
 import net.giuse.mainmodule.MainModule;
 import net.giuse.mainmodule.commands.AbstractCommand;
 import net.giuse.secretmessagemodule.SecretChatBuilder;
@@ -24,7 +24,7 @@ public class ReplyCommand extends AbstractCommand {
 
     @Inject
     public ReplyCommand(MainModule mainModule) {
-        super("reply", "lifeserver.reply", true);
+        super("reply", "lifeserver.reply");
         secretMessageModule = (SecretMessageModule) mainModule.getService(SecretMessageModule.class);
         secretChatProcess = mainModule.getInjector().getSingleton(SecretChatProcess.class);
         messageBuilder = mainModule.getMessageBuilder();

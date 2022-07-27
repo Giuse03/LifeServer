@@ -1,7 +1,7 @@
 package net.giuse.kitmodule.commands;
 
-import net.giuse.ezmessage.MessageBuilder;
-import net.giuse.ezmessage.TextReplacer;
+import ezmessage.MessageBuilder;
+import ezmessage.TextReplacer;
 import net.giuse.kitmodule.KitModule;
 import net.giuse.kitmodule.builder.KitBuilder;
 import net.giuse.mainmodule.MainModule;
@@ -29,7 +29,7 @@ public class KitCreate extends AbstractCommand {
 
     @Inject
     public KitCreate(MainModule mainModule) {
-        super("kitcreate", "lifeserver.kitcreate", true);
+        super("kitcreate", "lifeserver.kitcreate");
         kitModule = (KitModule) mainModule.getService(KitModule.class);
         messageBuilder = mainModule.getMessageBuilder();
     }
